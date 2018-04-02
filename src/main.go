@@ -2,44 +2,50 @@ package main
 
 import (
 	"fmt"
-	"io/ioutil"
+	"html/template"
 	"net/http"
 )
 
-//Page struct für Einzelne Seite
-type Page struct {
-	Title string
-	Body  []byte
+type Student struct {
+	Vorname  string
+	Name     string
+	Matrikel int
+	Gruppe   int
+	Info     string
+	ID       int
+}
+
+//Schreibt Daten des Studenten in Konsole
+func (st *Student) PrintData() {
+	fmt.Printf("%s %s:\n"+
+		"Matrikel: \t %v\n"+
+		"Gruppe: \t %v\n"+
+		"Infofeld: \t %s\n\n",
+		st.Vorname, st.Name, st.Matrikel, st.Gruppe, st.Info)
+}
+
+//gibt pfad zum Partrait aus
+func (st *Student) getPortraitPath() string {
+	return fmt.Sprintf("/portraits/%v.jpg", st.Matrikel)
+}
+
+func handleFunc(w http.ResponseWriter, r *http.Request) {
+
+	studentList := []Student{
+		Student{"Max", "Mustermann", 261812, 1, "Ich bin kuhl", 3},
+		Student{"Kalle", "Klößchen", 214679, 2, "Ich bin kuhl", 3},
+		Student{"Freddy", "Ferrari", 231678, 1, "Ich bin kuhl", 3},
+		Student{"Vladimir", "Vlidimirovic", 296837, 2, "Ich bin kuhl", 3}}
+
+	//parse template to html
+	tmpl, _ := template.ParseFiles("studentlist.gohtml")
+	//handle
+	tmpl.Execute(w, studentList)
+
 }
 
 func main() {
-	//erzeuge Page struct
-	p1 := &Page{"TestPage", []byte("This is a test Page")}
-	//speicher als .txt
-	p1.save()
-	//lade Page von .txt
-	p2, _ := loadPage("TestPage")
-	//Print Page
-	fmt.Println(string(p2.Body))
-}
 
-//speichert Page als .txt
-func (p *Page) save() error {
-	filename := p.Title + ".txt"
-	return ioutil.WriteFile(filename, p.Body, 0600)
-}
-
-//lädt .txt als Page struct
-func loadPage(title string) (*Page, error) {
-	filename := title + ".txt"
-	body, err := ioutil.ReadFile(filename)
-	if err != nil {
-		return nil, err
-	}
-	return &Page{Title: title, Body: body}, nil
-}
-
-func handler(w http.ResponseWriter, r *http.Request) {
-	//Print aktuellen URL Pfad. [1:] entfernt erstes Zeichen (hier: / )
-	fmt.Fprintf(w, "Aktueller Pfad: %s", r.URL.Path[1:])
+	http.HandleFunc("/", handleFunc)
+	http.ListenAndServe(":8080", nil)
 }
