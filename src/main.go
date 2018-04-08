@@ -1,51 +1,49 @@
 package main
 
 import (
+	"encoding/json"
 	"fmt"
 	"html/template"
+	"io/ioutil"
 	"net/http"
 )
 
 type Student struct {
-	Vorname  string
-	Name     string
-	Matrikel int
-	Gruppe   int
-	Info     string
-	ID       int
+	Name struct {
+		Vorname  string `json:"vorname"`
+		Nachname string `json:"nachname"`
+	} `json:"name"`
+	Matrikel int    `json:"matrikel"`
+	Gruppe   int    `json:"gruppe"`
+	Info     string `json:"info"`
+	ID       int    `json:"id"`
 }
 
-//Schreibt Daten des Studenten in Konsole
-func (st *Student) PrintData() {
-	fmt.Printf("%s %s:\n"+
-		"Matrikel: \t %v\n"+
-		"Gruppe: \t %v\n"+
-		"Infofeld: \t %s\n\n",
-		st.Vorname, st.Name, st.Matrikel, st.Gruppe, st.Info)
-}
-
-//gibt pfad zum Partrait aus
-func (st *Student) getPortraitPath() string {
+//returns path to student-portrait
+func (st *Student) PortraitPath() string {
 	return fmt.Sprintf("/portraits/%v.jpg", st.Matrikel)
 }
 
-func handleFunc(w http.ResponseWriter, r *http.Request) {
+func handleStudents(w http.ResponseWriter, r *http.Request) {
+	//Read json:
+	jsondata, err := ioutil.ReadFile("./students.json")
+	if err != nil {
+		fmt.Println("Error while reading .json")
+	}
 
-	studentList := []Student{
-		Student{"Max", "Mustermann", 261812, 1, "Ich bin kuhl", 3},
-		Student{"Kalle", "Klößchen", 214679, 2, "Ich bin kuhl", 3},
-		Student{"Freddy", "Ferrari", 231678, 1, "Ich bin kuhl", 3},
-		Student{"Vladimir", "Vlidimirovic", 296837, 2, "Ich bin kuhl", 3}}
+	//convert jsondata to student slice
+	studentlist := make([]Student, 0)
+	err = json.Unmarshal(jsondata, &studentlist)
+	if err != nil {
+		fmt.Println("Error while converting jsondata")
+	}
 
-	//parse template to html
-	tmpl, _ := template.ParseFiles("studentlist.gohtml")
-	//handle
-	tmpl.Execute(w, studentList)
-
+	tmpl, _ := template.ParseFiles("studentlist.go.html")
+	tmpl.Execute(w, studentlist)
 }
 
 func main() {
 
-	http.HandleFunc("/", handleFunc)
+	http.HandleFunc("/", handleStudents)
 	http.ListenAndServe(":8080", nil)
 }
