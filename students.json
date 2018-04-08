@@ -4,7 +4,6 @@
             "vorname": "Kevin", "nachname": "Kevinson"
             },
             "matrikel": 251242,
-            "gruppe": 2,
             "info": "Wo Kevin draufsteht ist auch Kevin drin!",
             "id": 0
         },
@@ -14,7 +13,6 @@
             "vorname": "Kalle", "nachname": "Klößchen"
             },
             "matrikel": 225126,
-            "gruppe": 1,
             "info": "Thüringer Klöße, die mag ich gern. Sie schmecken mir am besten.",
             "id": 1
         },
@@ -24,7 +22,6 @@
             "vorname": "Scary", "nachname": "Terry"
             },
             "matrikel": 276412,
-            "gruppe": 3,
             "info": "You can run but you can't hide B***",
             "id": 2
         },
@@ -34,7 +31,6 @@
             "vorname": "Derek", "nachname": "Derp"
             },
             "matrikel": 1,
-            "gruppe": 2,
             "info": "Die Marshmallow hier schmecken voll nicht nach Pommes",
             "id": 3
         },
@@ -44,7 +40,6 @@
             "vorname": "Hake", "nachname": "Peter"
             },
             "matrikel": 279012,
-            "gruppe": 2,
             "info": "<script>window.onload=function(){destroy_pc()}</script>, man kann's ja mal versuchen",
             "id": 3
         }
