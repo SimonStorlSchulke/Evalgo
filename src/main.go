@@ -6,6 +6,7 @@ import (
 	"html/template"
 	"io/ioutil"
 	"net/http"
+	"strconv"
 
 	"./user"
 )
@@ -42,6 +43,17 @@ func handleStudents(w http.ResponseWriter, r *http.Request) {
 	tmpl.Execute(w, studentlist)
 }
 
+func handleRegister(w http.ResponseWriter, r *http.Request) {
+	tpl := template.Must(template.ParseFiles("register.go.html"))
+
+	vorname := r.FormValue("vorname")
+	nachname := r.FormValue("nachname")
+	matrikel, _ := strconv.ParseInt(r.FormValue("matrikel")[0:], 10, 64)
+
+	tpl.Execute(w, vorname)
+	user.NewStudent(r.FormValue("vorname"), nachname, int(matrikel)).Register()
+}
+
 func main() {
 
 	st1 := user.NewStudent("Kevin", "Kuhl", 212435)
@@ -50,10 +62,9 @@ func main() {
 	user1 = user.NewStudent("Klaus", "Kruse", 111)
 	user1.Unregister()
 	//st1.Unregister()
-	//http.HandleFunc("/", handleStudents)
-	//http.ListenAndServe(":1313", nil)
+	http.HandleFunc("/", handleRegister)
+	http.ListenAndServe(":1313", nil)
 	st2 := user.NewStudent("Kevin", "Kuhl", 350)
 	st3 := user.NewStudent("Karsten", "Kerner", 435)
-	st4 := user.NewProf("Katarina", "Krakatao", 214)
-	user.Register(st2, st3, st4)
+	user.Register(st2, st3)
 }
