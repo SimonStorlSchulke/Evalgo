@@ -6,48 +6,9 @@ import (
 	"html/template"
 	"io/ioutil"
 	"net/http"
+
+	"./user"
 )
-
-type htmlcolor string
-
-const (
-	rot  = "#ff8080"
-	grün = "#66ff99"
-	blau = "#33ccff"
-	grau = "#969696"
-)
-
-type Student struct {
-	Name struct {
-		Vorname  string `json:"vorname"`
-		Nachname string `json:"nachname"`
-	} `json:"name"`
-	Matrikel     int `json:"matrikel"`
-	Gruppenfarbe htmlcolor
-	Info         string `json:"info"`
-	ID           int    `json:"id"`
-}
-
-//returns path to student-portrait
-func (st *Student) PortraitPath() string {
-	return fmt.Sprintf("/portraits/%v.jpg", st.Matrikel)
-}
-
-//momentan unbenutzt - funzt iwie ned (farben werden nicht angewendet)
-func verteileGruppen(stl *[]Student) {
-	for i, stu := range *stl {
-		switch {
-		case i%3 == 0:
-			stu.Gruppenfarbe = rot
-		case i%3 == 1:
-			stu.Gruppenfarbe = grün
-		case i%3 == 2:
-			stu.Gruppenfarbe = blau
-		default:
-			stu.Gruppenfarbe = grau
-		}
-	}
-}
 
 func handleStudents(w http.ResponseWriter, r *http.Request) {
 	//Read json:
@@ -57,23 +18,23 @@ func handleStudents(w http.ResponseWriter, r *http.Request) {
 	}
 
 	//convert jsondata to student slice
-	studentlist := make([]Student, 0)
+	studentlist := make([]user.Student, 0)
 	err = json.Unmarshal(jsondata, &studentlist)
 	if err != nil {
-		fmt.Println("Error while converting jsondata")
+		fmt.Println(err)
 	}
 
 	//gebe Gruppenfarben
 	for i, _ := range studentlist {
 		switch {
 		case i%3 == 0:
-			studentlist[i].Gruppenfarbe = rot
+			studentlist[i].Gruppenfarbe = 1
 		case i%3 == 1:
-			studentlist[i].Gruppenfarbe = grün
+			studentlist[i].Gruppenfarbe = 2
 		case i%3 == 2:
-			studentlist[i].Gruppenfarbe = blau
+			studentlist[i].Gruppenfarbe = 3
 		default:
-			studentlist[i].Gruppenfarbe = grau
+			studentlist[i].Gruppenfarbe = 0
 		}
 	}
 
@@ -83,6 +44,16 @@ func handleStudents(w http.ResponseWriter, r *http.Request) {
 
 func main() {
 
-	http.HandleFunc("/", handleStudents)
-	http.ListenAndServe(":8080", nil)
+	st1 := user.NewStudent("Kevin", "Kuhl", 212435)
+	st1.Register()
+	var user1 user.User
+	user1 = user.NewStudent("Klaus", "Kruse", 111)
+	user1.Unregister()
+	//st1.Unregister()
+	//http.HandleFunc("/", handleStudents)
+	//http.ListenAndServe(":1313", nil)
+	st2 := user.NewStudent("Kevin", "Kuhl", 350)
+	st3 := user.NewStudent("Karsten", "Kerner", 435)
+	st4 := user.NewProf("Katarina", "Krakatao", 214)
+	user.Register(st2, st3, st4)
 }
