@@ -12,7 +12,7 @@ func handleStudents(w http.ResponseWriter, r *http.Request) {
 	//Read jsons:
 	studentlist := user.ReadStudents()
 
-	//gebe Gruppenfarben
+	//apply group colors
 	red, green, blue, grey := "#ed4b4b", "#66ed4b", "#55b2f4", "#808080"
 	for i, _ := range studentlist {
 		switch {

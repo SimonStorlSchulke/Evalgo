@@ -71,17 +71,21 @@ func (st Student) Unregister() {
 /*ReadStudents reads all profile.json files in /Userdata/Students
 and return it as a slice of Students*/
 func ReadStudents() []Student {
+	//Read Folders
 	folders, err := ioutil.ReadDir("./Userdata/Students")
 	if err != nil {
 		log.Fatal(err)
 	}
 
 	var currentStudent Student
+	var path string
+	var jsondata []byte
 	studentlist := make([]Student, 0)
 
+	//Loop through Folders and create Student Slice
 	for _, file := range folders {
-		path := fmt.Sprintf("./Userdata/Students/%s/profile.json", file.Name())
-		jsondata, err := ioutil.ReadFile(path)
+		path = fmt.Sprintf("./Userdata/Students/%s/profile.json", file.Name())
+		jsondata, err = ioutil.ReadFile(path)
 		if err != nil {
 			log.Fatal(err)
 		}
