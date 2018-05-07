@@ -4,6 +4,7 @@ import (
 	"encoding/json"
 	"fmt"
 	"io/ioutil"
+	"log"
 	"os"
 	"path/filepath"
 )
@@ -12,14 +13,14 @@ type Student struct {
 	Vorname      string `json:"vorname"`
 	Nachname     string `json:"nachname"`
 	Matrikel     int    `json:"matrikel"`
-	Gruppenfarbe int
+	Gruppenfarbe string
 	Info         string `json:"info"`
 	ID           int    `json:"id"`
 }
 
 //Constructor for Student only Vorname, Nachname, Matrikel
 func NewStudent(Vorname, Nachname string, Matrikel int) Student {
-	return Student{Vorname, Nachname, Matrikel, 0, "", 0}
+	return Student{Vorname, Nachname, Matrikel, "", "", 0}
 }
 
 func (st Student) ToJSON() []byte {
@@ -37,7 +38,6 @@ func (st Student) getPath() string {
 }
 
 //Write Student JSON to Studentdata Folder
-//TODO - macht das sinn als Methode? Oder lieber als Funktion?
 func (st Student) Register() {
 
 	//create Subfolder in Studentdata/Matrikel
@@ -58,8 +58,7 @@ func (st Student) Register() {
 	}
 
 	fmt.Printf("registered Student %s %s at %s\n", st.Vorname, st.Nachname, st.getPath())
-
-	//TODO: Check if already registered Matrikel
+	//TODO: Check if already registered Matrikel!!
 }
 
 //Removes Studentdata from /Studentdata
@@ -67,4 +66,30 @@ func (st Student) Register() {
 func (st Student) Unregister() {
 	os.RemoveAll(st.getPath())
 	fmt.Printf("Unregistered Student %s %s at %s\n", st.Vorname, st.Nachname, st.getPath())
+}
+
+/*ReadStudents reads all profile.json files in /Userdata/Students
+and return it as a slice of Students*/
+func ReadStudents() []Student {
+	folders, err := ioutil.ReadDir("./Userdata/Students")
+	if err != nil {
+		log.Fatal(err)
+	}
+
+	var currentStudent Student
+	studentlist := make([]Student, 0)
+
+	for _, file := range folders {
+		path := fmt.Sprintf("./Userdata/Students/%s/profile.json", file.Name())
+		jsondata, err := ioutil.ReadFile(path)
+		if err != nil {
+			log.Fatal(err)
+		}
+		err = json.Unmarshal(jsondata, &currentStudent)
+		if err != nil {
+			log.Fatal(err)
+		}
+		studentlist = append(studentlist, currentStudent)
+	}
+	return studentlist
 }

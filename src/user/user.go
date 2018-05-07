@@ -1,5 +1,9 @@
 package user
 
+import (
+	"fmt"
+)
+
 type User interface {
 	Register()
 	Unregister()
@@ -9,6 +13,7 @@ type User interface {
 func Register(us ...User) {
 	for _, currentUser := range us {
 		currentUser.Register()
+		fmt.Println("registered", us)
 	}
 }
 
