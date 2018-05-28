@@ -44,19 +44,7 @@ func handleRegister(w http.ResponseWriter, r *http.Request) {
 
 func main() {
 
-	//Testarea
-	/*st2 := user.NewStudent("Kevin", "Kuhl", 35042)
-	st3 := user.NewStudent("Katrin", "Kunz", 43512)
-	st4 := user.NewStudent("Kurt", "Krüger", 43525)
-	pr1 := user.NewProf("Gotthardt", "Bitte")
-
-	user.Register(st2, st3, pr1, st4)
-	user.Unregister(st4)
-
-	fmt.Println(user.ReadStudents())
-	*/
-
 	http.HandleFunc("/register", handleRegister)
 	http.HandleFunc("/studentlist", handleStudents)
-	http.ListenAndServe(":1313", nil)
+	http.ListenAndServe(":8080", nil)
 }

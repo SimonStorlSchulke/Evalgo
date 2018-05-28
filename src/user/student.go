@@ -40,6 +40,20 @@ func (st Student) getPath() string {
 //Write Student JSON to Studentdata Folder
 func (st Student) Register() {
 
+	//return if Matrikel already exists
+	for _, existingSt := range ReadStudents() {
+		if existingSt.Matrikel == st.Matrikel {
+			fmt.Println("Student with the Matrikel", st.Matrikel, "already exists")
+			return
+		}
+	}
+
+	//return if Matrikel = 0
+	if st.Matrikel == 0 {
+		fmt.Println("No Matrikelnumber given")
+		return
+	}
+
 	//create Subfolder in Studentdata/Matrikel
 	fmt.Println(st.getPath())
 	err := os.MkdirAll(st.getPath(), 0777)
