@@ -4,7 +4,6 @@ import (
 	"encoding/json"
 	"fmt"
 	"io/ioutil"
-	"log"
 	"os"
 	"path/filepath"
 )
@@ -88,7 +87,8 @@ func ReadStudents() []Student {
 	//Read Folders
 	folders, err := ioutil.ReadDir("./Userdata/Students")
 	if err != nil {
-		log.Fatal(err)
+		fmt.Println(err)
+		return nil
 	}
 
 	var currentStudent Student
@@ -99,14 +99,19 @@ func ReadStudents() []Student {
 	//Loop through Folders and create Student Slice
 	for _, file := range folders {
 		path = fmt.Sprintf("./Userdata/Students/%s/profile.json", file.Name())
+
 		jsondata, err = ioutil.ReadFile(path)
 		if err != nil {
-			log.Fatal(err)
+			fmt.Println(err)
+			return nil
 		}
+
 		err = json.Unmarshal(jsondata, &currentStudent)
 		if err != nil {
-			log.Fatal(err)
+			fmt.Println(err)
+			return nil
 		}
+
 		studentlist = append(studentlist, currentStudent)
 	}
 	return studentlist

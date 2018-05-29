@@ -46,5 +46,5 @@ func main() {
 
 	http.HandleFunc("/register", handleRegister)
 	http.HandleFunc("/studentlist", handleStudents)
-	http.ListenAndServe(":8080", nil)
+	http.ListenAndServe(":1313", nil)
 }
