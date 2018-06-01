@@ -22,6 +22,34 @@ func NewStudent(Vorname, Nachname string, Matrikel int) Student {
 	return Student{Vorname, Nachname, Matrikel, "", "", 0}
 }
 
+//Returns a Student based on given Matrikel
+func FromMatrikel(matrikel int) Student {
+	jsondata, err := ioutil.ReadFile(fmt.Sprintf("./Userdata/Students/%v/profile.json", matrikel))
+	if err != nil {
+		fmt.Println(err)
+	}
+
+	var st Student
+	err = json.Unmarshal(jsondata, &st)
+	if err != nil {
+		fmt.Println(err)
+	}
+	return st
+}
+
+//Returns Posts of a Student
+func (st Student) GetPosts() []byte {
+
+	//TODO: das gleiche mit input matrikel
+
+	posts, err := ioutil.ReadFile(fmt.Sprintf("./Userdata/Students/%v/posts.md", st.Matrikel))
+	if err != nil {
+		fmt.Println(err)
+		return []byte("This Student has no posts yet.")
+	}
+	return posts
+}
+
 func (st Student) ToJSON() []byte {
 	jsondata, err := json.Marshal(st)
 	if err != nil {
@@ -29,11 +57,6 @@ func (st Student) ToJSON() []byte {
 		return nil
 	}
 	return jsondata
-}
-
-//Returns Folderpath to Studentdata as string
-func (st Student) getPath() string {
-	return filepath.Join(".", "Userdata", "Students", fmt.Sprintf("%v", st.Matrikel))
 }
 
 //Write Student JSON to Studentdata Folder
@@ -98,6 +121,7 @@ func ReadStudents() []Student {
 
 	//Loop through Folders and create Student Slice
 	for _, file := range folders {
+		//TODO user FromMatrikel here
 		path = fmt.Sprintf("./Userdata/Students/%s/profile.json", file.Name())
 
 		jsondata, err = ioutil.ReadFile(path)
@@ -115,4 +139,9 @@ func ReadStudents() []Student {
 		studentlist = append(studentlist, currentStudent)
 	}
 	return studentlist
+}
+
+//Returns Folderpath to Studentdata as string
+func (st Student) getPath() string {
+	return filepath.Join(".", "Userdata", "Students", fmt.Sprintf("%v", st.Matrikel))
 }

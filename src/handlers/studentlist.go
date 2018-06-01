@@ -27,20 +27,18 @@ func HandleStudents(w http.ResponseWriter, r *http.Request) {
 		}
 	}
 
-	/*
-		//TODO
-		page := struct {
-			nav      string
-			students []user.Student
-		}{
-			"test",
-			studentlist,
-		}
-	*/
-
 	tmpl, err := template.ParseFiles("./templates/studentlist.go.html")
 	if err != nil {
 		log.Fatalln(err)
 	}
-	tmpl.Execute(w, studentlist)
+
+	pageData := struct {
+		Nav      string
+		Students []user.Student
+	}{
+		Nav:      getNav(),
+		Students: studentlist,
+	}
+
+	tmpl.Execute(w, pageData)
 }

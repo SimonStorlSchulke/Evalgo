@@ -7,15 +7,24 @@
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm"
         crossorigin="anonymous">
-    <title>Register Student</title>
+
+    <title>Profile</title>
+
+    <!--Todo: Own highlight Package
+    <script src="/static/highlight/highlight.pack.js"></script>
+    <link rel="stylesheet" href="/static/highlight/styles/obsidian.css">
+    -->
+    <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/styles/default.min.css">
+    <script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/highlight.min.js"></script>
 </head>
 
 <body>
     <div class="container" style="margin-top:50px">
-        <a href="./register">register</a>
-        <a href="./studentlist">studentlist</a>
-        <a href="./profile">profile</a>
-        <h1>Profile</h1>
-        <p>{{.}}</p>
+        {{.Nav}}
+        <h1>Profile of {{.St.Vorname}} {{.St.Nachname}}</h1>
+        <script>
+            hljs.initHighlightingOnLoad();
+        </script>
+        <p>{{.Profile}}</p>
     </div>
 </body>
