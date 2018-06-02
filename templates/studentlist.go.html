@@ -48,9 +48,9 @@
                         <a class="nav-link" href="/profile/{{.CurrentUser.Matrikel}}">
                             {{if .CurrentUser.Vorname}} 
                                 Eingeloggt als 
-                                {{.CurrentUser.Vorname}} 
-                                {{.CurrentUser.Nachname}} - 
-                                {{.CurrentUser.Matrikel}}
+                                    {{.CurrentUser.Vorname}} 
+                                    {{.CurrentUser.Nachname}} - 
+                                    {{.CurrentUser.Matrikel}}
                             {{else}} 
                                 not logged in 
                             {{end}}
@@ -66,12 +66,18 @@
             <div class="col-12 col-sm-3">
                 <!--loop über alle im übergebenen Slice (.) enthaltenen Objekte-->
                 {{$st := .Students}} {{$pt := .Portraits}} {{range $index, $st := .Students}}
-                <div style="margin-bottom: 8px; background: {{.Gruppenfarbe}};" class="card">
+                <div style="cursor: pointer; margin-bottom: 8px; background: {{.Gruppenfarbe}};" class="card">
                     <div class="card-body student-profile" onclick="makeRequest({{.Matrikel}})">
                         <b class="card-text">
                             {{.Vorname}} {{.Nachname}}
 
-                            <img class="float-right" width=85 src="{{index $pt $index}}">
+                            <!--Portrait-->
+                            <div style="
+                            float: right; 
+                            background-size: 65px; 
+                            height: 65px; width: 65px; 
+                            background-image: url({{index $pt $index}});">
+                            </div>
                         </b>
                         <h6>{{.Matrikel}}</h6>
                     </div>
