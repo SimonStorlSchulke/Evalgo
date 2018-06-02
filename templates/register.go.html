@@ -24,7 +24,10 @@
                 <input oninput="checkMatrikel()" id="lname" class="form-control" type="text" name="nachname">
 
                 <label for="matrikel">Matrikelnummer</label>
-                <input id="matrikel" oninput="checkMatrikel()" class="form-control" type="number" name="matrikel" id="">
+                <input id="matrikel" oninput="checkMatrikel()" class="form-control" type="number" name="matrikel">
+                
+                <label for="matrikel">Passwort</label>
+                <input id="passwort" oninput="checkMatrikel()" class="form-control" type="password" name="passwort" id="passwort">
 
                 <!--Validation Error-->
                 <div id="errorinfo" class="alert alert-danger">
@@ -44,8 +47,9 @@
             var mat = document.getElementById("matrikel").value;
             var lname = document.getElementById("lname").value;
             var fname = document.getElementById("fname").value;
+            var pw = document.getElementById("passwort").value;
 
-            if (mat < 100000 || lname == "" || fname == "") {
+            if (pw == "" || mat < 100000 || lname == "" || fname == "") {
                 document.getElementById("errorinfo").style.display = 'block';
                 document.getElementById("submitButton").disabled = true;
             } else {

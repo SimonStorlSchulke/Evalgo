@@ -28,25 +28,29 @@ func HandleLogin(w http.ResponseWriter, r *http.Request) {
 
 	//create Student from Matrikelnumber and Redirect if not existing
 	matrikel, _ := strconv.ParseInt(r.FormValue("matrikel")[0:], 10, 64)
-	st, err := user.FromMatrikel(int(matrikel))
-	if err != nil {
-		fmt.Println(err)
-		//http.Redirect(w, r, "/", http.StatusSeeOther)
-		//return
-	}
-	password := user.GetPassword(st)
-	enteredPassword := r.FormValue("password")
+	var st user.Student
+	var err error
 
-	//set session if password correct
-	if password == enteredPassword {
-		c := &http.Cookie{
-			Name:  "session",
-			Value: strconv.Itoa(int(matrikel)),
+	//dirty Fix. Clean me up pls
+	if matrikel != 0 {
+		st, err = user.FromMatrikel(int(matrikel))
+		if err != nil {
+			fmt.Println(err)
 		}
-		http.SetCookie(w, c)
-		http.Redirect(w, r, "/", http.StatusSeeOther)
-	} else {
-		fmt.Print("user entered wrong password")
+		password := st.GetPassword()
+		enteredPassword := r.FormValue("password")
+
+		//set session if password correct. TODO: check always when on site
+		if password == enteredPassword {
+			c := &http.Cookie{
+				Name:  "session",
+				Value: strconv.Itoa(int(matrikel)),
+			}
+			http.SetCookie(w, c)
+			http.Redirect(w, r, "/", http.StatusSeeOther)
+		} else {
+			fmt.Print("user entered wrong password")
+		}
 	}
 
 	page := map[string]string{

@@ -5,8 +5,9 @@ import (
 )
 
 type User interface {
-	Register()
+	Register() error
 	Unregister()
+	GetPassword() string
 }
 
 //Register variable number of Users
@@ -22,9 +23,4 @@ func Unregister(us ...User) {
 	for _, currentUser := range us {
 		currentUser.Unregister()
 	}
-}
-
-//TODO Return Password of User
-func GetPassword(us User) string {
-	return "placeholder"
 }

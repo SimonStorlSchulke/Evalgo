@@ -8,6 +8,8 @@ import (
 	"path/filepath"
 )
 
+const MASTERPASSWORD string = "aeibom"
+
 type Prof struct {
 	Vorname  string `json:"vorname"`
 	Nachname string `json:"nachname"`
@@ -57,4 +59,8 @@ func (pr Prof) Register() {
 	fmt.Printf("registered Prof %s %s at %s\n", pr.Vorname, pr.Nachname, pr.getPath())
 
 	//TODO: Check if already registered Matrikel
+}
+
+func (pr Prof) GetPassword() string {
+	return MASTERPASSWORD
 }

@@ -2,6 +2,7 @@ package user
 
 import (
 	"encoding/json"
+	"errors"
 	"fmt"
 	"io/ioutil"
 	"os"
@@ -15,12 +16,12 @@ type Student struct {
 	Matrikel     int    `json:"matrikel"`
 	Gruppenfarbe string
 	Info         string `json:"info"`
-	ID           int    `json:"id"`
+	Passwort     string `json:"passwort"`
 }
 
 //Constructor for Student only Vorname, Nachname, Matrikel
-func NewStudent(Vorname, Nachname string, Matrikel int) Student {
-	return Student{Vorname, Nachname, Matrikel, "", "", 0}
+func NewStudent(Vorname, Nachname string, Matrikel int, Passwort string) Student {
+	return Student{Vorname, Nachname, Matrikel, "", "", Passwort}
 }
 
 //Returns a Student based on given Matrikel
@@ -62,20 +63,18 @@ func (st Student) ToJSON() []byte {
 }
 
 //Write Student JSON to Studentdata Folder
-func (st Student) Register() {
+func (st Student) Register() error {
 
 	//return if Matrikel already exists
 	for _, existingSt := range ReadStudents() {
 		if existingSt.Matrikel == st.Matrikel {
-			fmt.Println("Student with the Matrikel", st.Matrikel, "already exists")
-			return
+			return errors.New("Student with the Matrikel already exists")
 		}
 	}
 
 	//return if Matrikel = 0
 	if st.Matrikel == 0 {
-		fmt.Println("No Matrikelnumber given")
-		return
+		return errors.New("No Matrikelnumber given")
 	}
 
 	//create Subfolder in Studentdata/Matrikel
@@ -83,7 +82,7 @@ func (st Student) Register() {
 	err := os.MkdirAll(st.getPath(), 0777)
 	if err != nil {
 		fmt.Println(err)
-		return
+		return err
 	}
 
 	//Write Studentdata to Studentdata/Matrikel/profile.json
@@ -91,12 +90,11 @@ func (st Student) Register() {
 	profilePath := filepath.Join(st.getPath(), "profile.json")
 	err = ioutil.WriteFile(profilePath, jsondata, 0777)
 	if err != nil {
-		fmt.Println(err)
-		return
+		return err
 	}
 
 	fmt.Printf("registered Student %s %s at %s\n", st.Vorname, st.Nachname, st.getPath())
-	//TODO: Check if already registered Matrikel!!
+	return nil
 }
 
 //Removes Studentdata from /Studentdata
@@ -166,4 +164,8 @@ func ReadStudents() []Student {
 //Returns Folderpath to Studentdata as string
 func (st Student) getPath() string {
 	return filepath.Join(".", "Userdata", "Students", fmt.Sprintf("%v", st.Matrikel))
+}
+
+func (st Student) GetPassword() string {
+	return st.Passwort
 }
