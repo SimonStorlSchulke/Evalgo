@@ -1,30 +1,78 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm"
+        crossorigin="anonymous">
+    <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/styles/default.min.css">
+    <script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/highlight.min.js"></script>
+    <script src="https://code.jquery.com/jquery-3.3.1.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8="
+        crossorigin="anonymous"></script>
     <title>Go Testpage</title>
 </head>
 
 <body>
     <div class="container" style="margin-top:50px">
         {{.Nav}}
+        <div class="float-right">
+            {{if .CurrentUser.Vorname}} 
+                Logged in as {{.CurrentUser.Vorname}} 
+                {{.CurrentUser.Nachname}} - 
+                {{.CurrentUser.Matrikel}} 
+            {{else}}
+                not logged in 
+            {{end}}
+        </div>
         <h1>Studenten:</h1>
         <br>
-        <!--loop über alle im übergebenen Slice (.) enthaltenen Objekte-->
-        {{range .Students}}
-        <div style="background: {{.Gruppenfarbe}};" class="card">
-            <div class="card-body">
-                <h4 class="card-title"><a class="text-dark" href="profile/{{.Matrikel}}">{{.Vorname}} {{.Nachname}}</a></h4>
-                <h6 class="card-subtitle mb-2">{{.Matrikel}}</h6>
-                {{.Info}}
+        <div class="row">
+            <div class="col-12 col-sm-3">
+                <!--loop über alle im übergebenen Slice (.) enthaltenen Objekte-->
+                {{range .Students}}
+                <div style="background: {{.Gruppenfarbe}};" class="card">
+                    <div class="card-body student-profile" onclick="makeRequest({{.Matrikel}})">
+                        <h4 class="card-title">
+                            {{.Vorname}} {{.Nachname}}
+                        </h4>
+                        <h6 class="card-subtitle mb-2">{{.Matrikel}}</h6>
+                        {{.Info}}
+                    </div>
+                </div>
+                <br>
+                <!--loop ende-->
+                {{end}}
+            </div>
+            <!-- right column-->
+            <div class="col" onclick="hl()" id="post-area">
+                <script>
+                    //Ajax Post Loader
+                    function makeRequest(matrikel) {
+                        var xhr = new XMLHttpRequest();
+
+                        //open request to /profile/matrikel
+                        var path = '/profile/';
+                        xhr.open('GET', path.concat(matrikel), true);
+
+                        //handle response
+                        xhr.onreadystatechange = function () {
+                            if (xhr.readyState === XMLHttpRequest.DONE && xhr.status === 200) {
+                                document.getElementById("post-area").innerHTML = xhr.responseText;
+
+                                //highlightJS
+                                $('pre > code').each(function () {
+                                    hljs.highlightBlock(this);
+                                });
+                            }
+                        };
+                        xhr.send();
+                    }
+                </script>
             </div>
         </div>
-        <br>
-        <!--loop ende-->
-        {{end}}
     </div>
 </body>
+
 </html>

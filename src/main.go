@@ -1,28 +1,24 @@
 package main
 
 import (
-	"fmt"
 	"net/http"
 
 	"./handlers"
-	"./user"
+	"github.com/gorilla/mux"
 )
 
 func main() {
 
-	//serve static files (css, js...)
-	fs := http.FileServer(http.Dir("static"))
-	http.Handle("/static/", http.StripPrefix("/static/", fs))
-	fmt.Println(fs)
+	rtr := mux.NewRouter()
 
-	//handle profiles TODO -> nicht ganze Liste lesen, nur Matrikelnummern
-	stList := user.ReadStudents()
-	for _, st := range stList {
-		http.HandleFunc(fmt.Sprintf("/profile/%v", st.Matrikel), handlers.HandleProfile)
-	}
+	FileServer := http.FileServer(http.Dir("static"))
+	http.Handle("/static/", http.StripPrefix("/static/", FileServer))
 
-	http.HandleFunc("/register", handlers.HandleRegister)
-	http.HandleFunc("/studentlist", handlers.HandleStudents)
-	http.HandleFunc("/profile", handlers.HandleProfile)
+	rtr.HandleFunc("/register", handlers.HandleRegister)
+	rtr.HandleFunc("/login", handlers.HandleLogin)
+	rtr.HandleFunc("/", handlers.HandleStudents)
+	rtr.HandleFunc("/profile/{matrikel}", handlers.HandleProfile)
+	http.Handle("/", rtr)
 	http.ListenAndServe(":8080", nil)
+
 }

@@ -6,6 +6,7 @@ import (
 	"io/ioutil"
 	"os"
 	"path/filepath"
+	"strconv"
 )
 
 type Student struct {
@@ -23,18 +24,19 @@ func NewStudent(Vorname, Nachname string, Matrikel int) Student {
 }
 
 //Returns a Student based on given Matrikel
-func FromMatrikel(matrikel int) Student {
+func FromMatrikel(matrikel int) (Student, error) {
+	var st Student
 	jsondata, err := ioutil.ReadFile(fmt.Sprintf("./Userdata/Students/%v/profile.json", matrikel))
 	if err != nil {
 		fmt.Println(err)
+		return st, err
 	}
 
-	var st Student
 	err = json.Unmarshal(jsondata, &st)
 	if err != nil {
 		fmt.Println(err)
 	}
-	return st
+	return st, err
 }
 
 //Returns Posts of a Student
@@ -45,7 +47,7 @@ func (st Student) GetPosts() []byte {
 	posts, err := ioutil.ReadFile(fmt.Sprintf("./Userdata/Students/%v/posts.md", st.Matrikel))
 	if err != nil {
 		fmt.Println(err)
-		return []byte("This Student has no posts yet.")
+		return []byte("Noch keine Einträge.")
 	}
 	return posts
 }
@@ -102,6 +104,26 @@ func (st Student) Register() {
 func (st Student) Unregister() {
 	os.RemoveAll(st.getPath())
 	fmt.Printf("Unregistered Student %s %s at %s\n", st.Vorname, st.Nachname, st.getPath())
+}
+
+//returns a List of registered Matrikelnumbers
+func MatrikelList() []int {
+	folders, err := ioutil.ReadDir("./Userdata/Students")
+	if err != nil {
+		fmt.Println(err)
+		return nil
+	}
+
+	mList := make([]int, 0)
+	for _, file := range folders {
+		m, err := strconv.Atoi(file.Name())
+		if err != nil {
+			fmt.Println(err)
+			return nil
+		}
+		mList = append(mList, m)
+	}
+	return mList
 }
 
 /*ReadStudents reads all profile.json files in /Userdata/Students

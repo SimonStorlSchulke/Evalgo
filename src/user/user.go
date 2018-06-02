@@ -23,3 +23,8 @@ func Unregister(us ...User) {
 		currentUser.Unregister()
 	}
 }
+
+//TODO Return Password of User
+func GetPassword(us User) string {
+	return "placeholder"
+}

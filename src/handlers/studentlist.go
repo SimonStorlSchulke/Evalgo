@@ -3,6 +3,7 @@ package handlers
 import (
 	"log"
 	"net/http"
+	"strconv"
 	"text/template"
 
 	"../user"
@@ -13,17 +14,17 @@ func HandleStudents(w http.ResponseWriter, r *http.Request) {
 	studentlist := user.ReadStudents()
 
 	//apply group colors
-	red, green, blue, grey := "#ed4b4b", "#66ed4b", "#55b2f4", "#808080"
+	c1, c2, c3, cDef := "#beffa3", "#a3e6ff", "#f7ffa8", "#808080"
 	for i, _ := range studentlist {
 		switch {
 		case i%3 == 0:
-			studentlist[i].Gruppenfarbe = red
+			studentlist[i].Gruppenfarbe = c1
 		case i%3 == 1:
-			studentlist[i].Gruppenfarbe = green
+			studentlist[i].Gruppenfarbe = c2
 		case i%3 == 2:
-			studentlist[i].Gruppenfarbe = blue
+			studentlist[i].Gruppenfarbe = c3
 		default:
-			studentlist[i].Gruppenfarbe = grey
+			studentlist[i].Gruppenfarbe = cDef
 		}
 	}
 
@@ -32,12 +33,21 @@ func HandleStudents(w http.ResponseWriter, r *http.Request) {
 		log.Fatalln(err)
 	}
 
+	var currentUser user.Student
+	var session, cErr = r.Cookie("session")
+	if cErr == nil {
+		mat, _ := strconv.Atoi(session.Value)
+		currentUser, err = user.FromMatrikel(mat)
+	}
+
 	pageData := struct {
-		Nav      string
-		Students []user.Student
+		Nav         string
+		Students    []user.Student
+		CurrentUser user.Student
 	}{
-		Nav:      getNav(),
-		Students: studentlist,
+		Nav:         getNav(),
+		Students:    studentlist,
+		CurrentUser: currentUser,
 	}
 
 	tmpl.Execute(w, pageData)
