@@ -17,6 +17,11 @@
     function deleteSession() {
         document.cookie = "session" + '=; expires=Thu, 01 Jan 1970 00:00:01 GMT;';
     }
+    function selectStudent(e) {
+        var currentCard = $(e)
+        $(".selected-profile").removeClass("selected-profile");
+        $(e).addClass("selected-profile");
+    }
     </script>
 </head>
 
@@ -40,6 +45,9 @@
                 {{if .CurrentUser.Vorname}}
                 <li class="nav-item">
                     <a onclick="deleteSession()" class="nav-link" href="./">logout</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="./post">Post</a>
                 </li>
                 {{else}}
                 <li class="nav-item">
@@ -73,7 +81,7 @@
                 <!--loop über alle im übergebenen Slice (.) enthaltenen Objekte-->
                 {{$st := .Students}} {{$pt := .Portraits}} {{range $index, $st := .Students}}
                 <div style="cursor: pointer; margin-bottom: 8px; background: {{.Gruppenfarbe}};" class="card">
-                    <div class="card-body student-profile" onclick="makeRequest({{.Matrikel}})">
+                    <div class="card-body student-profile" onclick="selectStudent(this); makeRequest({{.Matrikel}})">
                         <b class="card-text">
                             {{.Vorname}} {{.Nachname}}
 

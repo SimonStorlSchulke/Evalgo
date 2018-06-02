@@ -20,6 +20,7 @@ func main() {
 	rtr.HandleFunc("/register", handlers.HandleRegister)
 	rtr.HandleFunc("/login", handlers.HandleLogin)
 	rtr.HandleFunc("/", handlers.HandleStudents)
+	rtr.HandleFunc("/post", handlers.HandlePost)
 	rtr.HandleFunc("/profile/{matrikel}", handlers.HandleProfile)
 	http.Handle("/", rtr)
 	http.ListenAndServe(":8080", nil)

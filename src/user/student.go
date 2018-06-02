@@ -53,6 +53,11 @@ func (st Student) GetPosts() []byte {
 	return posts
 }
 
+func (st Student) Post(str string) {
+	ioutil.WriteFile(fmt.Sprintf("./Userdata/Students/%v/posts.md", st.Matrikel), []byte(str), 0777)
+	fmt.Println(st.Vorname, "posted", str)
+}
+
 //Return path to user portrait TODO: jpg.
 func (st Student) GetPortraitPath() string {
 	url := fmt.Sprintf("/portraits/%v.png", st.Matrikel)
