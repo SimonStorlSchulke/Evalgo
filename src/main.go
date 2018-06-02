@@ -14,6 +14,9 @@ func main() {
 	FileServer := http.FileServer(http.Dir("static"))
 	http.Handle("/static/", http.StripPrefix("/static/", FileServer))
 
+	FileServerPortraits := http.FileServer(http.Dir("Userdata/Portraits"))
+	http.Handle("/portraits/", http.StripPrefix("/portraits/", FileServerPortraits))
+
 	rtr.HandleFunc("/register", handlers.HandleRegister)
 	rtr.HandleFunc("/login", handlers.HandleLogin)
 	rtr.HandleFunc("/", handlers.HandleStudents)

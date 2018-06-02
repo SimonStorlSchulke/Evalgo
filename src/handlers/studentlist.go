@@ -4,10 +4,31 @@ import (
 	"log"
 	"net/http"
 	"strconv"
+	"strings"
 	"text/template"
 
 	"../user"
 )
+
+//returns true and matrikel if password and matrikel match
+func loggedIn(r *http.Request) (bool, int) {
+	var session, cErr = r.Cookie("session")
+
+	if cErr == nil {
+		sessionSplitted := strings.Split(session.Value, "<split>")
+		storedMat, err := strconv.Atoi(sessionSplitted[0])
+		if err != nil {
+			return false, 0
+		}
+		storedPw := sessionSplitted[1]
+		currentUser, err := user.FromMatrikel(storedMat)
+
+		if currentUser.GetPassword() == storedPw {
+			return true, storedMat
+		}
+	}
+	return false, 0
+}
 
 func HandleStudents(w http.ResponseWriter, r *http.Request) {
 	//Read jsons:
@@ -34,20 +55,26 @@ func HandleStudents(w http.ResponseWriter, r *http.Request) {
 	}
 
 	var currentUser user.Student
-	var session, cErr = r.Cookie("session")
-	if cErr == nil {
-		mat, _ := strconv.Atoi(session.Value)
+	loggedIn, mat := loggedIn(r)
+	if loggedIn {
 		currentUser, err = user.FromMatrikel(mat)
+	}
+
+	var portraits []string
+	for _, st := range studentlist {
+		portraits = append(portraits, st.GetPortraitPath())
 	}
 
 	pageData := struct {
 		Nav         string
 		Students    []user.Student
 		CurrentUser user.Student
+		Portraits   []string
 	}{
 		Nav:         getNav(),
 		Students:    studentlist,
 		CurrentUser: currentUser,
+		Portraits:   portraits,
 	}
 
 	tmpl.Execute(w, pageData)

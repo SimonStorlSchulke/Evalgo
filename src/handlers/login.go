@@ -42,9 +42,10 @@ func HandleLogin(w http.ResponseWriter, r *http.Request) {
 
 		//set session if password correct. TODO: check always when on site
 		if password == enteredPassword {
+			cookieValue := fmt.Sprintf("%v<split>%s", strconv.Itoa(int(matrikel)), password)
 			c := &http.Cookie{
 				Name:  "session",
-				Value: strconv.Itoa(int(matrikel)),
+				Value: cookieValue,
 			}
 			http.SetCookie(w, c)
 			http.Redirect(w, r, "/", http.StatusSeeOther)
