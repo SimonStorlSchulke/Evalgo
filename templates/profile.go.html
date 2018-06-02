@@ -15,13 +15,13 @@
 
 <!--TODO: alles hier drüber kann für AJAX Version rausgenommen werden-->
 <body>
-    <div class="container">
+    <div class="container-fluid">
         <!--Nav nicht benötigt - TODO-->
         <h2 style="margin-bottom: 0px;">Profil von {{.St.Vorname}} {{.St.Nachname}}</h2>
         <p class="text-muted">{{.St.Matrikel}}</p>
         <script>hljs.initHighlightingOnLoad();
         </script>
         
-        <p>{{.Profile}}</p>
+        <div>{{.Profile}}</div>
     </div>
 </body>

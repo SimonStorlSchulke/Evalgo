@@ -30,13 +30,14 @@ func loggedIn(r *http.Request) (bool, int) {
 	return false, 0
 }
 
+//Handles Main Site
 func HandleStudents(w http.ResponseWriter, r *http.Request) {
 	//Read jsons:
 	studentlist := user.ReadStudents()
 
-	//apply group colors
+	//apply group colors TODO no hardcode
 	c1, c2, c3, cDef := "#beffa3", "#a3e6ff", "#f7ffa8", "#808080"
-	for i, _ := range studentlist {
+	for i := range studentlist {
 		switch {
 		case i%3 == 0:
 			studentlist[i].Gruppenfarbe = c1

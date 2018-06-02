@@ -1,0 +1,30 @@
+  #studentcards {
+    width: 700px;
+  }
+
+  #post-area {
+    height: 800px;
+    overflow: auto;
+  }
+  
+  .row {
+      height: 100%;
+    /*width:calc(100% - 300px + 15px * 2);*/
+  }
+
+  .portrait {
+    float: right; 
+    position: absolute;
+    top: 8px;
+    right: 8px;
+    background-size: 65px; 
+    height: 65px; width: 65px;
+    border-radius: 3px;
+  }
+
+  .student-profile {
+      height: 83px !important;
+      padding: 8px !important;
+      padding-right: 80px !important;
+      overflow: auto;
+  }
