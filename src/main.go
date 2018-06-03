@@ -20,6 +20,7 @@ func main() {
 	rtr.HandleFunc("/register", handlers.HandleRegister)
 	rtr.HandleFunc("/login", handlers.HandleLogin)
 	rtr.HandleFunc("/post", handlers.HandlePostForm)
+	rtr.HandleFunc("/info", handlers.HandleInfo)
 	rtr.HandleFunc("/{number}", handlers.HandleStudents)
 	rtr.HandleFunc("/", handlers.HandleStudents)
 	rtr.HandleFunc("/profile/{matrikel}", handlers.HandleProfile)

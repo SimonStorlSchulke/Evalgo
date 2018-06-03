@@ -64,7 +64,29 @@ function makeRequest(matrikel) {
         }
     };
     xhr.send();
+}
 
+//Show Course Info in PostArea
+function showInfo() {
+
+    selectStudent(0);
+    $(".nav-item").removeClass("active");
+
+    var xhr = new XMLHttpRequest();
+    //Open path
+    xhr.open('GET', "/info", true);
+
+    //handle response
+    xhr.onreadystatechange = function () {
+        if (xhr.readyState === XMLHttpRequest.DONE && xhr.status === 200) {
+            document.getElementById("post-area").innerHTML = xhr.responseText;
+            //highlightJS
+            $('pre > code').each(function () {
+                hljs.highlightBlock(this);
+            });
+        }
+    };
+    xhr.send();
 }
 
 function postLink(number) {
