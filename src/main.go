@@ -19,10 +19,12 @@ func main() {
 
 	rtr.HandleFunc("/register", handlers.HandleRegister)
 	rtr.HandleFunc("/login", handlers.HandleLogin)
+	rtr.HandleFunc("/post", handlers.HandlePostForm)
+	rtr.HandleFunc("/{number}", handlers.HandleStudents)
 	rtr.HandleFunc("/", handlers.HandleStudents)
-	rtr.HandleFunc("/post", handlers.HandlePost)
-	rtr.HandleFunc("/profile/{matrikel}", handlers.HandleProfile)
+	rtr.HandleFunc("/profile/{matrikel}", handlers.HandleProfile) //TODO
+	rtr.HandleFunc("/{matrikel}/postraw/{postnr}", handlers.HandleRawPosts)
+	rtr.HandleFunc("/{matrikel}/post/{postnr}", handlers.HandlePosts)
 	http.Handle("/", rtr)
 	http.ListenAndServe(":8080", nil)
-
 }

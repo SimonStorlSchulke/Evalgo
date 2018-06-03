@@ -11,30 +11,37 @@ import (
 	"github.com/russross/blackfriday"
 )
 
-func HandleProfile(w http.ResponseWriter, r *http.Request) {
+//Handle posts for /{matrikel}/post/{postnr}
+func HandlePosts(w http.ResponseWriter, r *http.Request) {
 
-	//Get Matrikel from mux Parameters
+	//Get Matrikel from URL
 	params := mux.Vars(r)
 	matrikelSt := params["matrikel"]
 	matrikel, _ := strconv.Atoi(matrikelSt)
+
 	student, err := user.FromMatrikel(matrikel)
 	if err != nil {
 		fmt.Println("Error reading Matrikelnumber")
 	}
 
+	postNrSt := params["postnr"]
+	postNr, _ := strconv.Atoi(postNrSt)
+
 	//Parse Markdown to []byte
-	md := blackfriday.MarkdownCommon(student.GetPost(1))
+	md := blackfriday.MarkdownCommon(student.GetPost(postNr))
 
 	pageData := struct {
 		St      user.Student
 		Nav     string
 		Profile string
+		PostNr  int
 	}{
 		St:      student,
 		Nav:     getNav(),
 		Profile: string(md[:]),
+		PostNr:  postNr,
 	}
 
-	tpl := template.Must(template.ParseFiles("./templates/profile.go.html"))
+	tpl := template.Must(template.ParseFiles("./templates/posts.go.html"))
 	tpl.Execute(w, pageData)
 }

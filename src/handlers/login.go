@@ -16,14 +16,6 @@ func alreadyLoggedIn(r *http.Request) bool {
 
 func HandleLogin(w http.ResponseWriter, r *http.Request) {
 
-	//Check if already logged in
-	/*_, err := r.Cookie("session")
-	if err == nil {
-		fmt.Println("ups1")
-		http.Redirect(w, r, "/", http.StatusSeeOther)
-		return
-	}*/
-
 	tpl := template.Must(template.ParseFiles("./templates/login.go.html"))
 
 	//create Student from Matrikelnumber and Redirect if not existing

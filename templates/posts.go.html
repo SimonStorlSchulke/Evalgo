@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm"
+        crossorigin="anonymous">
+        <link rel="stylesheet" href="/static/css/markdown.css">
+    <title>Post Nr. {{.PostNr}}</title>
+
+    <link rel="stylesheet" href="/static/highlight/styles/googlecode.css">
+    <script src="/static/highlight/highlight.pack.js"></script>
+</head>
+
+<!--TODO: alles hier drüber kann für AJAX Version rausgenommen werden-->
+<body>
+    <div class="container-fluid">
+        <!--Nav nicht benötigt - TODO-->
+        <h3 id="navigation" style="padding-top: 15px;"><a href="/">Fertig</a></h3>
+        <h2 style="margin-bottom: 0px;">{{.St.Vorname}} {{.St.Nachname}} - Aufgabe {{.PostNr}}</h2>
+        <p class="text-muted">{{.St.Matrikel}}</p>
+        
+        <div>{{.Profile}}</div>
+        <script>hljs.initHighlightingOnLoad();</script>
+    </div>
+</body>

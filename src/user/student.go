@@ -40,6 +40,16 @@ func FromMatrikel(matrikel int) (Student, error) {
 	return st, err
 }
 
+func (st *Student) GetPost(postNr int) []byte {
+
+	post, err := ioutil.ReadFile(fmt.Sprintf("./Userdata/Students/%v/post_%v.md", st.Matrikel, postNr))
+	if err != nil {
+		fmt.Println(err)
+		return []byte("Noch keine Abgabe.")
+	}
+	return post
+}
+
 //Returns Posts of a Student
 func (st Student) GetPosts() []byte {
 
@@ -55,6 +65,11 @@ func (st Student) GetPosts() []byte {
 
 func (st Student) Post(str string) {
 	ioutil.WriteFile(fmt.Sprintf("./Userdata/Students/%v/posts.md", st.Matrikel), []byte(str), 0777)
+	fmt.Println(st.Vorname, "posted", str)
+}
+
+func (st *Student) PostNr(str string, postNumber int) {
+	ioutil.WriteFile(fmt.Sprintf("./Userdata/Students/%v/post_%v.md", st.Matrikel, postNumber), []byte(str), 0777)
 	fmt.Println(st.Vorname, "posted", str)
 }
 
