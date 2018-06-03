@@ -22,7 +22,7 @@ func main() {
 	rtr.HandleFunc("/post", handlers.HandlePostForm)
 	rtr.HandleFunc("/{number}", handlers.HandleStudents)
 	rtr.HandleFunc("/", handlers.HandleStudents)
-	rtr.HandleFunc("/profile/{matrikel}", handlers.HandleProfile) //TODO
+	rtr.HandleFunc("/profile/{matrikel}", handlers.HandleProfile)
 	rtr.HandleFunc("/{matrikel}/postraw/{postnr}", handlers.HandleRawPosts)
 	rtr.HandleFunc("/{matrikel}/post/{postnr}", handlers.HandlePosts)
 	http.Handle("/", rtr)

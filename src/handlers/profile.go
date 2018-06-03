@@ -23,16 +23,19 @@ func HandleProfile(w http.ResponseWriter, r *http.Request) {
 	}
 
 	//Parse Markdown to []byte
-	md := blackfriday.MarkdownCommon(student.GetPost(1))
+	postData, postNumbers := student.GetAllPosts()
+	md := blackfriday.MarkdownCommon(postData)
 
 	pageData := struct {
-		St      user.Student
-		Nav     string
-		Profile string
+		St          user.Student
+		Nav         string
+		Profile     string
+		PostNumbers []int
 	}{
-		St:      student,
-		Nav:     getNav(),
-		Profile: string(md[:]),
+		St:          student,
+		Nav:         getNav(),
+		Profile:     string(md[:]),
+		PostNumbers: postNumbers,
 	}
 
 	tpl := template.Must(template.ParseFiles("./templates/profile.go.html"))

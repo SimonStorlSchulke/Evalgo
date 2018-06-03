@@ -8,6 +8,7 @@ import (
 	"os"
 	"path/filepath"
 	"strconv"
+	"strings"
 )
 
 type Student struct {
@@ -71,6 +72,25 @@ func (st Student) Post(str string) {
 func (st *Student) PostNr(str string, postNumber int) {
 	ioutil.WriteFile(fmt.Sprintf("./Userdata/Students/%v/post_%v.md", st.Matrikel, postNumber), []byte(str), 0777)
 	fmt.Println(st.Vorname, "posted", str)
+}
+
+//Returns []byte of all posts and int slice of postNumbers
+func (st *Student) GetAllPosts() ([]byte, []int) {
+	posts, _ := ioutil.ReadDir(fmt.Sprintf("./Userdata/Students/%v/", st.Matrikel))
+	var data []byte
+	var postNumbers []int
+	for _, p := range posts {
+		number, err := strconv.Atoi(strings.Trim(p.Name(), "post_.md"))
+		if err == nil {
+			heading := fmt.Sprintf("\n# <div class='post-header text-primary' id='%v'>Aufgabe %v</div>\n", number, number)
+			headingData := []byte(heading)
+			data = append(data, headingData...)
+
+			data = append(data, st.GetPost(number)...)
+			postNumbers = append(postNumbers, number)
+		}
+	}
+	return data, postNumbers
 }
 
 //Return path to user portrait TODO: jpg.

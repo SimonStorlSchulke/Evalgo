@@ -1,181 +1,94 @@
 <!DOCTYPE html>
-<html lang="de">
-
+<html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm"
-        crossorigin="anonymous">
+    <script src="static/jquery-3.3.1.min.js"></script>
+    <link rel="stylesheet" href="/static/bootstrap/bootstrap.min.css">
     <link rel="stylesheet" href="/static/highlight/styles/googlecode.css">
-    <script src="./static/highlight/highlight.pack.js"></script>
-    <script src="https://code.jquery.com/jquery-3.3.1.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8="
-        crossorigin="anonymous"></script>
     <link rel="stylesheet" href="/static/css/studentlist.css">
-    <title>Go Web Testpage</title>
-    <script>
-    function deleteSession() {
-        document.cookie = "session" + '=; expires=Thu, 01 Jan 1970 00:00:01 GMT;';
-    }
-
-    var currentMatrikel;
-
-    function selectStudent(matrikel) {
-        window.currentMatrikel = matrikel;
-        var currentCard = $(matrikel)
-        $(".selected-profile").removeClass("selected-profile");
-        $(matrikel).addClass("selected-profile");
-    }
-
-
-    function getPostNumber() {
-        var path = '/';
-        var urlArray = window.location.pathname.split( '/' );
-        return urlArray.slice(-1)[0]
-    }
-
-    //select active assignment
-    window.onload=function() {
-        currentMatrikel = new URL(document.URL).searchParams.get("mat");
-        selectStudent(251669);
-        console.log(currentMatrikel);
-        makeRequest(currentMatrikel);
-        var classStr = ".a";
-        if(getPostNumber() > 0) {
-            classStr = classStr.concat(getPostNumber())
-            $(classStr).addClass("active");
-        } else {
-            $(".a1").addClass("active");
-        }
-    }
-    </script>
+    <link rel="stylesheet" href="/static/css/markdown.css">
+    <script src="./static/highlight/highlight.pack.js"></script>
+    <script src="./static/js/studentlist.js"></script>
+    <title>Studentlist</title>
 </head>
-
 <body>
-    <div class="container" style="margin-top:50px">
-
-        <!--Navbar TODO load dynamic-->
-        <nav class="navbar navbar-expand-sm bg-light navbar-light">
-            <!--Set base url to root TODO: für externe Seiten-->
-            <script type="text/javascript">
-                document.write("<base href='http://" + document.location.host + "' />");
-            </script>
-            <!-- Links -->
-            <ul class="navbar-nav">
-                <li class="nav-item">
-                    <a class="nav-link" href="./">Übersicht</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="./register">register</a>
-                </li>
-                {{if .CurrentUser.Vorname}}
-                <li class="nav-item">
-                    <a onclick="deleteSession()" class="nav-link" href="./">logout</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="./post">Post</a>
-                </li>
-                {{else}}
-                <li class="nav-item">
-                    <a class="nav-link" href="./login">login</a>
-                </li>
-                {{end}}
-            </ul>
-            <!--right alligned-->
-            <div class="navbar-collapse collapse w-100 order-3 dual-collapse2">
-                <ul class="navbar-nav ml-auto">
-                    <li class="nav-item">
-                        <a class="nav-link" href="/profile/{{.CurrentUser.Matrikel}}">
-                            {{if .CurrentUser.Vorname}} 
-                                Eingeloggt als 
-                                    {{.CurrentUser.Vorname}} 
-                                    {{.CurrentUser.Nachname}} - 
-                                    {{.CurrentUser.Matrikel}}
-                            {{else}} 
-                                not logged in 
-                            {{end}}
+<div class="container" style="margin-top:50px">
+<!--Navbar TODO load dynamic-->
+<nav class="navbar navbar-expand-sm bg-light navbar-light">
+    <!--Set base url to root TODO: für externe Seiten-->
+    <script type="text/javascript">
+        document.write("<base href='http://" + document.location.host + "' />");
+    </script>
+    <!-- Links -->
+    <ul class="navbar-nav">
+        <li class="nav-item"><a class="nav-link" href="./">Übersicht</a></li>
+        <li class="nav-item"><a class="nav-link" href="./register">register</a></li>
+    {{if .CurrentUser.Vorname}}
+        <li class="nav-item"><a onclick="deleteSession()" class="nav-link" href="./">logout</a></li>
+        <li class="nav-item"><a class="nav-link" href="./post">Post</a></li>
+    {{else}}
+        <li class="nav-item"><a class="nav-link" href="./login">login</a></li>
+    {{end}}
+    </ul>
+    <!--right alligned-->
+    <div class="navbar-collapse collapse w-100 order-3 dual-collapse2">
+        <ul class="navbar-nav ml-auto">
+            <li class="nav-item">
+                {{if .CurrentUser.Vorname}} 
+                <a class="nav-link" href="/profile/{{.CurrentUser.Matrikel}}">
+                        Eingeloggt als 
+                            {{.CurrentUser.Vorname}} 
+                            {{.CurrentUser.Nachname}} - 
+                            {{.CurrentUser.Matrikel}}
                         </a>
-                    </li>
-                </ul>
-            </div>
-        </nav>
-        <!--/Navbar-->
-        <h1 style="font-size: 26px;">Studenten:</h1>
-        <!--Aufgabenwähler-->
-        <nav class="assignmentnumber navbar navbar-expand-sm navbar-light">
-            <a class="navbar-brand">Aufgaben</a>
-            <ul class="navbar-nav">
-                <!--TODO: automatisch erzeugen-->
-                <li class="a1 nav-item"><a onclick="postLink(1)" class="nl nav-link">1</a></li>
-                <li class="a2 nav-item"><a onclick="postLink(2)" class="nl nav-link">2</a></li>
-                <li class="a3 nav-item"><a onclick="postLink(3)" class="nl nav-link">3</a></li>
-                <li class="a4 nav-item"><a onclick="postLink(4)" class="nl nav-link">4</a></li>
-                <li class="a5 nav-item"><a onclick="postLink(5)" class="nl nav-link">5</a></li>
-            </ul>
-        </nav>
-        <br>
-        <div class="row">
-            <div id="studentcards" class="col">
-                <!--loop über alle im übergebenen Slice (.) enthaltenen Objekte-->
-                {{$st := .Students}} {{$pt := .Portraits}} {{range $index, $st := .Students}}
-                <div style="cursor: pointer; margin-bottom: 8px; background: {{.Gruppenfarbe}};" class="card">
-                    <div id="{{.Matrikel}}"class="card-body student-profile" onclick="selectStudent({{.Matrikel}}); makeRequest({{.Matrikel}})">
-                        <b class="card-text">
-                            {{.Vorname}} {{.Nachname}}
+                    {{else}}
+                    <li class="nav-link">not logged in </li>
+                    {{end}}
+            </li>
+        </ul>
+    </div>
+</nav>
 
-                        </b>
-                        <h6>{{.Matrikel}}</h6>
-                        <!--Portrait-->
-                        <div class="portrait" style="background-image: url({{index $pt $index}});"></div>
-                    </div>
-                </div>
-                <!--loop ende-->
-                {{end}}
-            </div>
-            <!-- right column-->
-            <div class="col col-md-9" id="post-area">
-                <script>
-                    //Ajax Post Loader
-                    function makeRequest(matrikel) {
-                        window.currentMatrikel = matrikel;
-                        var xhr = new XMLHttpRequest();
+<h1 style="font-size: 26px;">Studenten:</h1>
 
-                        //open request to /matrikel/post/number
-                        var path = '/';
-                        var urlArray = window.location.pathname.split( '/' );
+<!--Aufgabenwähler-->
+<nav class="assignmentnumber navbar navbar-expand-sm navbar-light">
+    <a class="navbar-brand">Aufgaben</a>
+    <ul class="navbar-nav">
+        <!--TODO: automatisch erzeugen-->
+        <li class="a1 nav-item"><a onclick="postLink(1)" class="nl nav-link">1</a></li>
+        <li class="a2 nav-item"><a onclick="postLink(2)" class="nl nav-link">2</a></li>
+        <li class="a3 nav-item"><a onclick="postLink(3)" class="nl nav-link">3</a></li>
+        <li class="a4 nav-item"><a onclick="postLink(4)" class="nl nav-link">4</a></li>
+        <li class="a5 nav-item"><a onclick="postLink(5)" class="nl nav-link">5</a></li>
+    </ul>
+</nav>
 
-                        var postNumber = getPostNumber();
-
-                        //Open path to postnumber, else take post 1
-                        if (postNumber > 0) {
-                            xhr.open('GET', path.concat(matrikel, "/post/", postNumber), true);
-                        } else {
-                            xhr.open('GET', path.concat(matrikel, "/post/1"), true);
-                        }
-
-                        //handle response
-                        xhr.onreadystatechange = function () {
-                            if (xhr.readyState === XMLHttpRequest.DONE && xhr.status === 200) {
-                                document.getElementById("post-area").innerHTML = xhr.responseText;
-                                $("#navigation").addClass("hidden");
-                                //highlightJS
-                                $('pre > code').each(function () {
-                                    hljs.highlightBlock(this);
-                                });
-                            }
-                        };
-                        xhr.send();
-                        
-                    }
-
-                    function postLink(number) {
-                        var path = "/".concat(number, "mat=",currentMatrikel);
-                        window.location = path;
-                    }
-                </script>
+<div class="row">
+    <div id="studentcards" class="col">
+        <!--loop über alle im übergebenen Slice (.) enthaltenen Objekte-->
+        {{$st := .Students}} {{$pt := .Portraits}} {{range $index, $st := .Students}}
+        <div style="cursor: pointer; margin-bottom: 8px; background: {{.Gruppenfarbe}};" class="card">
+            <div class="{{.Matrikel}} card-body student-profile" onclick="selectStudent({{.Matrikel}}); makeRequest({{.Matrikel}})">
+                <b class="card-text">
+                    {{.Vorname}} {{.Nachname}}
+                </b>
+                <h6>{{.Matrikel}}</h6>
+                <h6><a class="profile-link" href="profile/{{.Matrikel}}">zum Profil</a></h6>
+                <!--Portrait-->
+                <div class="portrait" style="background-image: url({{index $pt $index}});"></div>
             </div>
         </div>
+        <!--loop ende-->
+        {{end}}
     </div>
-</body>
+    <!-- right column-->
+    <div class="col col-md-9" id="post-area"></div>
+</div>
 
+</div>
+
+</body>
 </html>

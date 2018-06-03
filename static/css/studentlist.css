@@ -23,25 +23,29 @@
   }
 
   .student-profile {
-      height: 83px !important;
+      height: 95px !important;
       padding: 8px !important;
       padding-right: 80px !important;
       overflow: auto;
+      position: relative;
+  }
+
+  .profile-link {
+    position: absolute;
+    bottom: 5px;
   }
 
   .selected-profile {
     box-shadow: inset 0 0 14px rgb(14, 121, 37);
   }
 
-
   .assignmentnumber {
     background-color: #fff!important;
     cursor: pointer !important;
-
   }
 
   .active {
-    background: rgb(127, 252, 113);
+    background: rgb(135, 191, 255);
   }
 
   .hidden {
