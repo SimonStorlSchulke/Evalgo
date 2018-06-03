@@ -1,6 +1,9 @@
 package handlers
 
 import (
+	"encoding/json"
+	"fmt"
+	"io/ioutil"
 	"log"
 	"net/http"
 	"strconv"
@@ -9,6 +12,27 @@ import (
 
 	"../user"
 )
+
+//TODO: Auslagern
+type Config struct {
+	Open_course bool `json:"open_course"`
+}
+
+func GetConfig() Config {
+	var conf Config
+	jsondata, err := ioutil.ReadFile("./courseconfig.json")
+	if err != nil {
+		fmt.Println(err)
+		return Config{Open_course: false}
+	}
+
+	err = json.Unmarshal(jsondata, &conf)
+	if err != nil {
+		fmt.Println(err)
+		return Config{Open_course: false}
+	}
+	return conf
+}
 
 //returns true and matrikel if password and matrikel match
 func loggedIn(r *http.Request) (bool, int) {
@@ -32,8 +56,21 @@ func loggedIn(r *http.Request) (bool, int) {
 
 //Handles Main Site
 func HandleStudents(w http.ResponseWriter, r *http.Request) {
+
+	var currentUser user.Student
+	var err error
+	loggedIn, mat := loggedIn(r)
+	if loggedIn {
+		currentUser, err = user.FromMatrikel(mat)
+	}
+
 	//Read jsons:
-	studentlist := user.ReadStudents()
+	studentlist := []user.Student{}
+	if GetConfig().Open_course {
+		studentlist = user.ReadStudents()
+	} else {
+		studentlist = []user.Student{currentUser}
+	}
 
 	//apply group colors TODO no hardcode
 	c1, c2, c3, cDef := "#beffa3", "#a3e6ff", "#f7ffa8", "#808080"
@@ -53,12 +90,6 @@ func HandleStudents(w http.ResponseWriter, r *http.Request) {
 	tmpl, err := template.ParseFiles("./templates/studentlist.go.html")
 	if err != nil {
 		log.Fatalln(err)
-	}
-
-	var currentUser user.Student
-	loggedIn, mat := loggedIn(r)
-	if loggedIn {
-		currentUser, err = user.FromMatrikel(mat)
 	}
 
 	var portraits []string
