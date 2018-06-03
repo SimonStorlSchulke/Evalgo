@@ -86,7 +86,7 @@
                 var postNr = document.getElementById("postNr").value;
 
                 //Open path to postnumber, else take post 1
-                xhr.open('GET', path.concat("251669", "/postraw/",postNr), true);
+                xhr.open('GET', path.concat("{{.Matrikel}}", "/postraw/",postNr), true);
 
                 //handle response
                 xhr.onreadystatechange = function () {
