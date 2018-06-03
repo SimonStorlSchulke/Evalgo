@@ -4,6 +4,8 @@ Aktuelle Entwicklungen im Bereich Online Medien - Evaluierung von Go für Webdev
 Ordnerstruktur:
 
 - **Executable**
+- courseconfig.json
+- info.md
 - 🗀 templates
 - 🗀 static
     - 🗀 css
