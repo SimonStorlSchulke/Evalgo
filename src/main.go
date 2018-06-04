@@ -45,7 +45,7 @@ func main() {
 		conf.Port, conf.Course_name, conf.Group_number, conf.Open_course)
 
 	//Start Server or exit with error message alter 5 seconds
-	err := http.ListenAndServe(conf.Port, nil)
+	err := http.ListenAndServeTLS(conf.Port, "../.tls/fullchain.pem", "../.tls/privatekey.pem", nil)
 	if err != nil {
 		fmt.Println(err)
 		time.Sleep(time.Second * 5)
