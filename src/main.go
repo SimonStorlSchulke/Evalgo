@@ -1,6 +1,7 @@
 package main
 
 import (
+	"fmt"
 	"net/http"
 
 	"./handlers"
@@ -9,6 +10,8 @@ import (
 
 func main() {
 
+	conf := handlers.GetConfig()
+	//TODO: rootUrl := conf.Root_url
 	rtr := mux.NewRouter()
 
 	FileServer := http.FileServer(http.Dir("static"))
@@ -27,5 +30,12 @@ func main() {
 	rtr.HandleFunc("/{matrikel}/postraw/{postnr}", handlers.HandleRawPosts)
 	rtr.HandleFunc("/{matrikel}/post/{postnr}", handlers.HandlePosts)
 	http.Handle("/", rtr)
-	http.ListenAndServe(":8080", nil)
+
+	fmt.Printf("Start server at port%s:\n"+
+		"   Coursname: %s\n"+
+		"   Number of studentgroups: %v\n"+
+		"   Course open: %v:",
+		conf.Port, conf.Course_name, conf.Group_number, conf.Open_course)
+
+	http.ListenAndServe(conf.Port, nil)
 }

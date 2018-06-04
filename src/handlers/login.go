@@ -4,14 +4,30 @@ import (
 	"fmt"
 	"net/http"
 	"strconv"
+	"strings"
 	"text/template"
 
 	"../user"
 )
 
-//TODO
-func alreadyLoggedIn(r *http.Request) bool {
-	return false
+//Returns true and matrikel if password and matrikel match
+func loggedIn(r *http.Request) (bool, int) {
+	var session, cErr = r.Cookie("session")
+
+	if cErr == nil {
+		sessionSplitted := strings.Split(session.Value, "<split>")
+		storedMat, err := strconv.Atoi(sessionSplitted[0])
+		if err != nil {
+			return false, 0
+		}
+		storedPw := sessionSplitted[1]
+		currentUser, err := user.FromMatrikel(storedMat)
+
+		if currentUser.GetPassword() == storedPw {
+			return true, storedMat
+		}
+	}
+	return false, 0
 }
 
 func HandleLogin(w http.ResponseWriter, r *http.Request) {
@@ -32,7 +48,7 @@ func HandleLogin(w http.ResponseWriter, r *http.Request) {
 		password := st.GetPassword()
 		enteredPassword := r.FormValue("password")
 
-		//set session if password correct. TODO: check always when on site
+		//set session if password correct
 		if password == enteredPassword {
 			cookieValue := fmt.Sprintf("%v<split>%s", strconv.Itoa(int(matrikel)), password)
 			c := &http.Cookie{
@@ -45,10 +61,5 @@ func HandleLogin(w http.ResponseWriter, r *http.Request) {
 			fmt.Print("user entered wrong password")
 		}
 	}
-
-	page := map[string]string{
-		"nav": getNav(),
-	}
-
-	tpl.Execute(w, page)
+	tpl.Execute(w, "")
 }

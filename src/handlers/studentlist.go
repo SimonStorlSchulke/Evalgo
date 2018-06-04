@@ -6,18 +6,20 @@ import (
 	"io/ioutil"
 	"log"
 	"net/http"
-	"strconv"
-	"strings"
 	"text/template"
 
 	"../user"
 )
 
-//TODO: Auslagern
 type Config struct {
-	Open_course bool `json:"open_course"`
+	Port         string `json:"port"`
+	Course_name  string `json:"course_name"`
+	Open_course  bool   `json:"open_course"`
+	Group_number int    `json:"group_number"`
+	Root_url     string `json:"root_url"`
 }
 
+//Read courseconfig.json and return as Config struct
 func GetConfig() Config {
 	var conf Config
 	jsondata, err := ioutil.ReadFile("./courseconfig.json")
@@ -34,29 +36,9 @@ func GetConfig() Config {
 	return conf
 }
 
-//returns true and matrikel if password and matrikel match
-func loggedIn(r *http.Request) (bool, int) {
-	var session, cErr = r.Cookie("session")
-
-	if cErr == nil {
-		sessionSplitted := strings.Split(session.Value, "<split>")
-		storedMat, err := strconv.Atoi(sessionSplitted[0])
-		if err != nil {
-			return false, 0
-		}
-		storedPw := sessionSplitted[1]
-		currentUser, err := user.FromMatrikel(storedMat)
-
-		if currentUser.GetPassword() == storedPw {
-			return true, storedMat
-		}
-	}
-	return false, 0
-}
-
 //Handles Main Site
 func HandleStudents(w http.ResponseWriter, r *http.Request) {
-
+	conf := GetConfig()
 	var currentUser user.Student
 	var err error
 	loggedIn, mat := loggedIn(r)
@@ -66,21 +48,22 @@ func HandleStudents(w http.ResponseWriter, r *http.Request) {
 
 	//Read jsons:
 	studentlist := []user.Student{}
-	if GetConfig().Open_course {
+	if conf.Open_course {
 		studentlist = user.ReadStudents()
 	} else {
 		studentlist = []user.Student{currentUser}
 	}
 
-	//apply group colors TODO no hardcode
-	c1, c2, c3, cDef := "#beffa3", "#a3e6ff", "#f7ffa8", "#808080"
+	//apply group colors TODO expose colors in coursecofig.json
+	c1, c2, c3, cDef := "#beffa3", "#a3e6ff", "#f7ffa8", "#e2e2e2"
+	grNum := conf.Group_number
 	for i := range studentlist {
 		switch {
-		case i%3 == 0:
+		case i%grNum == 0:
 			studentlist[i].Gruppenfarbe = c1
-		case i%3 == 1:
+		case i%grNum == 1:
 			studentlist[i].Gruppenfarbe = c2
-		case i%3 == 2:
+		case i%grNum == 2:
 			studentlist[i].Gruppenfarbe = c3
 		default:
 			studentlist[i].Gruppenfarbe = cDef

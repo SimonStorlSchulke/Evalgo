@@ -17,6 +17,7 @@ func HandleRegister(w http.ResponseWriter, r *http.Request) {
 	passwort := r.FormValue("passwort")
 	matrikel, _ := strconv.ParseInt(r.FormValue("matrikel")[0:], 10, 64)
 
+	//legacy
 	page := map[string]string{
 		"nav":  getNav(),
 		"name": vorname,

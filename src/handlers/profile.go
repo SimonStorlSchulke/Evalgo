@@ -11,6 +11,7 @@ import (
 	"github.com/russross/blackfriday"
 )
 
+//Handlefunc to display all Posts of a student
 func HandleProfile(w http.ResponseWriter, r *http.Request) {
 
 	//Get Matrikel from mux Parameters
@@ -19,7 +20,8 @@ func HandleProfile(w http.ResponseWriter, r *http.Request) {
 	matrikel, _ := strconv.Atoi(matrikelSt)
 	student, err := user.FromMatrikel(matrikel)
 	if err != nil {
-		fmt.Println("Error reading Matrikelnumber")
+		fmt.Fprintf(w, "There is no Student with the Matrikel %v registered.", matrikel)
+		return
 	}
 
 	//Parse Markdown to []byte
@@ -40,4 +42,5 @@ func HandleProfile(w http.ResponseWriter, r *http.Request) {
 
 	tpl := template.Must(template.ParseFiles("./templates/profile.go.html"))
 	tpl.Execute(w, pageData)
+
 }

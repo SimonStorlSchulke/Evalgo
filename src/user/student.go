@@ -41,37 +41,19 @@ func FromMatrikel(matrikel int) (Student, error) {
 	return st, err
 }
 
+//Post a string to /Userdata/Students/[st.matrikel]/post_[postnumber].md
+func (st *Student) PostNr(str string, postNumber int) {
+	ioutil.WriteFile(fmt.Sprintf("./Userdata/Students/%v/post_%v.md", st.Matrikel, postNumber), []byte(str), 0777)
+	fmt.Println(st.Vorname, st.Nachname, "created a new post Nr.", postNumber)
+}
+
 func (st *Student) GetPost(postNr int) []byte {
 
 	post, err := ioutil.ReadFile(fmt.Sprintf("./Userdata/Students/%v/post_%v.md", st.Matrikel, postNr))
 	if err != nil {
-		fmt.Println(err)
 		return []byte("Noch keine Abgabe.")
 	}
 	return post
-}
-
-//Returns Posts of a Student
-func (st Student) GetPosts() []byte {
-
-	//TODO: das gleiche mit input matrikel
-
-	posts, err := ioutil.ReadFile(fmt.Sprintf("./Userdata/Students/%v/posts.md", st.Matrikel))
-	if err != nil {
-		fmt.Println(err)
-		return []byte("Noch keine Einträge.")
-	}
-	return posts
-}
-
-func (st Student) Post(str string) {
-	ioutil.WriteFile(fmt.Sprintf("./Userdata/Students/%v/posts.md", st.Matrikel), []byte(str), 0777)
-	fmt.Println(st.Vorname, "posted", str)
-}
-
-func (st *Student) PostNr(str string, postNumber int) {
-	ioutil.WriteFile(fmt.Sprintf("./Userdata/Students/%v/post_%v.md", st.Matrikel, postNumber), []byte(str), 0777)
-	fmt.Println(st.Vorname, "posted", str)
 }
 
 //Returns []byte of all posts and int slice of postNumbers
@@ -94,7 +76,7 @@ func (st *Student) GetAllPosts() ([]byte, []int) {
 }
 
 //Return path to user portrait TODO: jpg.
-func (st Student) GetPortraitPath() string {
+func (st *Student) GetPortraitPath() string {
 	url := fmt.Sprintf("/portraits/%v.png", st.Matrikel)
 	filepath := fmt.Sprintf("./Userdata/Portraits/%v.png", st.Matrikel)
 
@@ -104,7 +86,18 @@ func (st Student) GetPortraitPath() string {
 	return url
 }
 
-func (st Student) ToJSON() []byte {
+//Returns Folderpath to Studentdata as string
+func (st *Student) getPath() string {
+	return filepath.Join(".", "Userdata", "Students", fmt.Sprintf("%v", st.Matrikel))
+}
+
+//Returns Password of Student
+func (st *Student) GetPassword() string {
+	return st.Passwort
+}
+
+//Convert Student Struct to JSON
+func (st *Student) ToJSON() []byte {
 	jsondata, err := json.Marshal(st)
 	if err != nil {
 		fmt.Println("Error when converting", st, "to JSON")
@@ -129,7 +122,6 @@ func (st Student) Register() error {
 	}
 
 	//create Subfolder in Studentdata/Matrikel
-	fmt.Println(st.getPath())
 	err := os.MkdirAll(st.getPath(), 0777)
 	if err != nil {
 		fmt.Println(err)
@@ -149,8 +141,8 @@ func (st Student) Register() error {
 }
 
 //Removes Studentdata from /Studentdata
-//TODO - macht das sinn als Methode? Oder lieber als Funktion?
-func (st Student) Unregister() {
+//TODO: - expose to user
+func (st *Student) Unregister() {
 	os.RemoveAll(st.getPath())
 	fmt.Printf("Unregistered Student %s %s at %s\n", st.Vorname, st.Nachname, st.getPath())
 }
@@ -210,13 +202,4 @@ func ReadStudents() []Student {
 		studentlist = append(studentlist, currentStudent)
 	}
 	return studentlist
-}
-
-//Returns Folderpath to Studentdata as string
-func (st Student) getPath() string {
-	return filepath.Join(".", "Userdata", "Students", fmt.Sprintf("%v", st.Matrikel))
-}
-
-func (st Student) GetPassword() string {
-	return st.Passwort
 }

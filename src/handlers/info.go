@@ -17,7 +17,7 @@ func HandleInfo(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
+	//Parse Markdown and parse to string
 	info = blackfriday.MarkdownCommon(info)
-	//Parse Markdown to []byte
 	fmt.Fprint(w, string(info[:]))
 }
