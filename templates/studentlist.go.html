@@ -16,7 +16,7 @@
 <body>
 <div class="container" style="margin-top:50px">
 <!--Navbar TODO load dynamic-->
-<nav class="navbar navbar-expand-sm bg-light navbar-light">
+<nav class="sticky-top navbar navbar-expand-sm bg-light navbar-light">
     <!--Set base url to root TODO: für externe Seiten-->
     <script type="text/javascript">
         document.write("<base href='http://" + document.location.host + "' />");
@@ -41,8 +41,9 @@
                     <a class="nav-link" href="/profile/{{.CurrentUser.Matrikel}}">
                         Eingeloggt als 
                         {{.CurrentUser.Vorname}} 
-                        {{.CurrentUser.Nachname}} - 
-                        {{.CurrentUser.Matrikel}}
+                        {{.CurrentUser.Nachname}} <i style="font-size: 13px">
+                            #{{.CurrentUser.Matrikel}}</i> 
+                            <img style="background-image: url({{.CurrentPortrait}});" id="navbar-portrait">
                     </a>
                 {{else}}
                     <li class="nav-link">not logged in </li>
@@ -86,7 +87,7 @@
         {{end}}
     </div>
     <!-- right column-->
-    <div class="col col-md-9" id="post-area"></div>
+    <div class="sticky-top col col-md-9" id="post-area"></div>
 </div>
 
 </div>

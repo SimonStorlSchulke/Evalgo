@@ -81,15 +81,17 @@ func HandleStudents(w http.ResponseWriter, r *http.Request) {
 	}
 
 	pageData := struct {
-		Nav         string
-		Students    []user.Student
-		CurrentUser user.Student
-		Portraits   []string
+		Nav             string
+		Students        []user.Student
+		CurrentUser     user.Student
+		Portraits       []string
+		CurrentPortrait string
 	}{
-		Nav:         getNav(),
-		Students:    studentlist,
-		CurrentUser: currentUser,
-		Portraits:   portraits,
+		Nav:             getNav(),
+		Students:        studentlist,
+		CurrentUser:     currentUser,
+		Portraits:       portraits,
+		CurrentPortrait: currentUser.GetPortraitPath(),
 	}
 
 	tmpl.Execute(w, pageData)

@@ -3,6 +3,8 @@ package main
 import (
 	"fmt"
 	"net/http"
+	"os"
+	"time"
 
 	"./handlers"
 	"github.com/gorilla/mux"
@@ -37,5 +39,11 @@ func main() {
 		"   Course open: %v:",
 		conf.Port, conf.Course_name, conf.Group_number, conf.Open_course)
 
-	http.ListenAndServe(conf.Port, nil)
+	//Start Server or exit with error message alter 5 seconds
+	err := http.ListenAndServe(conf.Port, nil)
+	if err != nil {
+		fmt.Println(err)
+		time.Sleep(time.Second * 5)
+		os.Exit(1)
+	}
 }

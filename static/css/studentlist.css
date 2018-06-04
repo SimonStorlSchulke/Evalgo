@@ -1,10 +1,22 @@
   #studentcards {
     width: 700px;
+    overflow: auto;
   }
 
   #post-area {
     height: 800px;
     overflow: auto;
+    top: 60px;
+  }
+
+  #navbar-portrait {
+    height: 44px;
+    width: 44px;
+    background-size: 44px;
+    display: inline-block;
+    border-radius: 22px;
+    margin-top: -14px;
+    margin-bottom: -15px;
   }
   
   .row {
