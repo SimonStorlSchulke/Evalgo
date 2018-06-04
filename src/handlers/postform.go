@@ -14,7 +14,7 @@ func HandlePostForm(w http.ResponseWriter, r *http.Request) {
 	//Redirect to loggin if not logged in
 	isLoggedIn, matrikel := loggedIn(r)
 	if isLoggedIn == false {
-		http.Redirect(w, r, "/login", http.StatusSeeOther)
+		http.Redirect(w, r, "./login", http.StatusSeeOther)
 	}
 	tpl := template.Must(template.ParseFiles("./templates/postform.go.html"))
 
@@ -23,7 +23,7 @@ func HandlePostForm(w http.ResponseWriter, r *http.Request) {
 	st, _ := user.FromMatrikel(matrikel)
 	if postedText != "" && postNumber > 0 {
 		st.PostNr(postedText, postNumber)
-		redirPath := fmt.Sprintf("/%v/post/%v", matrikel, postNumber)
+		redirPath := fmt.Sprintf("./%v/post/%v", matrikel, postNumber)
 		http.Redirect(w, r, redirPath, http.StatusSeeOther)
 	}
 

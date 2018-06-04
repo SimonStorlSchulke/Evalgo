@@ -77,11 +77,11 @@ func (st *Student) GetAllPosts() ([]byte, []int) {
 
 //Return path to user portrait TODO: jpg.
 func (st *Student) GetPortraitPath() string {
-	url := fmt.Sprintf("/portraits/%v.png", st.Matrikel)
+	url := fmt.Sprintf("./portraits/%v.png", st.Matrikel)
 	filepath := fmt.Sprintf("./Userdata/Portraits/%v.png", st.Matrikel)
 
 	if _, err := os.Stat(filepath); os.IsNotExist(err) {
-		return "/portraits/default.png"
+		return "./portraits/default.png"
 	}
 	return url
 }

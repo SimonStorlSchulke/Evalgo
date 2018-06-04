@@ -10,28 +10,33 @@ import (
 	"github.com/gorilla/mux"
 )
 
+var conf handlers.Config = handlers.GetConfig()
+
+func genUrl(str string) string {
+	fmt.Printf("%s%s\n", conf.Root_url, str)
+	return fmt.Sprintf("%s%s", conf.Root_url, str)
+}
+
 func main() {
 
-	conf := handlers.GetConfig()
-	//TODO: rootUrl := conf.Root_url
 	rtr := mux.NewRouter()
 
 	FileServer := http.FileServer(http.Dir("static"))
-	http.Handle("/static/", http.StripPrefix("/static/", FileServer))
+	http.Handle(genUrl("static/"), http.StripPrefix(genUrl("static/"), FileServer))
 
 	FileServerPortraits := http.FileServer(http.Dir("Userdata/Portraits"))
-	http.Handle("/portraits/", http.StripPrefix("/portraits/", FileServerPortraits))
+	http.Handle(genUrl("portraits/"), http.StripPrefix(genUrl("portraits/"), FileServerPortraits))
 
-	rtr.HandleFunc("/register", handlers.HandleRegister)
-	rtr.HandleFunc("/login", handlers.HandleLogin)
-	rtr.HandleFunc("/post", handlers.HandlePostForm)
-	rtr.HandleFunc("/info", handlers.HandleInfo)
-	rtr.HandleFunc("/{number}", handlers.HandleStudents)
-	rtr.HandleFunc("/", handlers.HandleStudents)
-	rtr.HandleFunc("/profile/{matrikel}", handlers.HandleProfile)
-	rtr.HandleFunc("/{matrikel}/postraw/{postnr}", handlers.HandleRawPosts)
-	rtr.HandleFunc("/{matrikel}/post/{postnr}", handlers.HandlePosts)
-	http.Handle("/", rtr)
+	rtr.HandleFunc(genUrl("register"), handlers.HandleRegister)
+	rtr.HandleFunc(genUrl("login"), handlers.HandleLogin)
+	rtr.HandleFunc(genUrl("post"), handlers.HandlePostForm)
+	rtr.HandleFunc(genUrl("info"), handlers.HandleInfo)
+	rtr.HandleFunc(genUrl("{number}"), handlers.HandleStudents)
+	rtr.HandleFunc(genUrl(""), handlers.HandleStudents)
+	rtr.HandleFunc(genUrl("profile/{matrikel}"), handlers.HandleProfile)
+	rtr.HandleFunc(genUrl("{matrikel}/postraw/{postnr}"), handlers.HandleRawPosts)
+	rtr.HandleFunc(genUrl("{matrikel}/post/{postnr}"), handlers.HandlePosts)
+	http.Handle(genUrl(""), rtr)
 
 	fmt.Printf("Start server at port%s:\n"+
 		"   Coursname: %s\n"+

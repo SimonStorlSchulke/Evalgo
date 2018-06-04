@@ -40,7 +40,7 @@ function makeRequest(matrikel) {
     var xhr = new XMLHttpRequest();
 
     //open request to /matrikel/post/number
-    var path = '/';
+    var path = './';
     var urlArray = window.location.pathname.split('/');
 
     var postNumber = getPostNumber();
@@ -74,7 +74,7 @@ function showInfo() {
 
     var xhr = new XMLHttpRequest();
     //Open path
-    xhr.open('GET', "/info", true);
+    xhr.open('GET', "./info", true);
 
     //handle response
     xhr.onreadystatechange = function () {

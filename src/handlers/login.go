@@ -56,7 +56,7 @@ func HandleLogin(w http.ResponseWriter, r *http.Request) {
 				Value: cookieValue,
 			}
 			http.SetCookie(w, c)
-			http.Redirect(w, r, "/", http.StatusSeeOther)
+			http.Redirect(w, r, "./", http.StatusSeeOther)
 		} else {
 			fmt.Print("user entered wrong password")
 		}

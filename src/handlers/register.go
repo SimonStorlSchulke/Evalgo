@@ -21,7 +21,7 @@ func HandleRegister(w http.ResponseWriter, r *http.Request) {
 
 	//Redirect if Registration successfull
 	if err == nil {
-		http.Redirect(w, r, "/", http.StatusSeeOther)
+		http.Redirect(w, r, "./", http.StatusSeeOther)
 	}
 	tpl.Execute(w, vorname)
 }
