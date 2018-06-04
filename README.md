@@ -9,7 +9,9 @@ Ordnerstruktur:
 - 🗀 templates
 - 🗀 static
     - 🗀 css
-    - highlightJS
+    - 🗀 js
+    - 🗀 highlightJS
+    - 🗀 bootstrap
 - 🗀 Userdata
     - 🗀 Portraits
         * ...[Matrikelnumer].png

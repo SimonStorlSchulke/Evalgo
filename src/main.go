@@ -41,7 +41,7 @@ func main() {
 	fmt.Printf("Start server at port%s:\n"+
 		"   Coursname: %s\n"+
 		"   Number of studentgroups: %v\n"+
-		"   Course open: %v:",
+		"   Course open: %v\n",
 		conf.Port, conf.Course_name, conf.Group_number, conf.Open_course)
 
 	//Start Server or exit with error message alter 5 seconds

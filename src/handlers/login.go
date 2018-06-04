@@ -45,12 +45,12 @@ func HandleLogin(w http.ResponseWriter, r *http.Request) {
 		if err != nil {
 			fmt.Println(err)
 		}
-		password := st.GetPassword()
+		hashedPassword := st.GetPassword()
 		enteredPassword := r.FormValue("password")
 
 		//set session if password correct
-		if password == enteredPassword {
-			cookieValue := fmt.Sprintf("%v<split>%s", strconv.Itoa(int(matrikel)), password)
+		if CheckPasswordHash(enteredPassword, hashedPassword) {
+			cookieValue := fmt.Sprintf("%v<split>%s", strconv.Itoa(int(matrikel)), hashedPassword)
 			c := &http.Cookie{
 				Name:  "session",
 				Value: cookieValue,
