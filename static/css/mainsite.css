@@ -20,8 +20,11 @@
 #post-area h5 {font-size: 18px;}
 
 .post-area {
-    z-index: -1;
     top: 53px;
+}
+
+.navbar {
+    z-index: 10000 !important;
 }
 
 .last-modified {
