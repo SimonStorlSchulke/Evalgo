@@ -63,8 +63,8 @@
         display: none;
     }
 
-    #post-area {
-        margin-left: -100px;
+    .row-post-area {
+        margin-left: -110px !important;
     }
 
     .as-title {
