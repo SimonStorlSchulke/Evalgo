@@ -42,5 +42,4 @@ func HandleProfile(w http.ResponseWriter, r *http.Request) {
 
 	tpl := template.Must(template.ParseFiles("./templates/profile.go.html"))
 	tpl.Execute(w, pageData)
-
 }

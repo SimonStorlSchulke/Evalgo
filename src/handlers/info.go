@@ -19,5 +19,6 @@ func HandleInfo(w http.ResponseWriter, r *http.Request) {
 
 	//Parse Markdown and parse to string
 	info = blackfriday.MarkdownCommon(info)
-	fmt.Fprint(w, string(info[:]))
+	str := "<div class='container post-area'>" + string(info[:]) + "</div>"
+	fmt.Fprint(w, str)
 }
