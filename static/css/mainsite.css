@@ -19,6 +19,20 @@
 
 #post-area h5 {font-size: 18px;}
 
+.last-modified {
+    color: grey;
+    font-size: 14px;
+    display: block;
+    margin-bottom: 20px;
+}
+
+.post-separator {
+    margin: 25px 0;
+    height: 1px;
+    background: black;
+    background: linear-gradient(to right, #eee , #aaa, #eee);
+}
+
 .selected-profile {
     box-shadow: inset 0 0 14px rgb(14, 121, 37);
 }

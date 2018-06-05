@@ -29,6 +29,7 @@ func main() {
 
 	rtr.HandleFunc(genUrl("register"), handlers.HandleRegister)
 	rtr.HandleFunc(genUrl("login"), handlers.HandleLogin)
+	rtr.HandleFunc(genUrl("portrait"), handlers.PortraitUpload)
 	rtr.HandleFunc(genUrl("post"), handlers.HandlePostForm)
 	rtr.HandleFunc(genUrl("info"), handlers.HandleInfo)
 	rtr.HandleFunc(genUrl("{number}"), handlers.HandleStudents)
@@ -45,8 +46,8 @@ func main() {
 		conf.Port, conf.Course_name, conf.Group_number, conf.Open_course)
 
 	//Start Server or exit with error message alter 5 seconds
-	err := http.ListenAndServeTLS(conf.Port, "../.tls/fullchain.pem", "../.tls/privkey.pem", nil)
-	//err := http.ListenAndServe(":8080", nil)
+	//err := http.ListenAndServeTLS(conf.Port, "../.tls/fullchain.pem", "../.tls/privkey.pem", nil)
+	err := http.ListenAndServe(":8080", nil)
 	if err != nil {
 		fmt.Println(err)
 		time.Sleep(time.Second * 5)
