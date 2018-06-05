@@ -19,6 +19,11 @@
 
 #post-area h5 {font-size: 18px;}
 
+#post-area {
+    z-index: -1;
+    top: 53px;
+}
+
 .last-modified {
     color: grey;
     font-size: 14px;
@@ -36,7 +41,7 @@ hr {
 }
 
 .active {
-    background: rgb(135, 191, 255);
+    background: rgb(135, 191, 255) !important;
 }
 
 .assignmentnumber {

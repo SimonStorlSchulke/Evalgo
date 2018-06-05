@@ -86,12 +86,14 @@ func HandleStudents(w http.ResponseWriter, r *http.Request) {
 		CurrentUser     user.Student
 		Portraits       []string
 		CurrentPortrait string
+		CourseName      string
 	}{
 		Nav:             getNav(),
 		Students:        studentlist,
 		CurrentUser:     currentUser,
 		Portraits:       portraits,
 		CurrentPortrait: currentUser.GetPortraitPath(),
+		CourseName:      conf.Course_name,
 	}
 
 	tmpl.Execute(w, pageData)
