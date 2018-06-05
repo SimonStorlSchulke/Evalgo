@@ -95,6 +95,7 @@
                         var lines = posttext.split('\n');
                         lines.splice(0, 1);
                         posttext = lines.join('\n');
+                        posttext += "\n";
                         document.getElementById("textarea").value = posttext;
                     }
                 };
