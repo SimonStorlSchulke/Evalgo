@@ -64,7 +64,7 @@ func (st *Student) GetAllPosts() ([]byte, []int) {
 	for _, p := range posts {
 		number, err := strconv.Atoi(strings.Trim(p.Name(), "post_.md"))
 		if err == nil {
-			heading := fmt.Sprintf("<div class='post-separator'></div>\n# <div class='post-header text-primary' id='%v'>Aufgabe %v</div>\n", number, number)
+			heading := fmt.Sprintf("---\n# <div class='post-header text-primary' id='%v'>Aufgabe %v</div>\n", number, number)
 			headingData := []byte(heading)
 			data = append(data, headingData...)
 
