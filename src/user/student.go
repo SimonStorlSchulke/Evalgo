@@ -59,16 +59,21 @@ func (st *Student) GetPost(postNr int) []byte {
 //Returns []byte of all posts and int slice of postNumbers
 func (st *Student) GetAllPosts() ([]byte, []int) {
 	posts, _ := ioutil.ReadDir(fmt.Sprintf("./Userdata/Students/%v/", st.Matrikel))
+	var postdata []byte
 	var data []byte
 	var postNumbers []int
 	for _, p := range posts {
 		number, err := strconv.Atoi(strings.Trim(p.Name(), "post_.md"))
 		if err == nil {
-			heading := fmt.Sprintf("\n---\n# <div class='post-header text-primary' id='%v'>Aufgabe %v</div>\n", number, number)
-			headingData := []byte(heading)
-			data = append(data, headingData...)
+			currentPostStr := fmt.Sprintf("# <div class='post-header text-primary'>Aufgabe %v</div>\n", number)
+			currentPost := []byte(currentPostStr)
+			postdata = st.GetPost(number)
+			currentPost = append(currentPost, postdata...)
+			hr := []byte("\n<hr>\n")
+			currentPost = append(currentPost, hr...)
+			data = append(data, currentPost...)
 
-			data = append(data, st.GetPost(number)...)
+			fmt.Println(string(data[:]))
 			postNumbers = append(postNumbers, number)
 		}
 	}
