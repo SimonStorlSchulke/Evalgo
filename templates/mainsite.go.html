@@ -61,20 +61,25 @@
 
 <div id="sidebar-wrapper">
     <ul class="sidebar-nav">
-        {{$st := .Students}} {{$pt := .Portraits}} {{range $index, $st := .Students}}
+        <!--lädt onclick Posts des Studenten "0" ein -> Platz für Aufgabenstellung--> 
+        <li class="assignment-selector" onclick="selectStudent(0); makeRequest(0)">
+            <div class="sidebar-st 0">
+                <div class="sidebar-name">Aufagbenstellung</div>
+                <p class="sidebar-matrikel">zur ausgewählten Aufgabe</p>
+            </div>
+        </a>
+    </li>
+    <!--Students-->
+    {{$st := .Students}} {{$pt := .Portraits}} {{range $index, $st := .Students}}
         <li class="{{.Matrikel}}" style="background: {{.Gruppenfarbe}};" onclick="selectStudent({{.Matrikel}}); makeRequest({{.Matrikel}})">
             <div class="sidebar-st {{.Matrikel}}">
                 <div class="sidebar-name">{{.Vorname}} {{.Nachname}}</div>
                 <img align="middle" style="background-image: url({{index $pt $index}});" class="sidebar-portrait">
-                <p class="sidebar-matrikel">
-                    <a></a>{{.Matrikel}}</b>
-                </p>
+                <p class="sidebar-matrikel">{{.Matrikel}}</p>
             </div>
-            <!--Portrait-->
-            <div class="portrait" style="background-image: url({{index $pt $index}});"></div>
             </a>
         </li>
-        {{end}}
+    {{end}}
     </ul>
 </div>
 <div class="container" style="margin-top: 10px; margin-left: 250px;">
@@ -84,6 +89,9 @@
         <a class="navbar-brand">Aufgaben</a>
         <ul class="assignmentnumber navbar-nav">
             <!--TODO: automatisch erzeugen-->
+            <li class="a0 nav-item">
+                <a onclick="postLink(0)" class="n0 nav-link">Alle</a>
+            </li>
             <li class="a1 nav-item">
                 <a onclick="postLink(1)" class="nl nav-link">1</a>
             </li>
@@ -101,7 +109,7 @@
             </li>
         </ul>
     </nav>
-    <div class="sticky-top col col-md-9" id="post-area"></div>
+    <div style="z-index: -1;"class="sticky-top col col-md-9" id="post-area"></div>
 </div>
 </body>
 

@@ -27,7 +27,7 @@ window.onload = function () {
         classStr = classStr.concat(getPostNumber())
         $(classStr).addClass("active");
     } else {
-        $(".a1").addClass("active");
+        $(".a0").addClass("active");
     }
 }
 
@@ -49,7 +49,7 @@ function makeRequest(matrikel) {
     if (postNumber > 0) {
         xhr.open('GET', path.concat(matrikel, "/post/", postNumber), true);
     } else {
-        xhr.open('GET', path.concat(matrikel, "/post/1"), true);
+        xhr.open('GET', path.concat("profile/" ,matrikel), true);
     }
 
     //handle response

@@ -12,25 +12,13 @@
     <link rel="stylesheet" href="../static/highlight/styles/googlecode.css">
     <script src="../static/highlight/highlight.pack.js"></script>
 </head>
-
-<!--TODO: alles hier drüber kann für AJAX Version rausgenommen werden-->
-
 <body>
     <div class="container">
-        <!--Nav nicht benötigt - TODO-->
-        <div style="top: 30px; left: 20px; position:fixed; width: 120px;">
-            <h3><a href="../">Zurück</a></h3>
-            {{range .PostNumbers}}
-                <a style="font-size: 20px;" href=#{{.}}>Aufgabe {{.}}</a><br> 
-            {{end}}
-
-            <script>hljs.initHighlightingOnLoad();</script>
-        </div>
         <img width=150 style="position: relative; right: 100px;" class="float-right" src="../portraits/{{.St.Matrikel}}.png" alt=""
             srcset="">
 
         <div style="margin-top: 30px; min-width: 500px; !important;">
-            <h1 style="margin-bottom: 0px;">Profil {{.St.Vorname}} {{.St.Nachname}}</h1>
+            <h2 style="margin-bottom: 0px;">{{.St.Vorname}} {{.St.Nachname}} - Alle Aufgaben</h2>
             <p class="text-muted">{{.St.Matrikel}}</p>
             {{.Profile}}
         </div>
