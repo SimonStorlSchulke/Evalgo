@@ -1,69 +1,83 @@
-  #studentcards {
-    width: 700px;
-    overflow: auto;
-  }
+#studentcards {
+  width: 250px !important;
+  max-width: 250px !important;
+  min-width: 250px !important;
+}
 
-  #post-area {
-    height: 800px;
-    overflow: auto;
-    top: 60px;
-  }
+.card {
+  cursor: pointer;
+  margin-bottom: 8px;
+}
 
-  #navbar-portrait {
-    height: 44px;
-    width: 44px;
-    background-size: 44px;
-    display: inline-block;
-    border-radius: 22px;
-    margin-top: -14px;
-    margin-bottom: -15px;
-  }
-  
-  .row {
-      height: 100%;
-    /*width:calc(100% - 300px + 15px * 2);*/
-  }
+.student-profile {
+  height: auto;
+  padding: 8px !important;
+  padding-right: 80px !important;
+  overflow: auto;
+  position: relative;
+}
 
-  .portrait {
-    float: right; 
-    position: absolute;
-    top: 8px;
-    right: 8px;
-    background-size: 65px; 
-    height: 65px; width: 65px;
-    border-radius: 3px;
-  }
+.assignment-card {
+  background-color: #eee;
+  height: 75px;
+}
 
-  .student-profile {
-      height: 95px !important;
-      padding: 8px !important;
-      padding-right: 80px !important;
-      overflow: auto;
-      position: relative;
-  }
+#post-area {
+  height: 800px;
+  top: 60px;
+  position: relative;
+}
 
-  .profile-link {
-    position: absolute;
-    bottom: 5px;
-  }
+#navbar-portrait {
+  height: 44px;
+  width: 44px;
+  background-size: 44px;
+  display: inline-block;
+  border-radius: 22px;
+}
 
-  .selected-profile {
-    box-shadow: inset 0 0 14px rgb(14, 121, 37);
-  }
+.row {
+  height: 100%;
+  /*width:calc(100% - 300px + 15px * 2);*/
+}
 
-  .assignmentnumber {
-    background-color: #fff!important;
-    cursor: pointer !important;
-  }
+.portrait {
+  float: right;
+  position: absolute;
+  top: 8px;
+  right: 8px;
+  background-size: 65px;
+  height: 65px;
+  width: 65px;
+  border-radius: 3px;
+}
 
-  .active {
-    background: rgb(135, 191, 255);
-  }
+.card-matrikel {
+  font-size: 12px;
+}
 
-  .hidden {
-    display: none;
-  }
+.profile-link {
+  bottom: 5px;
+  left: 5px;
+}
 
-  .nav-item:hover {
-    cursor: pointer;
-  }
+.selected-profile {
+  box-shadow: inset 0 0 14px rgb(14, 121, 37);
+}
+
+.assignmentnumber {
+  background-color: #fff !important;
+  cursor: pointer !important;
+}
+
+.active {
+  background: rgb(135, 191, 255);
+}
+
+.hidden {
+  display: none;
+}
+
+.nav-item:hover {
+  cursor: pointer;
+}

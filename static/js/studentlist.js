@@ -63,7 +63,10 @@ function makeRequest(matrikel) {
             });
         }
     };
+    
     xhr.send();
+    querystring = "?nr=" + postNumber + "&mat=" + matrikel;
+    history.pushState("", document.title, querystring);
 }
 
 //Show Course Info in PostArea

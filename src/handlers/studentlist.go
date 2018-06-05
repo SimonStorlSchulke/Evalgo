@@ -70,7 +70,7 @@ func HandleStudents(w http.ResponseWriter, r *http.Request) {
 		}
 	}
 
-	tmpl, err := template.ParseFiles("./templates/studentlist.go.html")
+	tmpl, err := template.ParseFiles("./templates/mainsite.go.html")
 	if err != nil {
 		log.Fatalln(err)
 	}
