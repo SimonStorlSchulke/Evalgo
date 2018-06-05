@@ -1,22 +1,27 @@
 package handlers
 
 import (
+	"crypto/md5"
+	"encoding/hex"
 	"net/http"
 	"strconv"
 	"text/template"
 
 	"../user"
-	"golang.org/x/crypto/bcrypt"
 )
 
-func HashPassword(pw string) (string, error) {
-	bytes, err := bcrypt.GenerateFromPassword([]byte(pw), 14)
-	return string(bytes), err
+func HashPassword(pw string) string {
+	hasher := md5.New()
+	hasher.Write([]byte(pw))
+	return hex.EncodeToString(hasher.Sum(nil))
 }
 
-func CheckPasswordHash(password, hash string) bool {
-	err := bcrypt.CompareHashAndPassword([]byte(hash), []byte(password))
-	return err == nil
+func CheckPasswordHash(enteredPw, hashedPw string) bool {
+	if HashPassword(enteredPw) == hashedPw {
+		return true
+	} else {
+		return false
+	}
 }
 
 //Handles Register Form and Submit
@@ -25,7 +30,7 @@ func HandleRegister(w http.ResponseWriter, r *http.Request) {
 
 	vorname := r.FormValue("vorname")
 	nachname := r.FormValue("nachname")
-	passwort, _ := HashPassword(r.FormValue("passwort"))
+	passwort := HashPassword(r.FormValue("passwort"))
 	matrikel, _ := strconv.ParseInt(r.FormValue("matrikel")[0:], 10, 64)
 
 	err := user.NewStudent(r.FormValue("vorname"), nachname, int(matrikel), passwort).Register()
