@@ -19,7 +19,7 @@
 
 #post-area h5 {font-size: 18px;}
 
-#post-area {
+.post-area {
     z-index: -1;
     top: 53px;
 }
@@ -40,6 +40,7 @@
 }
 
 
+
 @media only screen and (max-width: 680px) {
 
     .sidebar-portrait {
@@ -55,16 +56,22 @@
         max-width: 150px; 
     }
 
-    .container {
-        margin-left: 150px;
-    }
-
     .a-info {
         display: none;
     }
 
-    .row-post-area {
-        margin-left: -100px !important;
+    #post-area {
+        margin-left: -100px;
+        width: calc(100% + 100px);
+
+    }
+
+    .post-area {
+        word-wrap: break-word !important;
+    }
+
+    .as-title-row {
+        margin-left: -110px !important;
     }
 }
 
