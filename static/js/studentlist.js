@@ -28,6 +28,7 @@ window.onload = function () {
         $(classStr).addClass("active");
     } else {
         $(".a0").addClass("active");
+        showInfo();
     }
 }
 
@@ -89,7 +90,8 @@ function loadAssignment(postNumber) {
 
 //Show Course Info in PostArea
 function showInfo() {
-    loadContent("./info")
+    loadContent("./info");
+    history.pushState("", document.title, "?nr=0&mat=0");
 }
 
 function postLink(number) {
