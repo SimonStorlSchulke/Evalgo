@@ -41,15 +41,30 @@ func FromMatrikel(matrikel int) (Student, error) {
 	return st, err
 }
 
+func intToString(num int) (string, error) {
+	if num > 999 || num < 0 {
+		return "", errors.New("Number must be < than 1000 and > 0")
+	}
+	str := strconv.Itoa(num)
+	for mDg := 3 - len(str); mDg > 0; mDg-- {
+		str = "0" + str
+	}
+	return str, nil
+}
+
 //Post a string to /Userdata/Students/[st.matrikel]/post_[postnumber].md
 func (st *Student) PostNr(str string, postNumber int) {
-	ioutil.WriteFile(fmt.Sprintf("./Userdata/Students/%v/post_%v.md", st.Matrikel, postNumber), []byte(str), 0777)
-	fmt.Println(st.Vorname, st.Nachname, "created a new post Nr.", postNumber)
+	nrStr, err := intToString(postNumber)
+	if err == nil {
+		ioutil.WriteFile(fmt.Sprintf("./Userdata/Students/%v/post_%s.md", st.Matrikel, nrStr), []byte(str), 0777)
+		fmt.Println(st.Vorname, st.Nachname, "created a new post Nr.", postNumber)
+	}
+	//TODO except
 }
 
 func (st *Student) GetPost(postNr int) []byte {
-
-	post, err := ioutil.ReadFile(fmt.Sprintf("./Userdata/Students/%v/post_%v.md", st.Matrikel, postNr))
+	nrStr, _ := intToString(postNr)
+	post, err := ioutil.ReadFile(fmt.Sprintf("./Userdata/Students/%v/post_%s.md", st.Matrikel, nrStr))
 	if err != nil {
 		return []byte("Noch keine Abgabe.")
 	}

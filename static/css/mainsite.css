@@ -77,7 +77,7 @@
 }
 
 hr {
-    height: 0.5px !important; 
+    height: 1px !important; 
     background-image: linear-gradient(to right, #eee, #777 , #eee) !important;
  }
 
