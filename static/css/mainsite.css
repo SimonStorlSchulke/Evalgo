@@ -67,6 +67,11 @@
     .as-title-row {
         margin-left: -110px !important;
     }
+
+    .sidebar-nav li {
+        font-weight: bold;
+        text-indent: 6px !important;
+    }
 }
 
 
