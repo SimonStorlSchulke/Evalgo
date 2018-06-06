@@ -59,10 +59,7 @@
 
     #post-area {
         margin-left: -100px;
-        width: calc(100% + 100px);
-    }
-
-    .post-area {
+        max-width: calc(100% + 100px) !important;
         word-wrap: break-word !important;
         font-size: 13px;
     }
@@ -72,8 +69,16 @@
     }
 }
 
-.post-area {
+
+
+#post-area {
     margin-top: 10px;
+    word-wrap: break-word !important;
+    max-width: 100%;
+}
+
+.post-area img {
+    max-width: 100%;
 }
 
 hr {
