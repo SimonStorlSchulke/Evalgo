@@ -33,11 +33,10 @@ func loggedIn(r *http.Request) (bool, int) {
 func HandleLogin(w http.ResponseWriter, r *http.Request) {
 
 	tpl := template.Must(template.ParseFiles("./templates/login.go.html"))
-
 	//create Student from Matrikelnumber and Redirect if not existing
 	matrikel, _ := strconv.ParseInt(r.FormValue("matrikel")[0:], 10, 64)
-	var st user.Student
 	var err error
+	var st user.Student
 
 	//dirty Fix. Clean me up pls
 	if matrikel != 0 {

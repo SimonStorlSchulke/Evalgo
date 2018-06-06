@@ -12,11 +12,12 @@ import (
 )
 
 type Config struct {
-	Port         string `json:"port"`
-	Course_name  string `json:"course_name"`
-	Open_course  bool   `json:"open_course"`
-	Group_number int    `json:"group_number"`
-	Root_url     string `json:"root_url"`
+	Port            string `json:"port"`
+	Course_name     string `json:"course_name"`
+	Open_course     bool   `json:"open_course"`
+	Group_number    int    `json:"group_number"`
+	Root_url        string `json:"root_url"`
+	Master_password string `json:"master_password"`
 }
 
 //Read courseconfig.json and return as Config struct

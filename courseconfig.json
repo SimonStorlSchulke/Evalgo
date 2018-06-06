@@ -3,5 +3,6 @@
     "course_name": "GoWebStuffFun",
     "group_number": 3,
     "open_course": true,
-    "root_url": "/GoWebStuff/"
+    "root_url": "/GoWebStuff/",
+    "master_password": "gulasch"
 }

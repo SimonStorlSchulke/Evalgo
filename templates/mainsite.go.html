@@ -27,9 +27,7 @@
         <li class="nav-item">
                 <a onclick="showInfo()" class="nav-link">Kursinfo</a>
         </li>
-        <li class="nav-item">
-            <a class="nav-link" href="./register">register</a>
-        </li>
+        
         {{if .CurrentUser.Vorname}}
         <li class="nav-item">
             <a onclick="deleteSession()" class="nav-link" href="./">logout</a>
@@ -38,6 +36,9 @@
             <a class="nav-link" href="./post">Post</a>
         </li>
         {{else}}
+        <li class="nav-item">
+                <a class="nav-link" href="./register">register</a>
+            </li>
         <li class="nav-item">
             <a class="nav-link" href="./login">login</a>
         </li>
@@ -87,12 +88,12 @@
     <div class="container post-container" style="width: auto; margin-top: 10px; margin-left: 250px;">
         <!--Aufgabenwähler-->
         <div class="row as-title-row">
-            <div onclick="postLink(0)" class="awb a0 btn btn-light">Alle</div>
-            <div onclick="postLink(1)" class="awb a1 btn btn-light">1</div>
-            <div onclick="postLink(2)" class="awb a2 btn btn-light">2</div>
-            <div onclick="postLink(3)" class="awb a3 btn btn-light">3</div>
-            <div onclick="postLink(4)" class="awb a4 btn btn-light">4</div>
-            <div onclick="postLink(5)" class="awb a5 btn btn-light">5</div>
+            <div onclick="loadAssignment(0)" class="awb a0 btn btn-light">Alle</div>
+            <div onclick="loadAssignment(1)" class="awb a1 btn btn-light">1</div>
+            <div onclick="loadAssignment(2)" class="awb a2 btn btn-light">2</div>
+            <div onclick="loadAssignment(3)" class="awb a3 btn btn-light">3</div>
+            <div onclick="loadAssignment(4)" class="awb a4 btn btn-light">4</div>
+            <div onclick="loadAssignment(5)" class="awb a5 btn btn-light">5</div>
         </div>
         <div class="row row-post-area">
                 <div class="sticky-top" id="post-area"></div>

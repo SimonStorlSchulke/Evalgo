@@ -31,26 +31,12 @@ window.onload = function () {
     }
 }
 
-//Ajax Post Loader
-function makeRequest(matrikel) {
-    window.currentMatrikel = matrikel;
-    if(currentMatrikel < 1) {
-        return
-    }
+//load content to #post-area
+function loadContent(src) {
     var xhr = new XMLHttpRequest();
 
-    //open request to /matrikel/post/number
-    var path = './';
-    var urlArray = window.location.pathname.split('/');
-
-    var postNumber = getPostNumber();
-
-    //Open path to postnumber, else take post 1
-    if (postNumber > 0) {
-        xhr.open('GET', path.concat(matrikel, "/post/", postNumber), true);
-    } else {
-        xhr.open('GET', path.concat("profile/" ,matrikel), true);
-    }
+    //Open path
+    xhr.open('GET', src, true);
 
     //handle response
     xhr.onreadystatechange = function () {
@@ -63,33 +49,47 @@ function makeRequest(matrikel) {
             });
         }
     };
-    
     xhr.send();
+}
+
+function makeRequest(matrikel) {
+    window.currentMatrikel = matrikel;
+    if(currentMatrikel < 1) {
+        return
+    }
+    //open request to /matrikel/post/number
+    var path = './';
+    var urlArray = window.location.pathname.split('/');
+    var postNumber = getPostNumber();
+    
+    //Open path to postnumber, else take post 1
+    if (postNumber > 0) {
+        loadContent(path.concat(matrikel, "/post/", postNumber));
+    } else {
+        loadContent(path.concat("profile/" ,matrikel));
+    }
+    querystring = "?nr=" + postNumber + "&mat=" + matrikel;
+    history.pushState("", document.title, querystring);
+}
+
+//Ajax Post Loader
+function loadAssignment(postNumber) {
+    var matrikel = new URL(document.URL).searchParams.get("mat");
+    if (postNumber > 0) {
+    loadContent("./".concat(matrikel, "/post/", postNumber));
+    } else {
+        loadContent("./".concat("profile/" ,matrikel));
+    }
+    $(".awb").removeClass("active");
+    classStr = ".a".concat(postNumber)
+    $(classStr).addClass("active");
     querystring = "?nr=" + postNumber + "&mat=" + matrikel;
     history.pushState("", document.title, querystring);
 }
 
 //Show Course Info in PostArea
 function showInfo() {
-
-    selectStudent(0);
-    $(".nav-item").removeClass("active");
-
-    var xhr = new XMLHttpRequest();
-    //Open path
-    xhr.open('GET', "./info", true);
-
-    //handle response
-    xhr.onreadystatechange = function () {
-        if (xhr.readyState === XMLHttpRequest.DONE && xhr.status === 200) {
-            document.getElementById("post-area").innerHTML = xhr.responseText;
-            //highlightJS
-            $('pre > code').each(function () {
-                hljs.highlightBlock(this);
-            });
-        }
-    };
-    xhr.send();
+    loadContent("./info")
 }
 
 function postLink(number) {

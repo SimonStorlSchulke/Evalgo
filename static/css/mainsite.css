@@ -19,10 +19,6 @@
 
 #post-area h5 {font-size: 18px;}
 
-.post-area {
-    top: 53px;
-}
-
 .navbar {
     z-index: 10000 !important;
 }
@@ -41,8 +37,6 @@
 .as-title-row {
     margin-left: 0px !important;
 }
-
-
 
 @media only screen and (max-width: 680px) {
 
@@ -66,7 +60,6 @@
     #post-area {
         margin-left: -100px;
         width: calc(100% + 100px);
-
     }
 
     .post-area {
@@ -77,6 +70,10 @@
     .as-title-row {
         margin-left: -110px !important;
     }
+}
+
+.post-area {
+    margin-top: 10px;
 }
 
 hr {
