@@ -26,7 +26,7 @@ window.onload = function () {
     if (getPostNumber() > 0) {
         classStr = classStr.concat(getPostNumber())
         $(classStr).addClass("active");
-    } else {
+    } else if (currentMatrikel == null){
         $(".a0").addClass("active");
         showInfo();
     }
