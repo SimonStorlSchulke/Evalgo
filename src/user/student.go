@@ -69,7 +69,7 @@ func (st *Student) GetAllPosts() ([]byte, []int) {
 			currentPost := []byte(currentPostStr)
 			postdata = st.GetPost(number)
 			currentPost = append(currentPost, postdata...)
-			hr := []byte("\n<hr>\n")
+			hr := []byte("\n\n<hr>\n")
 			currentPost = append(currentPost, hr...)
 			data = append(data, currentPost...)
 			postNumbers = append(postNumbers, number)
