@@ -38,9 +38,9 @@ func GetConfig() Config {
 }
 
 //Handles Main Site
-func HandleStudents(w http.ResponseWriter, r *http.Request) {
+func HandleMainSite(w http.ResponseWriter, r *http.Request) {
 	conf := GetConfig()
-	var currentUser user.Student
+	var currentUser user.User
 	var err error
 	loggedIn, mat := loggedIn(r)
 	if loggedIn {
@@ -48,11 +48,11 @@ func HandleStudents(w http.ResponseWriter, r *http.Request) {
 	}
 
 	//Read jsons:
-	studentlist := []user.Student{}
+	studentlist := []user.User{}
 	if conf.Open_course {
 		studentlist = user.ReadStudents()
 	} else {
-		studentlist = []user.Student{currentUser}
+		studentlist = []user.User{currentUser}
 	}
 
 	//apply group colors TODO expose colors in coursecofig.json
@@ -83,8 +83,8 @@ func HandleStudents(w http.ResponseWriter, r *http.Request) {
 
 	pageData := struct {
 		Nav             string
-		Students        []user.Student
-		CurrentUser     user.Student
+		Students        []user.User
+		CurrentUser     user.User
 		Portraits       []string
 		CurrentPortrait string
 		CourseName      string

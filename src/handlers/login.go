@@ -1,6 +1,8 @@
 package handlers
 
 import (
+	"crypto/md5"
+	"encoding/hex"
 	"fmt"
 	"net/http"
 	"strconv"
@@ -9,6 +11,22 @@ import (
 
 	"../user"
 )
+
+//Use md5 to Hash password
+func HashPassword(pw string) string {
+	hasher := md5.New()
+	hasher.Write([]byte(pw))
+	return hex.EncodeToString(hasher.Sum(nil))
+}
+
+//compare unhashed and hashed password and return true if they match
+func CheckPasswordHash(enteredPw, hashedPw string) bool {
+	if HashPassword(enteredPw) == hashedPw {
+		return true
+	} else {
+		return false
+	}
+}
 
 //Returns true and matrikel if password and matrikel match
 func loggedIn(r *http.Request) (bool, int) {
@@ -36,15 +54,15 @@ func HandleLogin(w http.ResponseWriter, r *http.Request) {
 	//create Student from Matrikelnumber and Redirect if not existing
 	matrikel, _ := strconv.ParseInt(r.FormValue("matrikel")[0:], 10, 64)
 	var err error
-	var st user.Student
+	var us user.User
 
 	//dirty Fix. Clean me up pls
 	if matrikel != 0 {
-		st, err = user.FromMatrikel(int(matrikel))
+		us, err = user.FromMatrikel(int(matrikel))
 		if err != nil {
 			fmt.Println(err)
 		}
-		hashedPassword := st.GetPassword()
+		hashedPassword := us.GetPassword()
 		enteredPassword := r.FormValue("password")
 
 		//set session if password correct

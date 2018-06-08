@@ -31,7 +31,7 @@ func HandlePosts(w http.ResponseWriter, r *http.Request) {
 	md := blackfriday.MarkdownCommon(student.GetPost(postNr))
 
 	pageData := struct {
-		St      user.Student
+		St      user.User
 		Nav     string
 		Profile string
 		PostNr  int

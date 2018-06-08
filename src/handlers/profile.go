@@ -29,7 +29,7 @@ func HandleProfile(w http.ResponseWriter, r *http.Request) {
 	md := blackfriday.MarkdownCommon(postData)
 
 	pageData := struct {
-		St          user.Student
+		St          user.User
 		Nav         string
 		Profile     string
 		PostNumbers []int
