@@ -9,6 +9,8 @@ import (
 	"path/filepath"
 	"strconv"
 	"strings"
+
+	"../courseconfig"
 )
 
 type User struct {
@@ -16,18 +18,48 @@ type User struct {
 	Nachname     string `json:"nachname"`
 	Matrikel     int    `json:"matrikel"`
 	Gruppenfarbe string
-	Passwort     string `json:"passwort"`
-	Authorized	bool	`json:"Authorized"`
+	Passwort     string   `json:"passwort"`
+	Usertype     Usertype `json:"usertype"`
 }
+
+// Defines the type of User
+type Usertype int
+
+const (
+	/*STUDENT has the rights to post assignments*/
+	STUDENT Usertype = iota + 1
+	/*TUTOR has the right to rate Assignments and give Feedback*/
+	TUTOR
+	/*ADMIN has the right to rate to create Assignments,
+	Assignments and give Feedback, unregister students,*/
+	ADMIN
+)
 
 //Constructor for User only Vorname, Nachname, Matrikel
 func NewUser(Vorname, Nachname string, Matrikel int, Passwort string) User {
-	return User{Vorname, Nachname, Matrikel, "", Passwort, false}
+	return User{Vorname, Nachname, Matrikel, "", Passwort, STUDENT}
 }
 
 //Constructor for User only Vorname, Nachname, Matrikel
 func NewAuthUser(Vorname, Nachname string, Matrikel int, Passwort string) User {
-	return User{Vorname, Nachname, Matrikel, "", Passwort, true}
+	return User{Vorname, Nachname, Matrikel, "", Passwort, TUTOR}
+}
+
+func (us User) IsAuthorized() bool {
+	if us.Usertype > STUDENT {
+		return true
+	} else {
+		return false
+	}
+}
+
+//Determines whether a user may post or not
+func (us User) MayPost() bool {
+	//If User is student or all Tutors can post TODO nicht immer GetConfig aufrufen weil Performance
+	if us.Usertype == STUDENT || courseconfig.GetConfig().Tutors_can_post {
+		return true
+	}
+	return false
 }
 
 //Returns a User based on given Matrikel
@@ -223,8 +255,16 @@ func ReadStudents() []User {
 			fmt.Println(err)
 			return nil
 		}
-
-		studentlist = append(studentlist, currentStudent)
+		if currentStudent.Usertype == STUDENT {
+			studentlist = append(studentlist, currentStudent)
+		} else if courseconfig.GetConfig().Tutors_can_post {
+			studentlist = prepend(studentlist, currentStudent)
+		}
 	}
 	return studentlist
+}
+
+//aplies user at beginning of Slice
+func prepend(arr []User, item User) []User {
+	return append([]User{item}, arr...)
 }

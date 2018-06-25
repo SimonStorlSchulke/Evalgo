@@ -9,6 +9,7 @@ import (
 	"strings"
 	"text/template"
 
+	"../courseconfig"
 	"../user"
 )
 
@@ -67,6 +68,40 @@ func HandleLogin(w http.ResponseWriter, r *http.Request) {
 
 		//set session if password correct
 		if CheckPasswordHash(enteredPassword, hashedPassword) {
+			cookieValue := fmt.Sprintf("%v<split>%s", strconv.Itoa(int(matrikel)), hashedPassword)
+			c := &http.Cookie{
+				Name:  "session",
+				Value: cookieValue,
+			}
+			http.SetCookie(w, c)
+			http.Redirect(w, r, "./", http.StatusSeeOther)
+		} else {
+			fmt.Print("user entered wrong password")
+		}
+	}
+	tpl.Execute(w, "")
+}
+
+func HandleAuthLogin(w http.ResponseWriter, r *http.Request) {
+
+	tpl := template.Must(template.ParseFiles("./templates/login.go.html"))
+	//create Student from Matrikelnumber and Redirect if not existing
+	matrikel, _ := strconv.ParseInt(r.FormValue("matrikel")[0:], 10, 64)
+	var err error
+	var us user.User
+
+	//dirty Fix. Clean me up pls
+	if matrikel != 0 {
+		us, err = user.FromMatrikel(int(matrikel))
+		if err != nil {
+			fmt.Println(err)
+		}
+		hashedPassword := us.GetPassword()
+		enteredPassword := r.FormValue("password")
+		enteredMasterPassword := r.FormValue("masterpassword")
+
+		//set session if password correct
+		if CheckPasswordHash(enteredPassword, hashedPassword) && enteredMasterPassword == courseconfig.GetConfig().Master_password {
 			cookieValue := fmt.Sprintf("%v<split>%s", strconv.Itoa(int(matrikel)), hashedPassword)
 			c := &http.Cookie{
 				Name:  "session",

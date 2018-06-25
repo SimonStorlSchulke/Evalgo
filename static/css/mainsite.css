@@ -114,6 +114,10 @@ hr {
     max-width: 185px;
 }
 
+.sidebar-authorized-user {
+    color: red;
+}
+
 .sidebar-matrikel {
     margin-bottom: 0px;
     font-size: 12px;

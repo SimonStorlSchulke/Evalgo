@@ -32,9 +32,11 @@
         <li class="nav-item">
             <a onclick="deleteSession()" class="nav-link" href="./">logout</a>
         </li>
+        {{if .CurrentUser.MayPost}}
         <li class="nav-item">
             <a class="nav-link" href="./post">Post</a>
         </li>
+        {{end}}
         {{else}}
         <li class="nav-item">
                 <a class="nav-link" href="./register">register</a>
@@ -43,13 +45,15 @@
             <a class="nav-link" href="./login">login</a>
         </li>
         {{end}}
+
+
         </ul>
         <!--right alligned-->
         <ul class="navbar-nav ml-auto">
                 <li class="nav-item">
                     {{if .CurrentUser.Vorname}}
                     <a class="nav-link" href="./profile/{{.CurrentUser.Matrikel}}">
-                        Eingeloggt als {{.CurrentUser.Vorname}} {{.CurrentUser.Nachname}}
+                        Eingeloggt als {{if .CurrentUser.IsAuthorized}}authorized{{end}} {{.CurrentUser.Vorname}} {{.CurrentUser.Nachname}}
                         <i style="font-size: 13px">
                             #{{.CurrentUser.Matrikel}}</i>
                         <img style="background-image: url({{.CurrentPortrait}});" id="navbar-portrait">
@@ -76,9 +80,9 @@
             {{$st := .Students}} {{$pt := .Portraits}} {{range $index, $st := .Students}}
             <li class="{{.Matrikel}}" style="background: {{.Gruppenfarbe}};" onclick="selectStudent({{.Matrikel}}); makeRequest({{.Matrikel}})">
                 <div class="sidebar-st {{.Matrikel}}">
-                    <div class="sidebar-name">{{.Vorname}} {{.Nachname}}</div>
+                    <div class="sidebar-name {{if .IsAuthorized}}sidebar-authorized-user{{end}}">{{.Vorname}} {{.Nachname}}</div>
                     <img align="middle" style="background-image: url({{index $pt $index}});" class="sidebar-portrait">
-                    <p class="sidebar-matrikel">{{.Matrikel}}</p>
+                    <p class="sidebar-matrikel">{{if .IsAuthorized}}Tutor{{else}}{{.Matrikel}}{{end}}</p>
                 </div>
                 </a>
             </li>

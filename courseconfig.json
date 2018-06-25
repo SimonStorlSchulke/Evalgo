@@ -4,5 +4,6 @@
     "group_number": 3,
     "open_course": true,
     "root_url": "/GoWebStuff/",
-    "master_password": "gulasch"
+    "master_password": "gulasch",
+    "tutors_can_post": true
 }

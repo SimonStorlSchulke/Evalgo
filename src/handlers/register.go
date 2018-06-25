@@ -17,11 +17,14 @@ func HandleRegister(w http.ResponseWriter, r *http.Request) {
 	passwort := HashPassword(r.FormValue("passwort"))
 	matrikel, _ := strconv.ParseInt(r.FormValue("matrikel")[0:], 10, 64)
 
-	err := user.NewUser(r.FormValue("vorname"), nachname, int(matrikel), passwort).Register()
+	registeredUser := user.NewUser(r.FormValue("vorname"), nachname, int(matrikel), passwort)
+
+	err := registeredUser.Register()
 
 	//Redirect if Registration successfull
 	if err == nil {
 		http.Redirect(w, r, "./", http.StatusSeeOther)
+		//TODO: Login directly
 	}
 	tpl.Execute(w, vorname)
 }

@@ -6,11 +6,12 @@ import (
 	"os"
 	"time"
 
+	"./courseconfig"
 	"./handlers"
 	"github.com/gorilla/mux"
 )
 
-var conf handlers.Config = handlers.GetConfig()
+var conf courseconfig.Config = courseconfig.GetConfig()
 
 func genUrl(str string) string {
 	fmt.Printf("%s%s\n", conf.Root_url, str)
@@ -29,6 +30,7 @@ func main() {
 
 	rtr.HandleFunc(genUrl("register"), handlers.HandleRegister)
 	rtr.HandleFunc(genUrl("login"), handlers.HandleLogin)
+	rtr.HandleFunc(genUrl("authlogin"), handlers.HandleAuthLogin)
 	rtr.HandleFunc(genUrl("portrait"), handlers.PortraitUpload)
 	rtr.HandleFunc(genUrl("post"), handlers.HandlePostForm)
 	rtr.HandleFunc(genUrl("info"), handlers.HandleInfo)
@@ -46,8 +48,8 @@ func main() {
 		conf.Port, conf.Course_name, conf.Group_number, conf.Open_course)
 
 	//Start Server or exit with error message alter 5 seconds
-	//err := http.ListenAndServeTLS(conf.Port, "../.tls/fullchain.pem", "../.tls/privkey.pem", nil)
-	err := http.ListenAndServe(":8080", nil)
+	err := http.ListenAndServeTLS(conf.Port, "../.tls/fullchain.pem", "../.tls/privkey.pem", nil)
+	//err := http.ListenAndServe(":8080", nil)
 	if err != nil {
 		fmt.Println(err)
 		time.Sleep(time.Second * 5)
