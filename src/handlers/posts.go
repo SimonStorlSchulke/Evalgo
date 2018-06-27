@@ -32,12 +32,10 @@ func HandlePosts(w http.ResponseWriter, r *http.Request) {
 
 	pageData := struct {
 		St      user.User
-		Nav     string
 		Profile string
 		PostNr  int
 	}{
 		St:      student,
-		Nav:     getNav(),
 		Profile: string(md[:]),
 		PostNr:  postNr,
 	}

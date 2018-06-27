@@ -45,21 +45,15 @@ func NewAuthUser(Vorname, Nachname string, Matrikel int, Passwort string) User {
 	return User{Vorname, Nachname, Matrikel, "", Passwort, TUTOR}
 }
 
+//check if user is authorized
 func (us User) IsAuthorized() bool {
-	if us.Usertype > STUDENT {
-		return true
-	} else {
-		return false
-	}
+	return us.Usertype > STUDENT
 }
 
 //Determines whether a user may post or not
 func (us User) MayPost() bool {
 	//If User is student or all Tutors can post TODO nicht immer GetConfig aufrufen weil Performance
-	if us.Usertype == STUDENT || courseconfig.GetConfig().Tutors_can_post {
-		return true
-	}
-	return false
+	return us.Usertype == STUDENT || courseconfig.GetConfig().Tutors_can_post
 }
 
 //Returns a User based on given Matrikel
@@ -78,18 +72,6 @@ func FromMatrikel(matrikel int) (User, error) {
 	return us, err
 }
 
-//Converts an int to a three digit string (for example 5 -> "005")
-func intToString(num int) (string, error) {
-	if num > 999 || num < 0 {
-		return "", errors.New("Number must be < than 1000 and > 0")
-	}
-	str := strconv.Itoa(num)
-	for mDg := 3 - len(str); mDg > 0; mDg-- {
-		str = "0" + str
-	}
-	return str, nil
-}
-
 //Post a string to /Userdata/Students/[st.matrikel]/post_[postnumber].md
 func (us *User) PostNr(str string, postNumber int) {
 	nrStr, err := intToString(postNumber)
@@ -97,7 +79,6 @@ func (us *User) PostNr(str string, postNumber int) {
 		ioutil.WriteFile(fmt.Sprintf("./Userdata/Students/%v/post_%s.md", us.Matrikel, nrStr), []byte(str), 0777)
 		fmt.Println(us.Vorname, us.Nachname, "created a new post Nr.", postNumber)
 	}
-	//TODO except
 }
 
 //Returns a post as []byte
@@ -119,6 +100,7 @@ func (us *User) GetAllPosts() ([]byte, []int) {
 	for _, p := range posts {
 		number, err := strconv.Atoi(strings.Trim(p.Name(), "post_.md"))
 		if err == nil {
+			//TODO: clean up hard-coded html
 			currentPostStr := fmt.Sprintf("# <div class='post-header text-primary'>Aufgabe %v</div>\n", number)
 			currentPost := []byte(currentPostStr)
 			postdata = us.GetPost(number)
@@ -132,7 +114,7 @@ func (us *User) GetAllPosts() ([]byte, []int) {
 	return data, postNumbers
 }
 
-//Return path to user portrait TODO: jpg.
+//Return path to user portrait TODO: jpg support
 func (us *User) GetPortraitPath() string {
 	url := fmt.Sprintf("./portraits/%v.png", us.Matrikel)
 	filepath := fmt.Sprintf("./Userdata/Portraits/%v.png", us.Matrikel)
@@ -141,11 +123,6 @@ func (us *User) GetPortraitPath() string {
 		return "./portraits/default.png"
 	}
 	return url
-}
-
-//Returns Folderpath to Studentdata as string
-func (us *User) getPath() string {
-	return filepath.Join(".", "Userdata", "Students", fmt.Sprintf("%v", us.Matrikel))
 }
 
 //Returns Password of User
@@ -241,7 +218,6 @@ func ReadStudents() []User {
 
 	//Loop through Folders and create User Slice
 	for _, file := range folders {
-		//TODO user FromMatrikel here
 		path = fmt.Sprintf("./Userdata/Students/%s/profile.json", file.Name())
 
 		jsondata, err = ioutil.ReadFile(path)
@@ -264,7 +240,26 @@ func ReadStudents() []User {
 	return studentlist
 }
 
+//---Util---
+
+//Returns Folderpath to Studentdata as string
+func (us *User) getPath() string {
+	return filepath.Join(".", "Userdata", "Students", fmt.Sprintf("%v", us.Matrikel))
+}
+
 //aplies user at beginning of Slice
 func prepend(arr []User, item User) []User {
 	return append([]User{item}, arr...)
+}
+
+//Converts an int to a three digit string (for example 5 -> "005")
+func intToString(num int) (string, error) {
+	if num > 999 || num < 0 {
+		return "", errors.New("Number must be < than 1000 and > 0")
+	}
+	str := strconv.Itoa(num)
+	for mDg := 3 - len(str); mDg > 0; mDg-- {
+		str = "0" + str
+	}
+	return str, nil
 }

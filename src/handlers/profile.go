@@ -30,12 +30,10 @@ func HandleProfile(w http.ResponseWriter, r *http.Request) {
 
 	pageData := struct {
 		St          user.User
-		Nav         string
 		Profile     string
 		PostNumbers []int
 	}{
 		St:          student,
-		Nav:         getNav(),
 		Profile:     string(md[:]),
 		PostNumbers: postNumbers,
 	}

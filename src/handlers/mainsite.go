@@ -54,14 +54,12 @@ func HandleMainSite(w http.ResponseWriter, r *http.Request) {
 	}
 
 	pageData := struct {
-		Nav             string
 		Students        []user.User
 		CurrentUser     user.User
 		Portraits       []string
 		CurrentPortrait string
 		CourseName      string
 	}{
-		Nav:             getNav(),
 		Students:        studentlist,
 		CurrentUser:     currentUser,
 		Portraits:       portraits,
