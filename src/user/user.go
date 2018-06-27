@@ -45,12 +45,12 @@ func NewAuthUser(Vorname, Nachname string, Matrikel int, Passwort string) User {
 	return User{Vorname, Nachname, Matrikel, "", Passwort, TUTOR}
 }
 
-//Returns true if User is of Usertype > Student
 func (us User) IsAuthorized() bool {
 	if us.Usertype > STUDENT {
 		return true
+	} else {
+		return false
 	}
-	return false
 }
 
 //Determines whether a user may post or not
