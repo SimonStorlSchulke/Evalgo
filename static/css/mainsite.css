@@ -1,3 +1,10 @@
+.feedback-post {
+    background: red;
+    color: black;
+    display: block;
+    position: inherit;
+}
+
 .sidebar-portrait {
     height: 50px;
     width: 50px;

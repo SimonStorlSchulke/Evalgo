@@ -21,7 +21,7 @@ func HandleMainSite(w http.ResponseWriter, r *http.Request) {
 
 	//Read jsons:
 	studentlist := []user.User{}
-	if conf.Open_course {
+	if conf.Open_course || currentUser.IsAuthorized() {
 		studentlist = user.ReadStudents()
 	} else {
 		studentlist = []user.User{currentUser}

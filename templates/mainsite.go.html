@@ -76,7 +76,8 @@
                 </div>
                 </a>
             </li>
-            <!--Students-->
+            <!--Show Students when logged in-->
+            {{if .CurrentUser.Vorname}}
             {{$st := .Students}} {{$pt := .Portraits}} {{range $index, $st := .Students}}
             <li class="{{.Matrikel}}" style="background: {{.Gruppenfarbe}};" onclick="selectStudent({{.Matrikel}}); makeRequest({{.Matrikel}})">
                 <div class="sidebar-st {{.Matrikel}}">
@@ -86,6 +87,7 @@
                 </div>
                 </a>
             </li>
+            {{end}}
             {{end}}
         </ul>
     </div>
@@ -103,6 +105,7 @@
                 <div class="sticky-top" id="post-area"></div>
         </div>
     </div>
+
 </body>
 
 </html>

@@ -19,8 +19,7 @@ Ordnerstruktur:
     - 🗀 Students
         - ...🗀 [Matrikelnummer]
             - profile.json
-            - posts.md (soon legacy)
             - post_[postnumber].md
-            - post_1.md
-            - post_2.md
+            - post_001.md
+            - post_002.md
             - post_...
