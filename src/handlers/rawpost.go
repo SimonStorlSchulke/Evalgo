@@ -5,7 +5,6 @@ import (
 	"net/http"
 	"strconv"
 
-	"../user"
 	"github.com/gorilla/mux"
 )
 
@@ -13,21 +12,24 @@ import (
 func HandleRawPosts(w http.ResponseWriter, r *http.Request) {
 
 	//Get matrikel from URL
-	params := mux.Vars(r)
-	matrikelSt := params["matrikel"]
-	matrikel, _ := strconv.Atoi(matrikelSt)
+	us, err := studentFromURL(r)
 
-	//Display Error Message when matrikel does not exist
-	student, err := user.FromMatrikel(matrikel)
-	if err != nil {
-		fmt.Fprintf(w, "Error reading Matrikelnumber %v for accessing raw post", matrikel)
+	//Check session
+	if !checkViewPermission(us, r) {
+		fmt.Fprintf(w, "Permission Denied")
 		return
 	}
-	postNrSt := params["postnr"]
+
+	//Display Error Message when matrikel does not exist
+	if err != nil {
+		fmt.Fprintf(w, "Error reading Matrikelnumber %v for accessing raw post", us.Matrikel)
+		return
+	}
+	postNrSt := mux.Vars(r)["postnr"]
 	postNr, _ := strconv.Atoi(postNrSt)
 
 	//Parse Markdown to []byte
-	content := student.GetPost(postNr)
+	content := us.GetPost(postNr)
 	fmt.Fprint(w, string(content[:]))
 
 }

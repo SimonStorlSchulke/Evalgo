@@ -1,9 +1,10 @@
 {
     "port": ":8080",
-    "course_name": "GoWebStuffFun",
+    "course_name": "Aeibom",
     "group_number": 3,
     "open_course": false,
     "root_url": "/GoWebStuff/",
     "master_password": "gulasch",
-    "tutors_can_post": true
+    "tutors_can_post": true,
+    "classes":[ "MIB", "MKB", "OMB" ]
 }

@@ -25,6 +25,7 @@ func HandleMainSite(w http.ResponseWriter, r *http.Request) {
 		studentlist = user.ReadStudents()
 	} else {
 		studentlist = []user.User{currentUser}
+		//TODO studenten auch Posts von authorisierte Nutzern anzeigen
 	}
 
 	//apply group colors TODO expose colors in coursecofig.json

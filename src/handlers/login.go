@@ -24,9 +24,8 @@ func HashPassword(pw string) string {
 func CheckPasswordHash(enteredPw, hashedPw string) bool {
 	if HashPassword(enteredPw) == hashedPw {
 		return true
-	} else {
-		return false
 	}
+	return false
 }
 
 //Returns true and matrikel if password and matrikel match

@@ -3,11 +3,9 @@ package handlers
 import (
 	"fmt"
 	"net/http"
-	"strconv"
 	"text/template"
 
 	"../user"
-	"github.com/gorilla/mux"
 	"github.com/russross/blackfriday"
 )
 
@@ -15,12 +13,16 @@ import (
 func HandleProfile(w http.ResponseWriter, r *http.Request) {
 
 	//Get Matrikel from mux Parameters
-	params := mux.Vars(r)
-	matrikelSt := params["matrikel"]
-	matrikel, _ := strconv.Atoi(matrikelSt)
-	student, err := user.FromMatrikel(matrikel)
+	student, err := studentFromURL(r)
+
+	//Check session
+	if !checkViewPermission(student, r) {
+		fmt.Fprintf(w, "Permission Denied")
+		return
+	}
+
 	if err != nil {
-		fmt.Fprintf(w, "There is no Student with the Matrikel %v registered.", matrikel)
+		fmt.Fprintf(w, "There is no Student with the Matrikel %v registered.", student.Matrikel)
 		return
 	}
 
