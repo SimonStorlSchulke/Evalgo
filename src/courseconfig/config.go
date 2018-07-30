@@ -14,6 +14,8 @@ type Config struct {
 	Root_url        string `json:"root_url"`
 	Master_password string `json:"master_password"`
 	Tutors_can_post bool   `json:"tutors_can_post"`
+	Enable_grades   bool   `json:"enable_grades"`
+	Enable_cards    bool   `json:"enable_cards"`
 }
 
 //Read courseconfig.json and return as Config struct

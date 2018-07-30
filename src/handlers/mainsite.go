@@ -61,12 +61,16 @@ func HandleMainSite(w http.ResponseWriter, r *http.Request) {
 		Portraits       []string
 		CurrentPortrait string
 		CourseName      string
+		GradesEnabled   bool
+		CardsEnabled    bool
 	}{
 		Students:        studentlist,
 		CurrentUser:     currentUser,
 		Portraits:       portraits,
 		CurrentPortrait: currentUser.GetPortraitPath(),
 		CourseName:      conf.Course_name,
+		GradesEnabled:   conf.Enable_grades,
+		CardsEnabled:    conf.Enable_cards,
 	}
 
 	tmpl.Execute(w, pageData)

@@ -91,7 +91,7 @@
             {{end}}
         </ul>
     </div>
-    <div class="container post-container" style="width: auto; margin-top: 10px; margin-left: 250px;">
+    <div class="container post-container" style="{{if .CurrentUser.IsAuthorized}}margin-bottom: 200px; {{end}} width: auto; margin-top: 10px; margin-left: 250px;">
         <!--Aufgabenwähler-->
         <div class="row as-title-row">
             <div onclick="loadAssignment(0)" class="awb a0 btn btn-light">Alle</div>
@@ -102,7 +102,26 @@
             <div onclick="loadAssignment(5)" class="awb a5 btn btn-light">5</div>
         </div>
         <div class="row row-post-area">
-                <div class="sticky-top" id="post-area"></div>
+                
+                <div class="sticky-top" id="post-area">
+                </div>
+                {{if .CurrentUser.IsAuthorized}}
+                <div id="feedback">
+                    <h5>Feedback geben</h5>
+                    <textarea id="feedback-text" rows=5 placeholder="Feedback Text eingeben" oninput="" class="form-control" type="text" name="feedbackText"></textarea>
+                    
+                    {{if .GradesEnabled}}
+                    <label for="matrikel">Note: </label>
+                    <input id="grade" min=1 max=5 style="width: 50px;" value=0 class="" form-control type="number" name="grade">
+                    {{end}}
+
+                    {{if .CardsEnabled}}
+                    KARTEN
+                    {{end}}
+
+                    <input  disabled="true" id="submit-button" class="float-right btn btn-primary" type="submit" value="Post">
+                </div>
+                {{end}}
         </div>
     </div>
 

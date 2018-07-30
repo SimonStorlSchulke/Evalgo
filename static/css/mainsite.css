@@ -16,6 +16,25 @@
     border-radius: 25px;
 }
 
+#feedback {
+    background: #ced2d8;
+    position: fixed;
+    bottom: 0px;
+    z-index: 2000;
+    height: 200px;
+    right: 0px;
+    padding: 0px 10px;;
+    left: 250px;
+    max-width: 700px;
+    border-radius: 0px 10px 0px 0px;
+    box-shadow: 3px -3px 10px rgb(211, 211, 211);
+}
+
+#feedback-text {
+    height: 120px !important;
+    margin-bottom: 5px;
+}
+
 #post-area h1 {font-size: 26px;}
 
 #post-area h2 {font-size: 24px;}
@@ -46,6 +65,12 @@
 }
 
 @media only screen and (max-width: 680px) {
+
+    
+    #feedback {
+        margin-left: -100px;
+        border-radius: 0px;
+    }
 
     .sidebar-portrait {
         display: none;
