@@ -8,7 +8,6 @@ import (
 	"os"
 	"path/filepath"
 	"strconv"
-	"strings"
 
 	"../courseconfig"
 )
@@ -70,48 +69,6 @@ func FromMatrikel(matrikel int) (User, error) {
 		fmt.Println(err)
 	}
 	return us, err
-}
-
-//Post a string to /Userdata/Students/[st.matrikel]/post_[postnumber].md
-func (us *User) PostNr(str string, postNumber int) {
-	nrStr, err := intToString(postNumber)
-	if err == nil {
-		ioutil.WriteFile(fmt.Sprintf("./Userdata/Students/%v/post_%s.md", us.Matrikel, nrStr), []byte(str), 0777)
-		fmt.Println(us.Vorname, us.Nachname, "created a new post Nr.", postNumber)
-	}
-}
-
-//Returns a post as []byte
-func (us *User) GetPost(postNr int) []byte {
-	nrStr, _ := intToString(postNr)
-	post, err := ioutil.ReadFile(fmt.Sprintf("./Userdata/Students/%v/post_%s.md", us.Matrikel, nrStr))
-	if err != nil {
-		return []byte("Noch keine Abgabe.")
-	}
-	return post
-}
-
-//Returns []byte containing all posts of student and []int of postNumbers
-func (us *User) GetAllPosts() ([]byte, []int) {
-	posts, _ := ioutil.ReadDir(fmt.Sprintf("./Userdata/Students/%v/", us.Matrikel))
-	var postdata []byte
-	var data []byte
-	var postNumbers []int
-	for _, p := range posts {
-		number, err := strconv.Atoi(strings.Trim(p.Name(), "post_.md"))
-		if err == nil {
-			//TODO: clean up hard-coded html
-			currentPostStr := fmt.Sprintf("# <div class='post-header text-primary'>Aufgabe %v</div>\n", number)
-			currentPost := []byte(currentPostStr)
-			postdata = us.GetPost(number)
-			currentPost = append(currentPost, postdata...)
-			hr := []byte("\n\n<hr>\n")
-			currentPost = append(currentPost, hr...)
-			data = append(data, currentPost...)
-			postNumbers = append(postNumbers, number)
-		}
-	}
-	return data, postNumbers
 }
 
 //Return path to user portrait TODO: jpg support
@@ -238,6 +195,47 @@ func ReadStudents() []User {
 		}
 	}
 	return studentlist
+}
+
+/*ReadStudents reads all profile.json files in /Userdata/Students
+and return it as a slice of Students*/
+func ReadTutors() []User {
+	//Read Folders
+	folders, err := ioutil.ReadDir("./Userdata/Students")
+	if err != nil {
+		fmt.Println(err)
+		return nil
+	}
+
+	if !courseconfig.GetConfig().Tutors_can_post {
+		return nil
+	}
+
+	var currentUser User
+	var path string
+	var jsondata []byte
+	userlist := make([]User, 0)
+
+	//Loop through Folders and create User Slice
+	for _, file := range folders {
+		path = fmt.Sprintf("./Userdata/Students/%s/profile.json", file.Name())
+
+		jsondata, err = ioutil.ReadFile(path)
+		if err != nil {
+			fmt.Println(err)
+			return nil
+		}
+
+		err = json.Unmarshal(jsondata, &currentUser)
+		if err != nil {
+			fmt.Println(err)
+			return nil
+		}
+		if currentUser.Usertype > STUDENT {
+			userlist = append(userlist, currentUser)
+		}
+	}
+	return userlist
 }
 
 //---Util---

@@ -14,7 +14,7 @@ func HandleRawPosts(w http.ResponseWriter, r *http.Request) {
 	//Get matrikel from URL
 	us, err := studentFromURL(r)
 
-	//Check session
+	//Check Permission
 	if !checkViewPermission(us, r) {
 		fmt.Fprintf(w, "Permission Denied")
 		return
@@ -31,5 +31,4 @@ func HandleRawPosts(w http.ResponseWriter, r *http.Request) {
 	//Parse Markdown to []byte
 	content := us.GetPost(postNr)
 	fmt.Fprint(w, string(content[:]))
-
 }

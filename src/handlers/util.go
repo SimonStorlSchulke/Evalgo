@@ -1,7 +1,6 @@
 package handlers
 
 import (
-	"fmt"
 	"net/http"
 	"strconv"
 
@@ -25,18 +24,21 @@ func checkViewPermission(us user.User, r *http.Request) bool {
 
 	loggedIn, loggedInMat := loggedIn(r)
 	if !loggedIn {
-		fmt.Println("1")
 		return false
 	}
 
 	requester, err := user.FromMatrikel(loggedInMat)
 	if err != nil {
-		fmt.Println("2")
 		return false
 	}
 
 	if requester.Matrikel == us.Matrikel || courseconfig.GetConfig().Open_course || requester.IsAuthorized() {
 		return true
 	}
+
+	if us.IsAuthorized() {
+		return true
+	}
+
 	return false
 }

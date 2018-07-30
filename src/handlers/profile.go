@@ -15,7 +15,7 @@ func HandleProfile(w http.ResponseWriter, r *http.Request) {
 	//Get Matrikel from mux Parameters
 	student, err := studentFromURL(r)
 
-	//Check session
+	//Check Permission
 	if !checkViewPermission(student, r) {
 		fmt.Fprintf(w, "Permission Denied")
 		return

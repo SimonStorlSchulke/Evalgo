@@ -2,7 +2,7 @@
     "port": ":8080",
     "course_name": "Aeibom",
     "group_number": 3,
-    "open_course": false,
+    "open_course": true,
     "root_url": "/GoWebStuff/",
     "master_password": "gulasch",
     "tutors_can_post": true,

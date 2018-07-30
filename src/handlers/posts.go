@@ -19,7 +19,7 @@ func HandlePosts(w http.ResponseWriter, r *http.Request) {
 		fmt.Println("Error reading Matrikelnumber")
 	}
 
-	//Check session
+	//Check Permission
 	if !checkViewPermission(us, r) {
 		fmt.Fprintf(w, "Permission Denied")
 		return

@@ -24,7 +24,8 @@ func HandleMainSite(w http.ResponseWriter, r *http.Request) {
 	if conf.Open_course || currentUser.IsAuthorized() {
 		studentlist = user.ReadStudents()
 	} else {
-		studentlist = []user.User{currentUser}
+		studentlist = user.ReadTutors()
+		studentlist = append(studentlist, currentUser)
 		//TODO studenten auch Posts von authorisierte Nutzern anzeigen
 	}
 

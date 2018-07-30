@@ -12,6 +12,7 @@ func HandlePdf(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
+	//Check Permission
 	if !checkViewPermission(us, r) {
 		fmt.Fprintf(w, "Permission Denied")
 		return
