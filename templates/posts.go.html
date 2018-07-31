@@ -12,14 +12,22 @@
     <script src="../../static/highlight/highlight.pack.js"></script>
 </head>
 
-<!--TODO: alles hier drüber kann für AJAX Version rausgenommen werden-->
 <body>
     <div class="container-fluid post-area">
         <!--Nav nicht benötigt - TODO-->
         <h3 id="navigation" style="padding-top: 15px;"><a class="btn btn-primary" href="../../?nr={{.PostNr}}&mat={{.St.Matrikel}}">Fertig</a></h3>
         <h2 style="margin-bottom: 0px;">{{.St.Vorname}} {{.St.Nachname}} - Aufgabe {{.PostNr}}</h2>
         <p class="text-muted">{{.St.Matrikel}}</p>
-        
+
+        <!--Feedbackbereich-->
+        {{if .FbIs}}
+        <div id="fb" class="{{if .Fb.IsYellow}}yellow{{else if .Fb.IsRed}}red{{end}}">
+            <h3>Feedback:</h3>
+            {{.Fb.Text}}
+            <br>
+            <b>Note: {{.Fb.Grade}}</b>
+        </div>
+        {{end}}
         <div>{{.Profile}}</div>
         <script>hljs.initHighlightingOnLoad();</script>
     </div>

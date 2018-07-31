@@ -76,19 +76,30 @@ func HandleMainSite(w http.ResponseWriter, r *http.Request) {
 	}
 
 	//Feedback
-	selectedUsStr, _ := r.URL.Query()["mat"]
-	selectedPostStr, _ := r.URL.Query()["nr"]
+	selectedUsStr, paramsOk := r.URL.Query()["mat"]
+	selectedPostStr, paramsOk := r.URL.Query()["nr"]
 
-	selectedUs, _ := strconv.Atoi(selectedUsStr[0])
-	selectedPost, _ := strconv.Atoi(selectedPostStr[0])
+	if paramsOk {
+		selectedUs, _ := strconv.Atoi(selectedUsStr[0])
+		selectedPost, _ := strconv.Atoi(selectedPostStr[0])
 
-	fbText := r.FormValue("fb-text")
-	fbGrade, _ := strconv.Atoi(r.FormValue("fb-grade"))
-	//fbCard, _ := strconv.Atoi(r.FormValue("feedback-text"))
-	//fbCard := 0
-	feedback := user.NewFeedback(fbText, fbGrade, 0)
-	user.StoreFeedback(selectedUs, selectedPost, feedback)
-	fmt.Println(feedback)
+		if selectedUs > 0 && selectedPost > 0 {
+
+			fbText := r.FormValue("fb-text")
+			fbGrade, _ := strconv.Atoi(r.FormValue("fb-grade"))
+			fbCard, _ := strconv.Atoi(r.FormValue("fb-card"))
+
+			//Store FB if not empty
+			if fbGrade != 0 && fbText != "" {
+				feedback := user.NewFeedback(fbText, fbGrade, fbCard)
+				err = user.StoreFeedback(selectedUs, selectedPost, feedback)
+				if err != nil {
+					fmt.Println(err)
+				}
+			}
+
+		}
+	}
 
 	tmpl.Execute(w, pageData)
 }

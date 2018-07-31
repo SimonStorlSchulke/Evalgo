@@ -32,14 +32,28 @@ func HandlePosts(w http.ResponseWriter, r *http.Request) {
 	//Parse Markdown to []byte
 	md := blackfriday.MarkdownCommon(us.GetPost(postNr))
 
+	//bool to check if there is Feedback in Template
+	FbIs := false
+
+	fb, err := user.GetFeedback(us.Matrikel, postNr)
+	if err == nil {
+		FbIs = true
+	} else {
+		fmt.Println(err)
+	}
+
 	pageData := struct {
 		St      user.User
 		Profile string
 		PostNr  int
+		FbIs    bool
+		Fb      user.Feedback
 	}{
 		St:      us,
 		Profile: string(md[:]),
 		PostNr:  postNr,
+		FbIs:    FbIs,
+		Fb:      fb,
 	}
 
 	tpl := template.Must(template.ParseFiles("./templates/posts.go.html"))

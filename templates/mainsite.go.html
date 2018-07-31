@@ -8,6 +8,8 @@
     <link rel="stylesheet" type="text/css" href="./static/bootstrap/bootstrap.min.css">
     <link rel="stylesheet" type="text/css" href="./static/highlight/styles/googlecode.css">
     <link rel="stylesheet" type="text/css" href="./static/css/mainsite.css">
+    <link rel="stylesheet" href="./static/css/feedback.css">
+
     <script src="./static/jquery-3.3.1.min.js"></script>
     <script src="./static/bootstrap/bootstrap.min.js"></script>
     <script src="./static/highlight/highlight.pack.js"></script>
@@ -117,7 +119,11 @@
                     {{end}}
 
                     {{if .CardsEnabled}}
-                    KARTEN
+                    <select name="fb-card">
+                        <option value="0">Keine Karte</option>
+                        <option style="background: yellow" value="1">Gelb</option>
+                        <option style="background: lightcoral" value="2">Rot</option>
+                      </select>
                     {{end}}
 
                     <input  id="feedback-submit" class="float-right btn btn-primary" type="submit" value="Submit">

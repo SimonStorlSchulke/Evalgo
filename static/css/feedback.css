@@ -1,0 +1,12 @@
+#fb {
+    background: #bcffcc;
+    padding: 10px;
+    margin-bottom: 10px;
+}
+.yellow {
+    background: #fffa77 !important;
+}
+.red {
+    background: #ff3d3d !important;
+    color: white;
+}
