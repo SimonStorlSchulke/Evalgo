@@ -1,8 +1,10 @@
 package handlers
 
 import (
+	"fmt"
 	"log"
 	"net/http"
+	"strconv"
 	"text/template"
 
 	"../courseconfig"
@@ -72,6 +74,21 @@ func HandleMainSite(w http.ResponseWriter, r *http.Request) {
 		GradesEnabled:   conf.Enable_grades,
 		CardsEnabled:    conf.Enable_cards,
 	}
+
+	//Feedback
+	selectedUsStr, _ := r.URL.Query()["mat"]
+	selectedPostStr, _ := r.URL.Query()["nr"]
+
+	selectedUs, _ := strconv.Atoi(selectedUsStr[0])
+	selectedPost, _ := strconv.Atoi(selectedPostStr[0])
+
+	fbText := r.FormValue("fb-text")
+	fbGrade, _ := strconv.Atoi(r.FormValue("fb-grade"))
+	//fbCard, _ := strconv.Atoi(r.FormValue("feedback-text"))
+	//fbCard := 0
+	feedback := user.NewFeedback(fbText, fbGrade, 0)
+	user.StoreFeedback(selectedUs, selectedPost, feedback)
+	fmt.Println(feedback)
 
 	tmpl.Execute(w, pageData)
 }
