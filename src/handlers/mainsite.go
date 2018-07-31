@@ -63,16 +63,14 @@ func HandleMainSite(w http.ResponseWriter, r *http.Request) {
 		Portraits       []string
 		CurrentPortrait string
 		CourseName      string
-		GradesEnabled   bool
-		CardsEnabled    bool
+		Conf            courseconfig.Config
 	}{
 		Students:        studentlist,
 		CurrentUser:     currentUser,
 		Portraits:       portraits,
 		CurrentPortrait: currentUser.GetPortraitPath(),
 		CourseName:      conf.Course_name,
-		GradesEnabled:   conf.Enable_grades,
-		CardsEnabled:    conf.Enable_cards,
+		Conf:            conf,
 	}
 
 	//Feedback
@@ -90,7 +88,7 @@ func HandleMainSite(w http.ResponseWriter, r *http.Request) {
 			fbCard, _ := strconv.Atoi(r.FormValue("fb-card"))
 
 			//Store FB if not empty
-			if fbGrade != 0 && fbText != "" {
+			if fbGrade != 0 && fbText != "" || !conf.Enable_grades && fbText != "" {
 				feedback := user.NewFeedback(fbText, fbGrade, fbCard)
 				err = user.StoreFeedback(selectedUs, selectedPost, feedback)
 				if err != nil {

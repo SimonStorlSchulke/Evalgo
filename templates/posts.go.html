@@ -21,11 +21,13 @@
 
         <!--Feedbackbereich-->
         {{if .FbIs}}
-        <div id="fb" class="{{if .Fb.IsYellow}}yellow{{else if .Fb.IsRed}}red{{end}}">
+        <div id="fb" class="{{if .Conf.Enable_cards}}{{if .Fb.IsYellow}}yellow{{else if .Fb.IsRed}}red{{end}}{{end}}">
             <h3>Feedback:</h3>
             {{.Fb.Text}}
-            <br>
-            <b>Note: {{.Fb.Grade}}</b>
+            {{if .Conf.Enable_grades}}
+                <br>
+                <b>Note: {{.Fb.Grade}}</b>
+            {{end}}
         </div>
         {{end}}
         <div>{{.Profile}}</div>

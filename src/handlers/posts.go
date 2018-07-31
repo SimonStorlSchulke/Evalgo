@@ -6,6 +6,7 @@ import (
 	"strconv"
 	"text/template"
 
+	"../courseconfig"
 	"../user"
 	"github.com/gorilla/mux"
 	"github.com/russross/blackfriday"
@@ -14,6 +15,7 @@ import (
 //Handle posts for /{matrikel}/post/{postnr}
 func HandlePosts(w http.ResponseWriter, r *http.Request) {
 
+	conf := courseconfig.GetConfig()
 	us, err := studentFromURL(r)
 	if err != nil {
 		fmt.Println("Error reading Matrikelnumber")
@@ -48,12 +50,14 @@ func HandlePosts(w http.ResponseWriter, r *http.Request) {
 		PostNr  int
 		FbIs    bool
 		Fb      user.Feedback
+		Conf    courseconfig.Config
 	}{
 		St:      us,
 		Profile: string(md[:]),
 		PostNr:  postNr,
 		FbIs:    FbIs,
 		Fb:      fb,
+		Conf:    conf,
 	}
 
 	tpl := template.Must(template.ParseFiles("./templates/posts.go.html"))
