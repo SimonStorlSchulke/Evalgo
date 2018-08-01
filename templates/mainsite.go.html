@@ -71,7 +71,7 @@
     <div id="sidebar-wrapper">
         <ul class="sidebar-nav">
             <!--lädt onclick Posts des Studenten "0" ein -> Platz für Aufgabenstellung-->
-            <li class="assignment-selector" onclick="selectStudent(0); makeRequest(0)">
+            <li class="assignment-selector" onclick="selectStudent(0); loadTask()">
                 <div class="sidebar-st 0">
                     <div class="sidebar-name">Aufgabenstellung</div>
                     <p class="sidebar-matrikel a-info">zur ausgewählten Aufgabe</p>
@@ -102,6 +102,8 @@
             <div onclick="loadAssignment(3)" class="awb a3 btn btn-light">3</div>
             <div onclick="loadAssignment(4)" class="awb a4 btn btn-light">4</div>
             <div onclick="loadAssignment(5)" class="awb a5 btn btn-light">5</div>
+            <div onclick="loadAssignment(6)" class="awb a6 btn btn-light">6</div>
+            <div onclick="loadAssignment(7)" class="awb a7 btn btn-light">7</div>
         </div>
         <div class="row row-post-area">
                 
@@ -126,7 +128,7 @@
                       </select>
                     {{end}}
 
-                    <input  id="feedback-submit" class="float-right btn btn-primary" type="submit" value="Submit">
+                    <input  id="feedback-submit" class="float-right btn btn-primary" type="submit" value="Abschicken">
                 </form>
                 </div>
                 {{end}}

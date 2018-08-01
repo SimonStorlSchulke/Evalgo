@@ -38,8 +38,9 @@ func main() {
 	rtr.HandleFunc(genUrl(""), handlers.HandleMainSite)
 	rtr.HandleFunc(genUrl("profile/{matrikel}"), handlers.HandleProfile)
 	rtr.HandleFunc(genUrl("{matrikel}/postraw/{postnr}"), handlers.HandleRawPosts)
-	rtr.HandleFunc(genUrl("{matrikel}/pdf/"), handlers.HandlePdf)
+	rtr.HandleFunc(genUrl("{matrikel}/pdf"), handlers.HandlePdf)
 	rtr.HandleFunc(genUrl("{matrikel}/post/{postnr}"), handlers.HandlePosts)
+	rtr.HandleFunc(genUrl("task/{tasknr}"), handlers.HandleTasks)
 	http.Handle(genUrl(""), rtr)
 
 	fmt.Printf("Start server at port%s:\n"+

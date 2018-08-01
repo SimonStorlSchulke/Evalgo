@@ -23,6 +23,11 @@ window.onload = function () {
     selectStudent(currentMatrikel);
     makeRequest(currentMatrikel);
     var classStr = ".a";
+
+    if(currentMatrikel == 0) {
+        loadTask();
+    } else {
+
     if (getPostNumber() > 0) {
         classStr = classStr.concat(getPostNumber())
         $(classStr).addClass("active");
@@ -30,6 +35,7 @@ window.onload = function () {
         $(".a0").addClass("active");
         showInfo();
     }
+}
 }
 
 //load content to #post-area
@@ -54,6 +60,10 @@ function loadContent(src) {
 }
 
 function makeRequest(matrikel) {
+
+    //Show Feedback
+    $(feedback).removeClass("hidden");
+
     window.currentMatrikel = matrikel;
     if(currentMatrikel < 1) {
         return
@@ -73,9 +83,33 @@ function makeRequest(matrikel) {
     history.pushState("", document.title, querystring);
 }
 
+function loadTask() {
+
+    //Hide Feedback
+    $(feedback).addClass("hidden");
+    var path = './';
+    var urlArray = window.location.pathname.split('/');
+    postNumber = getPostNumber();
+
+    //Open path to postnumber, else take post 1
+    if (postNumber > 0) {
+        loadContent(path.concat("task/", postNumber));
+    } else {
+        loadContent(path.concat("task/1"));
+    }
+    querystring = "?nr=" + postNumber + "&mat=0";
+    history.pushState("", document.title, querystring);
+
+}
+
 //Ajax Post Loader
 function loadAssignment(postNumber) {
     var matrikel = new URL(document.URL).searchParams.get("mat");
+
+    if (matrikel == 0) {
+        loadContent("./".concat("/task/", postNumber));
+    }
+
     if (postNumber > 0) {
     loadContent("./".concat(matrikel, "/post/", postNumber));
     } else {

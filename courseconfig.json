@@ -6,7 +6,7 @@
     "root_url": "/GoWebStuff/",
     "master_password": "gulasch",
     "tutors_can_post": true,
-    "enable_grades": false,
+    "enable_grades": true,
     "enable_cards": true,
     "classes":[ "MIB", "MKB", "OMB" ]
 }
