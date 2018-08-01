@@ -64,6 +64,7 @@ func HandleMainSite(w http.ResponseWriter, r *http.Request) {
 		CurrentPortrait string
 		CourseName      string
 		Conf            courseconfig.Config
+		TaskNumbers     []int
 	}{
 		Students:        studentlist,
 		CurrentUser:     currentUser,
@@ -71,6 +72,7 @@ func HandleMainSite(w http.ResponseWriter, r *http.Request) {
 		CurrentPortrait: currentUser.GetPortraitPath(),
 		CourseName:      conf.Course_name,
 		Conf:            conf,
+		TaskNumbers:     existingTaskNumbers(),
 	}
 
 	//Feedback

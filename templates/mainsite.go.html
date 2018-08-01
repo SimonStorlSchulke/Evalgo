@@ -85,7 +85,7 @@
                 <div class="sidebar-st {{.Matrikel}}">
                     <div class="sidebar-name {{if .IsAuthorized}}sidebar-authorized-user{{end}}">{{.Vorname}} {{.Nachname}}</div>
                     <img align="middle" style="background-image: url({{index $pt $index}});" class="sidebar-portrait">
-                    <p class="sidebar-matrikel">{{if .IsAuthorized}}Tutor{{else}}{{.Matrikel}}{{end}}</p>
+                    <p class="sidebar-matrikel{{if .IsAuthorized}} sidebar-tutor{{end}}">{{if .IsAuthorized}}Tutor{{else}}{{.Matrikel}}{{end}}</p>
                 </div>
                 </a>
             </li>
@@ -97,13 +97,9 @@
         <!--Aufgabenwähler-->
         <div class="row as-title-row">
             <div onclick="loadAssignment(0)" class="awb a0 btn btn-light">Alle</div>
-            <div onclick="loadAssignment(1)" class="awb a1 btn btn-light">1</div>
-            <div onclick="loadAssignment(2)" class="awb a2 btn btn-light">2</div>
-            <div onclick="loadAssignment(3)" class="awb a3 btn btn-light">3</div>
-            <div onclick="loadAssignment(4)" class="awb a4 btn btn-light">4</div>
-            <div onclick="loadAssignment(5)" class="awb a5 btn btn-light">5</div>
-            <div onclick="loadAssignment(6)" class="awb a6 btn btn-light">6</div>
-            <div onclick="loadAssignment(7)" class="awb a7 btn btn-light">7</div>
+            {{$ts := .TaskNumbers}} {{range $index, $ts := .TaskNumbers}}
+            <div onclick="loadAssignment({{.}})" class="awb a{{.}} btn btn-light">{{.}}</div>
+            {{end}}
         </div>
         <div class="row row-post-area">
                 

@@ -1,6 +1,8 @@
 package handlers
 
 import (
+	"fmt"
+	"io/ioutil"
 	"net/http"
 	"strconv"
 
@@ -41,4 +43,21 @@ func checkViewPermission(us user.User, r *http.Request) bool {
 	}
 
 	return false
+}
+
+func existingTaskNumbers() []int {
+
+	list := make([]int, 0)
+	tasks, err := ioutil.ReadDir("./Userdata/assignments")
+	if err != nil {
+		fmt.Println(err)
+	}
+
+	for _, f := range tasks {
+		fName := f.Name()
+		fNumStr := fName[5 : len(fName)-3]
+		fNum, _ := strconv.Atoi(fNumStr)
+		list = append(list, fNum)
+	}
+	return list
 }
