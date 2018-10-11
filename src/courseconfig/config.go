@@ -18,19 +18,30 @@ type Config struct {
 	Enable_cards    bool   `json:"enable_cards"`
 }
 
+var Conf Config
+
+func init() {
+	UpdateConfig()
+}
+
 //Read courseconfig.json and return as Config struct
 func GetConfig() Config {
+	return Conf
+}
+
+//Read courseconfig.json and return as Config struct
+func UpdateConfig() {
 	var conf Config
 	jsondata, err := ioutil.ReadFile("./courseconfig.json")
 	if err != nil {
 		fmt.Println(err)
-		return Config{Open_course: false}
+		return
 	}
 
 	err = json.Unmarshal(jsondata, &conf)
 	if err != nil {
 		fmt.Println(err)
-		return Config{Open_course: false}
+		return
 	}
-	return conf
+	Conf = conf
 }

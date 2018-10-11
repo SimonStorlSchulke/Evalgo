@@ -18,6 +18,14 @@
 </head>
 
 <body>
+
+<script>
+    var matrikel = new URL(document.URL).searchParams.get("mat");
+    var postnr = new URL(document.URL).searchParams.get("nr");
+    if (matrikel == 0 && postnr == 0) {
+        //$(feedback).addClass("hidden"); 
+    }
+</script>
     
 <nav class="sticky-top navbar navbar-expand-lg navbar-light bg-light">
     <a class="navbar-brand">{{.CourseName}}</a>
@@ -27,7 +35,7 @@
     <div class="collapse navbar-collapse" id="navbarNavDropdown">
         <ul class="navbar-nav">
         <li class="nav-item">
-                <a onclick="showInfo()" class="nav-link">Kursinfo</a>
+                <a onclick="showInfo();" class="nav-link">Kursinfo</a>
         </li>
         
         {{if .CurrentUser.Vorname}}
@@ -71,7 +79,7 @@
     <div id="sidebar-wrapper">
         <ul class="sidebar-nav">
             <!--lädt onclick Posts des Studenten "0" ein -> Platz für Aufgabenstellung-->
-            <li class="assignment-selector" onclick="selectStudent(0); loadTask()">
+            <li class="assignment-selector" onclick="switchStudent(0);">
                 <div class="sidebar-st 0">
                     <div class="sidebar-name">Aufgabenstellung</div>
                     <p class="sidebar-matrikel a-info">zur ausgewählten Aufgabe</p>
@@ -81,7 +89,7 @@
             <!--Show Students when logged in-->
             {{if .CurrentUser.Vorname}}
             {{$st := .Students}} {{$pt := .Portraits}} {{range $index, $st := .Students}}
-            <li class="{{.Matrikel}}" style="background: {{.Gruppenfarbe}};" onclick="selectStudent({{.Matrikel}}); makeRequest({{.Matrikel}})">
+            <li class="{{.Matrikel}}" style="background: {{.Gruppenfarbe}};" onclick="switchStudent({{.Matrikel}});">
                 <div class="sidebar-st {{.Matrikel}}">
                     <div class="sidebar-name {{if .IsAuthorized}}sidebar-authorized-user{{end}}">{{.Vorname}} {{.Nachname}}</div>
                     <img align="middle" style="background-image: url({{index $pt $index}});" class="sidebar-portrait">
@@ -96,9 +104,9 @@
     <div class="container post-container" style="{{if .CurrentUser.IsAuthorized}}margin-bottom: 200px; {{end}} width: auto; margin-top: 10px; margin-left: 250px;">
         <!--Aufgabenwähler-->
         <div class="row as-title-row">
-            <div onclick="loadAssignment(0)" class="awb a0 btn btn-light">Alle</div>
+            <div onclick="switchTask(0)" class="awb a0 btn btn-light">Alle</div>
             {{$ts := .TaskNumbers}} {{range $index, $ts := .TaskNumbers}}
-            <div onclick="loadAssignment({{.}})" class="awb a{{.}} btn btn-light">{{.}}</div>
+            <div onclick="switchTask({{.}})" class="awb a{{.}} btn btn-light">{{.}}</div>
             {{end}}
         </div>
         <div class="row row-post-area">
