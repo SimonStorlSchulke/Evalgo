@@ -31,20 +31,17 @@ func HandleMainSite(w http.ResponseWriter, r *http.Request) {
 		//TODO studenten auch Posts von authorisierte Nutzern anzeigen
 	}
 
-	//apply group colors TODO expose colors in coursecofig.json
-	c1, c2, c3, cDef := "#beffa3", "#a3e6ff", "#f7ffa8", "#e2e2e2"
-	grNum := conf.Group_number
+	//Gruppenfarben zuweisen
+	//Grün blau Gelb rot orange lila...
+	//TODO: Gruppenfarben auch im geschlossenen Kurs richtig anzeigen.
+	cArr := []string{"#CBFFA3", "#A3D1FF", "#FAFFA3", "#FFA3A3", "#FFD095", "#FF95F7", "#e2e2e2", "#e2e2e2", "#e2e2e2", "#e2e2e2", "#e2e2e2"}
+	cNum := conf.Group_number
+	if cNum > 6 {
+		cNum = 6
+	}
 	for i := range studentlist {
-		switch {
-		case i%grNum == 0:
-			studentlist[i].Gruppenfarbe = c1
-		case i%grNum == 1:
-			studentlist[i].Gruppenfarbe = c2
-		case i%grNum == 2:
-			studentlist[i].Gruppenfarbe = c3
-		default:
-			studentlist[i].Gruppenfarbe = cDef
-		}
+		v := (float32(i) / float32(len(studentlist))) * float32(cNum)
+		studentlist[i].Gruppenfarbe = cArr[int(v)]
 	}
 
 	tmpl, err := template.ParseFiles("./templates/mainsite.go.html")

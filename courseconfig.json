@@ -1,7 +1,7 @@
 {
     "port": ":8080",
-    "course_name": "Aeibom",
-    "group_number": 3,
+    "course_name": "Evalgo",
+    "group_number": 4,
     "open_course": true,
     "root_url": "/evalgo/",
     "master_password": "gulasch",

@@ -1,6 +1,7 @@
 package handlers
 
 import (
+	"fmt"
 	"net/http"
 	"strconv"
 	"text/template"
@@ -21,10 +22,17 @@ func HandleRegister(w http.ResponseWriter, r *http.Request) {
 
 	err := registeredUser.Register()
 
-	//Redirect if Registration successfull
+	//Redirect and autologin if Registration successfull
 	if err == nil {
+
+		//Auto Login afterwards
+		cookieValue := fmt.Sprintf("%v<split>%s", strconv.Itoa(int(matrikel)), passwort)
+		c := &http.Cookie{
+			Name:  "session",
+			Value: cookieValue,
+		}
+		http.SetCookie(w, c)
 		http.Redirect(w, r, "./", http.StatusSeeOther)
-		//TODO: Login directly
 	}
 	tpl.Execute(w, vorname)
 }

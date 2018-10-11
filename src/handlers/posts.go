@@ -40,8 +40,6 @@ func HandlePosts(w http.ResponseWriter, r *http.Request) {
 	fb, err := user.GetFeedback(us.Matrikel, postNr)
 	if err == nil {
 		FbIs = true
-	} else {
-		fmt.Println(err)
 	}
 
 	pageData := struct {

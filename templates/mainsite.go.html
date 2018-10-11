@@ -47,6 +47,11 @@
             <a class="nav-link" href="./post">Post</a>
         </li>
         {{end}}
+        {{if .CurrentUser.IsAuthorized}}
+        <li class="nav-item">
+                <a class="nav-link" href="./table">Notentabelle</a>
+        </li>
+        {{end}}
         {{else}}
         <li class="nav-item">
                 <a class="nav-link" href="./register">register</a>
@@ -62,12 +67,10 @@
         <ul class="navbar-nav ml-auto">
                 <li class="nav-item">
                     {{if .CurrentUser.Vorname}}
-                    <a class="nav-link" href="./profile/{{.CurrentUser.Matrikel}}">
                         Eingeloggt als {{if .CurrentUser.IsAuthorized}}authorized{{end}} {{.CurrentUser.Vorname}} {{.CurrentUser.Nachname}}
                         <i style="font-size: 13px">
                             #{{.CurrentUser.Matrikel}}</i>
                         <img style="background-image: url({{.CurrentPortrait}});" id="navbar-portrait">
-                    </a>
                     {{else}}
                     <li class="nav-link">not logged in </li>
                     {{end}}

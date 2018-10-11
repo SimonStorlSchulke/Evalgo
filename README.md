@@ -25,3 +25,5 @@ Ordnerstruktur:
             - post_...
 
 **[wkhtmltopdf](https://wkhtmltopdf.org/) muss für die PDF Funktionalität installiert und zu PATH hinzugefügt sein.**
+
+- Max GroupNumber: 6
