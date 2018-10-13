@@ -46,7 +46,7 @@ func HandleMainSite(w http.ResponseWriter, r *http.Request) {
 	/*append groupcolors
 	green, blue, yellow, red, orange, purple, grey...
 	TODO: Display Groupnumbers correctly in closed course.*/
-	groupColors := []string{"#CBFFA3", "#A3D1FF", "#FAFFA3", "#FFA3A3", "#FFD095", "#FF95F7", "#e2e2e2", "#e2e2e2", "#e2e2e2", "#e2e2e2", "#e2e2e2"}
+	groupColors := []string{"grc-1", "grc-2", "grc-3", "grc-4", "grc-5", "grc-6", "grc-7", "grc-8", "grc-9", "grc-10", "grc-11"}
 	cNum := conf.Group_number
 	if cNum > 6 {
 		cNum = 6

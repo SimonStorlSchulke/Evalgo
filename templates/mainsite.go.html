@@ -8,6 +8,7 @@
     <link rel="stylesheet" type="text/css" href="./static/bootstrap/bootstrap.min.css">
     <link rel="stylesheet" type="text/css" href="./static/highlight/styles/googlecode.css">
     <link rel="stylesheet" type="text/css" href="./static/css/mainsite.css">
+    <link rel="stylesheet" type="text/css" href="./static/css/groupcolors.css">
     <link rel="stylesheet" href="./static/css/feedback.css">
 
     <script src="./static/jquery-3.3.1.min.js"></script>
@@ -83,7 +84,7 @@
             <!--Show Students when logged in-->
             {{if .CurrentUser.Vorname}}
             {{$st := .Students}} {{$pt := .Portraits}} {{range $index, $st := .Students}}
-            <li class="{{.Matrikel}}" style="background: {{.Gruppenfarbe}};" onclick="switchStudent({{.Matrikel}});">
+            <li class="{{.Matrikel}} {{.Gruppenfarbe}}" onclick="switchStudent({{.Matrikel}});">
                 <div class="sidebar-st {{.Matrikel}}">
                     <div class="sidebar-name {{if .IsAuthorized}}sidebar-authorized-user{{end}}">{{.Vorname}} {{.Nachname}}</div>
                     <img align="middle" style="background-image: url({{index $pt $index}});" class="sidebar-portrait">
