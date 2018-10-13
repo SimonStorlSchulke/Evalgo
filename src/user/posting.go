@@ -35,7 +35,6 @@ func (us *User) GetAllPosts() ([]byte, []int) {
 	for _, p := range posts {
 		number, err := strconv.Atoi(strings.Trim(p.Name(), "post_.md"))
 		if err == nil {
-			//TODO: clean up hard-coded html
 			currentPostStr := fmt.Sprintf("# <div class='post-header text-primary'>Aufgabe %v</div>\n", number)
 			currentPost := []byte(currentPostStr)
 			postdata = us.GetPost(number)

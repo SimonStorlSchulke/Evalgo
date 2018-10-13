@@ -1,78 +1,85 @@
-# Falcata aliquid negat sarculaque virorum meque
+﻿
+# Evago - Evaluierung von Go für Webdevelopment
 
-## Nos mors timorem
+### Veranstaltung: Aktuelle Entwicklungen im Bereich Online Medien - Prof. Eisenbiegler
+<br>
+### Beispielhafte Ordnerstruktur:
 
-Lorem markdownum Actaeas. Domino pendentem siquidem dederat, fortuna iactavit me
-versus relinque ignota. E lumina animo comites **pingues** dictaque famae vultus
-sic inpulsos, in in et peto aniles latebras inter, Iuppiter. Tota exige
-sermonibus, dum deos facite mediae simulat; sic.
+- 🗀 Hauptverzeichniss
+    - **Executable** (Evalgo.exe / Evalgo linux binary)
+    - courseconfig.json
+    - info.md
+    - 🗀 templates
+    - 🗀 static
+        - 🗀 css
+        - 🗀 js
+        - 🗀 highlightJS
+        - 🗀 bootstrap
+    - 🗀 Userdata
+        - 🗀 assignments
+            - 🗀 img (beliebige Unterstruktur)
+                - 🗀 unterordner1
+                    - bild.png
+                - coolesBild01.png
+            - post_001.md
+            - post_002.md
+            - post_...
+        - 🗀 Portraits
+            * ...[Matrikelnumer].png
+            * default.png
+        - 🗀 Students
+            - ...🗀 [Matrikelnummer]
+                - profile.json
+                - post_[postnumber].md
+                - post_001.md
+                - post_002.md
+                - post_...
 
-    var bittorrentVeronicaCpm = atmAdc(leaderboard_session_png, pretest, uml(
-            multiprocessing_camera, -3, circuit_right_tftp * cdma_flaming));
-    impact.batch(wired_hfs_animated(delete));
-    runtime_footer_jquery = kde;
+### Konfiguration
+Im Hauptverzeichniss der Anwendung muss eine Datei `courseconfig.json` liegen. Der Inhalt sieht folgendermaßen aus:
+```json
+{
+    "port": ":8080",
+    "course_name": "Evalgo",
+    "group_number": 4,
+    "open_course": false,
+    "root_url": "/evalgo/",
+    "master_password": "gulasch",
+    "tutors_can_post": true,
+    "enable_grades": true,
+    "enable_cards": true,
+    "classes":[ "MIB", "MKB", "OMB" ]
+}
+```
+- `port` bestimmt den Port auf dem Server, auf dem die Anwendung laufen soll.
+- `course_name` bestimmt den Titel des Kurses, der auf der Hauptseite angezeigt wird.
+- `group_number` bestimmt die Anzahl der Gruppen (Farben), in die die Kursteilnehmer unterteilt werden.
+- `open_course` bestimmt, ob auch Studenten die Beiträge ihrer Mitstudierenden sehen können, oder nur Tutoren und Admins.
+- `root_url` bestimmt die URL der Haupseite. Hierbei ist zu beachten, dass die Schrägstriche vorne und hinten benötigt werden.
+- `tutors_can_post` Ermöglicht es Tutoren auch Abgaben zu machen oder nicht.
+- `enable_grades` Schaltet beim Feedback die Notenvergabe frei
+- `enable_cards` Schaltet beim Feedback die vergabe von gelben / roten Karten frei.
 
-Modo recingunt alis Minyeia trepidi praecordia Menelae visceribus abi mersis
-Cycnum et hanc **sua**. Facundia fulvo, transcribere erit **tauri arma**, est
-vera sic in perque ferunt vestra: vacantem, non! Corpora mentis. Spectat a
-similem coepta.
+Die Variablen `master_password`, und `classes` sind noch ungenutzt und dienen als Platzhalter für zukünftige Versionen. Die Anwendung muss neu gestartet werden, damit Änderungen an der Konfigurationsdatei berücksichtigt werden.
 
-## Ut suos deus socii traxerunt devenit epulas
+### Nutzergruppen
+Es gibt drei Nutzergruppen:
 
-Olympus tendit. Hoc frigus et occidit *adsis* querellas reddidit de mors
-ferarum, functo mea, nec sensit malorum repertum. *Cursuque* coniunx.
+- 1 `Student`
+- 2 `Tutor`
+- 3 `Admin`
 
-    vpiWeb = drop_optical / metaBotnet(bar.systray_expression(285272, file));
-    if (cleanLogCmyk(syntax_wysiwyg_netmask * defragment_network_raster) >=
-            swappableIpadHit(2, quad_cyberspace + 3)) {
-        gigaflops += 5;
-    }
-    var vlePath = exploit_xmp_x.hard_powerpoint(rootkit(73 + pci, xml -
-            flashMonochrome, 21), character(keylogger.nuiMonochromeBankruptcy(
-            ocr_ivr, ad_rgb_batch), index));
-    interfaceImpact.installer += -3;
+Momentan werden alle Nutzer als `Student` registriert. In der entsprechenden profile.json Datei kann im nachhinein dann "usertype" auf 2 (`Tutor`) oder 3 (`Admin`) gesetzt werden. Momentan gibt es in der Funktionalität noch keinen unterschied zwischen Tutor und Admin.
 
-*Umeris* et Herse ut spatium tamen, equi cum illa alta [prior
-trementia](http://ipso.io/). Numquam mille somnos mora, foret suis lumine, quae
-nomen clades cohaesit si omnia feros. Habebat columba est. Vinoque mihi
-inpositum curat sedes; dixerat tenuaverat erat, contra casus. Caput in nudaque,
-gravitate intercepta fiunt.
-# Falcata aliquid negat sarculaque virorum meque
+### Aufgabenstellung
+Für die Aufgabenstellung werden Markdown Dateien im Userdata/assignments erstellt. Diese müssen dem Benennungsschema `post_001.md`, `post_002.md`... folgen. Der Aufgabenwähler auf der hauptseite erkenn automatisch, für welche Aufgaben Einträge bestehen und zeigt diese im Aufgabenwähler an.
 
-## Nos mors timorem
+Da Bilder in den Aufgabenstellungen von der Haupseite aus aufgerufen werden, können diese per Markdown folgendermaßen z.b. aufgerufen werden: `![beschreibung](img/06.png "Licht")`. 
+Da der assignments/img Ordner beliebig unterteilt werden kann, ist z.b. auch `![alt text](img/a1/06.png "Licht")` möglich - wenn das Bild in einem Unterordner assignments/img/a1 abgelegt wurde.
 
-Lorem markdownum Actaeas. Domino pendentem siquidem dederat, fortuna iactavit me
-versus relinque ignota. E lumina animo comites **pingues** dictaque famae vultus
-sic inpulsos, in in et peto aniles latebras inter, Iuppiter. Tota exige
-sermonibus, dum deos facite mediae simulat; sic.
+### Posts
+Über den Reiter "Post" können Studierende Abgaben machen.
 
-    var bittorrentVeronicaCpm = atmAdc(leaderboard_session_png, pretest, uml(
-            multiprocessing_camera, -3, circuit_right_tftp * cdma_flaming));
-    impact.batch(wired_hfs_animated(delete));
-    runtime_footer_jquery = kde;
-
-Modo recingunt alis Minyeia trepidi praecordia Menelae visceribus abi mersis
-Cycnum et hanc **sua**. Facundia fulvo, transcribere erit **tauri arma**, est
-vera sic in perque ferunt vestra: vacantem, non! Corpora mentis. Spectat a
-similem coepta.
-
-## Ut suos deus socii traxerunt devenit epulas
-
-Olympus tendit. Hoc frigus et occidit *adsis* querellas reddidit de mors
-ferarum, functo mea, nec sensit malorum repertum. *Cursuque* coniunx.
-
-    vpiWeb = drop_optical / metaBotnet(bar.systray_expression(285272, file));
-    if (cleanLogCmyk(syntax_wysiwyg_netmask * defragment_network_raster) >=
-            swappableIpadHit(2, quad_cyberspace + 3)) {
-        gigaflops += 5;
-    }
-    var vlePath = exploit_xmp_x.hard_powerpoint(rootkit(73 + pci, xml -
-            flashMonochrome, 21), character(keylogger.nuiMonochromeBankruptcy(
-            ocr_ivr, ad_rgb_batch), index));
-    interfaceImpact.installer += -3;
-
-*Umeris* et Herse ut spatium tamen, equi cum illa alta [prior
-trementia](http://ipso.io/). Numquam mille somnos mora, foret suis lumine, quae
-nomen clades cohaesit si omnia feros. Habebat columba est. Vinoque mihi
-inpositum curat sedes; dixerat tenuaverat erat, contra casus. Caput in nudaque,
-gravitate intercepta fiunt.
+### PDF Download
+**[wkhtmltopdf](https://wkhtmltopdf.org/) muss für die PDF Funktionalität installiert und zu PATH hinzugefügt sein.**
+Dann kann über die URL `.../[Matrikelnummer]/pdf` eine PDF Datei mit allen Abgaben des in der URL mit der Matrikelnummer bestimmten Studenten erstellen. Download dieser Dateien ist momentan noch nicht möglich, aber geplant.

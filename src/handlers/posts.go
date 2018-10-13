@@ -42,20 +42,31 @@ func HandlePosts(w http.ResponseWriter, r *http.Request) {
 		FbIs = true
 	}
 
+	_, loggedInUserMat := loggedIn(r)
+	loggedInUser, err := user.FromMatrikel(loggedInUserMat)
+
+	//Check if logged in user is authorized to see Feedback to the current Post
+	allowFeedback := false
+	if loggedInUserMat == us.Matrikel || loggedInUser.IsAuthorized() && err == nil {
+		allowFeedback = true
+	}
+
 	pageData := struct {
-		St      user.User
-		Profile string
-		PostNr  int
-		FbIs    bool
-		Fb      user.Feedback
-		Conf    courseconfig.Config
+		DisplayFeedback bool
+		St              user.User
+		Profile         string
+		PostNr          int
+		FbIs            bool
+		Fb              user.Feedback
+		Conf            courseconfig.Config
 	}{
-		St:      us,
-		Profile: string(md[:]),
-		PostNr:  postNr,
-		FbIs:    FbIs,
-		Fb:      fb,
-		Conf:    conf,
+		DisplayFeedback: allowFeedback,
+		St:              us,
+		Profile:         string(md[:]),
+		PostNr:          postNr,
+		FbIs:            FbIs,
+		Fb:              fb,
+		Conf:            conf,
 	}
 
 	tpl := template.Must(template.ParseFiles("./templates/posts.go.html"))

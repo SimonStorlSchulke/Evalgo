@@ -20,7 +20,7 @@
         <p class="text-muted">{{.St.Matrikel}}</p>
 
         <!--Feedbackbereich-->
-        {{if .FbIs}}
+        {{if and .FbIs .DisplayFeedback}}
         <div id="fb" class="{{if .Conf.Enable_cards}}{{if .Fb.IsYellow}}yellow{{else if .Fb.IsRed}}red{{end}}{{end}}">
             <h3>Feedback:</h3>
             {{.Fb.Text}}

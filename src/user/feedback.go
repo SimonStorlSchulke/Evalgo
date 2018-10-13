@@ -15,9 +15,9 @@ type Feedback struct {
 type Card int
 
 const (
-	NOCARD int = iota + 1
-	YELLOWCARD
-	REDCARD
+	NOCARD     int = 0
+	YELLOWCARD     = 1
+	REDCARD        = 2
 )
 
 //Constructor

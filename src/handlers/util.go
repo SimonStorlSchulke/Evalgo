@@ -51,9 +51,13 @@ func existingTaskNumbers() []int {
 	tasks, err := ioutil.ReadDir("./Userdata/assignments")
 	if err != nil {
 		fmt.Println(err)
+		return list
 	}
 
 	for _, f := range tasks {
+		if f.IsDir() {
+			continue
+		}
 		fName := f.Name()
 		fNumStr := fName[5 : len(fName)-3]
 		fNum, _ := strconv.Atoi(fNumStr)

@@ -31,18 +31,32 @@ func HandleMainSite(w http.ResponseWriter, r *http.Request) {
 		//TODO studenten auch Posts von authorisierte Nutzern anzeigen
 	}
 
-	//Gruppenfarben zuweisen
-	//Grün blau Gelb rot orange lila...
-	//TODO: Gruppenfarben auch im geschlossenen Kurs richtig anzeigen.
-	cArr := []string{"#CBFFA3", "#A3D1FF", "#FAFFA3", "#FFA3A3", "#FFD095", "#FF95F7", "#e2e2e2", "#e2e2e2", "#e2e2e2", "#e2e2e2", "#e2e2e2"}
+	//Extract Students from Users and combine them again later - there must be a better way though...
+	var onlyStudents []user.User
+	var otherUsers []user.User
+
+	for _, us := range studentlist {
+		if us.Usertype == user.STUDENT {
+			onlyStudents = append(onlyStudents, us)
+		} else {
+			otherUsers = append(otherUsers, us)
+		}
+	}
+
+	/*append groupcolors
+	green, blue, yellow, red, orange, purple, grey...
+	TODO: Display Groupnumbers correctly in closed course.*/
+	groupColors := []string{"#CBFFA3", "#A3D1FF", "#FAFFA3", "#FFA3A3", "#FFD095", "#FF95F7", "#e2e2e2", "#e2e2e2", "#e2e2e2", "#e2e2e2", "#e2e2e2"}
 	cNum := conf.Group_number
 	if cNum > 6 {
 		cNum = 6
 	}
-	for i := range studentlist {
-		v := (float32(i) / float32(len(studentlist))) * float32(cNum)
-		studentlist[i].Gruppenfarbe = cArr[int(v)]
+	for i := range onlyStudents {
+		v := (float32(i) / float32(len(onlyStudents))) * float32(cNum)
+		onlyStudents[i].Gruppenfarbe = groupColors[int(v)]
 	}
+
+	studentlist = append(otherUsers, onlyStudents...)
 
 	tmpl, err := template.ParseFiles("./templates/mainsite.go.html")
 	if err != nil {
@@ -86,8 +100,8 @@ func HandleMainSite(w http.ResponseWriter, r *http.Request) {
 			fbGrade, _ := strconv.Atoi(r.FormValue("fb-grade"))
 			fbCard, _ := strconv.Atoi(r.FormValue("fb-card"))
 
-			//Store FB if not empty
-			if fbGrade != 0 && fbText != "" || !conf.Enable_grades && fbText != "" {
+			//Store Feedback
+			if fbGrade != 0 || !conf.Enable_grades && fbText != "" {
 				feedback := user.NewFeedback(fbText, fbGrade, fbCard)
 				err = user.StoreFeedback(selectedUs, selectedPost, feedback)
 				if err != nil {

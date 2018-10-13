@@ -134,3 +134,8 @@ function MatrikelFromUrl() {
 function PostNrFromUrl() {
     return new URL(document.URL).searchParams.get("nr");
 }
+
+function PostLink() {
+    nr = PostNrFromUrl();
+    window.location = "./post?nr="+nr;
+}

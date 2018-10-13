@@ -66,6 +66,12 @@
         </div>
     </div>
     <script>
+        //Read previously selected Postnumber from URL and set it in the Editor
+        window.onload = function() {
+            postNr = new URL(document.URL).searchParams.get("nr");
+            console.log(postNr);
+            document.getElementById("postNr").value = postNr;
+        };
         //TODO funzt no ned
         function checkText() {
             var btn = document.getElementById("submit-button");

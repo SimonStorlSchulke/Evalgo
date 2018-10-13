@@ -1,10 +1,17 @@
 ## TODO:
-- UpdateConfif nutzen
-- Studiengang Attribute
+- HTML Validator
+- UpdateConfif() nutzen
+- Studiengang Attribute (MIB, MKB...)
 - Bilder Upload (profile und Tasks)
 - Gruppenfarben manuell zuweisbar machen
-- Tutorien nicht Gruppenphase zuweisen
-- Notentabelle permission beschränken auf auth user
+- PDF Download
+- Javascript savety in user posts
 
-BUGS:
+### BUGS:
 - Gruppenfarben im geschlossenen Kurs falsch angezeigt
+
+### Hässlicher Code:
+- Farbzuweisung in mainsite.go
+- Code "entdenglischen"
+
+- long term - Rewrite mit besserem error handling und klarer Struktur
