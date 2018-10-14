@@ -21,6 +21,10 @@
         .card2 {
             background: rgb(255, 127, 127);
         }
+        .grade:hover {
+            outline: 2px solid #5fb1ff;
+            outline-offset: -2px;
+        }
     </style>
 
     <a style="margin: 10px;" class="btn btn-secondary" href="./">Zurück</a>
@@ -49,9 +53,10 @@
             <!--Feedback:-->
             {{range $task := $tasks}}
             <!--Read Card value from Feedback Struct-->
-            <th class="grade card{{(index $grades $student.Matrikel $task).Card}}">
+            <th onclick="toTask({{$task}}, {{$student.Matrikel}});" class="grade card{{(index $grades $student.Matrikel $task).Card}}">
                 <!--Display Grade (Field of Feedback struct)-->
-                {{(index $grades $student.Matrikel $task).Grade}}</th>
+                {{(index $grades $student.Matrikel $task).Grade}}
+            </th>
             {{end}}
             <!--PLATZHALTER FEEDBACK-->
         </tr>
@@ -61,6 +66,9 @@
 </div>
     <script>
     //Set 0 Grades to "-""
+    function toTask(nr, mat) {
+        window.location = "./?nr="+nr+"&mat="+mat;
+    }
     window.onload = function() {
         $( "th" ).each(function() {
             if ($( this ).text() == 0) {
