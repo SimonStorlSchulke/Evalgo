@@ -16,10 +16,15 @@ func HandlePostForm(w http.ResponseWriter, r *http.Request) {
 	//get highest taskNumber
 	if isLoggedIn == false {
 		http.Redirect(w, r, "./login", http.StatusSeeOther)
+		return
 	}
 	tpl := template.Must(template.ParseFiles("./templates/postform.go.html"))
 
-	us, _ := user.FromMatrikel(matrikel)
+	us, err := user.FromMatrikel(matrikel)
+	if err != nil {
+		fmt.Fprint(w, err)
+		return
+	}
 	pageData := struct {
 		Us         user.User
 		MaxPostNum int
@@ -27,12 +32,12 @@ func HandlePostForm(w http.ResponseWriter, r *http.Request) {
 		Us:         us,
 		MaxPostNum: highestTaskNumber(),
 	}
-
 	tpl.Execute(w, pageData)
 }
 
 //Handle incoming Posts
 func ProcessPost(w http.ResponseWriter, r *http.Request) {
+	fmt.Println("1")
 	if r.Method != "POST" {
 		fmt.Fprint(w, "Method is not Post")
 		return

@@ -19,47 +19,49 @@
                 <div class="form-group">
                     <form action="./process" method="post">
                         <label for="postNr">Aufgabe Nr. </label>
-                        <input id="postNr" min=1 max={{.MaxPostNum}} style="width: 50px;" value=1 class="" form-control type="number" name="postNr">
-                        <a class="text-primary" style="cursor: pointer;" onclick="loadPost()" class="link-primary">&nbspBestehende Abgabe editieren</a>
-                        <textarea id="textarea" rows=20 placeholder="Hier Abgabentext eingeben" oninput="checkText()" class="form-control" type="text" name="postcontent"></textarea>
+                        <input id="postNr" min=1 max={{.MaxPostNum}} style="width: 50px;" value=1 class="" form-control
+                            type="number" name="postNr">
+                        <a class="text-primary" style="cursor: pointer;" onclick="loadPost()" class="link-primary">&nbspBestehende
+                            Abgabe editieren</a>
+                        <textarea id="textarea" rows=20 placeholder="Hier Abgabentext eingeben" oninput="checkText()"
+                            class="form-control" type="text" name="postcontent"></textarea>
 
-                        <input type="submit" class="btn btn-primary">
+                        <input disabled id="submit-button" type="submit" class="btn btn-primary">
                     </form>
                 </div>
             </div>
-                <div id="markdown-examples">
-                    Zur Formatierung des Textes kann <a href="https://github.com/adam-p/markdown-here/wiki/Markdown-Cheatsheet">Markdown</a>
-                    verwendet werden:<br><br>
-                    <b>Überschriften</b>:<br>
-                    # Ich werde eine sehr dicke Überschrift<br>
-                    ## Ich mehr so mittel<br>
-                    ### eher kleiner<br>
-                    ....<br><br>
-                    <b>Textformat:</b><br>
-                    *ich werde italic Text*<br>
-                    **ich werde dicker Text**<br><br>
-                    <b>Links & Bilder einbinden:</b><br>
-                    [klick mich](https://www.hs-furtwangen.de/)<br>
-                    ![bild-titel](https://irgendein-Link-zu-irgendeinem-bild)<br><br>
+            <div id="markdown-examples">
+                Zur Formatierung des Textes kann <a href="https://github.com/adam-p/markdown-here/wiki/Markdown-Cheatsheet">Markdown</a>
+                verwendet werden:<br><br>
+                <b>Überschriften</b>:<br>
+                # Ich werde eine sehr dicke Überschrift<br>
+                ## Ich mehr so mittel<br>
+                ### eher kleiner<br>
+                ....<br><br>
+                <b>Textformat:</b><br>
+                *ich werde italic Text*<br>
+                **ich werde dicker Text**<br><br>
+                <b>Links & Bilder einbinden:</b><br>
+                [klick mich](https://www.hs-furtwangen.de/)<br>
+                ![bild-titel](https://irgendein-Link-zu-irgendeinem-bild)<br><br>
 
-                    <b>Listen</b><br>
-                    * Das hier werden<br><br>
-                    * Aufzählungen<br><br>
-                    1. Geht auch<br><br>
-                    2. Mit Nummern<br><br <i>Zwischen Aufzählungen müssen Leerzeichen sein.</i><br><br>
+                <b>Listen</b><br>
+                * Das hier werden<br><br>
+                * Aufzählungen<br><br>
+                1. Geht auch<br><br>
+                2. Mit Nummern<br><br <i>Zwischen Aufzählungen müssen Leerzeichen sein.</i><br><br>
 
 
-                    <b>Tabellen</b><br>
-                    Spalte1 | Spalte2<br>
-                    --------|--------<br>
-                    Eintrag1 | 15<br>
-                    Eintrag2 | 34<br><br>
+                <b>Tabellen</b><br>
+                Spalte1 | Spalte2<br>
+                --------|--------<br>
+                Eintrag1 | 15<br>
+                Eintrag2 | 34<br><br>
 
-                    <b>Code Block mit Syntax Highlighting</b><br>
-                    ```java<br>
-                    System.Out.Prinln("das funktioniert nicht nur mit Java!")<br>
-                    ```<br><br>
-                </div>
+                <b>Code Block mit Syntax Highlighting</b><br>
+                ```java<br>
+                System.Out.Prinln("das funktioniert nicht nur mit Java!")<br>
+                ```<br><br>
             </div>
         </div>
     </div>
@@ -73,7 +75,8 @@
         //TODO funzt no ned
         function checkText() {
             var btn = document.getElementById("submit-button");
-            if (btn.value == "") {
+            var text = document.getElementById("textarea");
+            if (text.value == "") {
                 btn.disabled = true;
             } else {
                 btn.disabled = false;
