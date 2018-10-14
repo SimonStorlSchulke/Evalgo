@@ -7,11 +7,11 @@ import (
 	"strings"
 )
 
-//Post a string to /Userdata/Students/[st.matrikel]/post_[postnumber].md
+//Post a string to /coursedata/users/[st.matrikel]/post_[postnumber].md
 func (us *User) PostNr(str string, postNumber int) {
 	nrStr, err := intToString(postNumber)
 	if err == nil {
-		ioutil.WriteFile(fmt.Sprintf("./Userdata/Students/%v/post_%s.md", us.Matrikel, nrStr), []byte(str), 0777)
+		ioutil.WriteFile(fmt.Sprintf("./coursedata/users/%v/post_%s.md", us.Matrikel, nrStr), []byte(str), 0777)
 		fmt.Println(us.Vorname, us.Nachname, "created post Nr.", postNumber)
 	}
 }
@@ -19,7 +19,7 @@ func (us *User) PostNr(str string, postNumber int) {
 //Returns a post as []byte
 func (us *User) GetPost(postNr int) []byte {
 	nrStr, _ := intToString(postNr)
-	post, err := ioutil.ReadFile(fmt.Sprintf("./Userdata/Students/%v/post_%s.md", us.Matrikel, nrStr))
+	post, err := ioutil.ReadFile(fmt.Sprintf("./coursedata/users/%v/post_%s.md", us.Matrikel, nrStr))
 	if err != nil {
 		return []byte("Noch keine Abgabe.")
 	}
@@ -28,7 +28,7 @@ func (us *User) GetPost(postNr int) []byte {
 
 //Returns []byte containing all posts of student and []int of postNumbers
 func (us *User) GetAllPosts() ([]byte, []int) {
-	posts, _ := ioutil.ReadDir(fmt.Sprintf("./Userdata/Students/%v/", us.Matrikel))
+	posts, _ := ioutil.ReadDir(fmt.Sprintf("./coursedata/users/%v/", us.Matrikel))
 	var postdata []byte
 	var data []byte
 	var postNumbers []int

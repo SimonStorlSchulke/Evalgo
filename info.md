@@ -15,8 +15,8 @@
         - 🗀 js
         - 🗀 highlightJS
         - 🗀 bootstrap
-    - 🗀 Userdata
-        - 🗀 assignments
+    - 🗀 coursedata
+        - 🗀 tasks
             - 🗀 img (beliebige Unterstruktur)
                 - 🗀 unterordner1
                     - bild.png
@@ -24,10 +24,10 @@
             - post_001.md
             - post_002.md
             - post_...
-        - 🗀 Portraits
+        - 🗀 portraits
             * ...[Matrikelnumer].png
             * default.png
-        - 🗀 Students
+        - 🗀 users
             - ...🗀 [Matrikelnummer]
                 - profile.json
                 - post_[postnumber].md
@@ -79,6 +79,9 @@ Da der assignments/img Ordner beliebig unterteilt werden kann, ist z.b. auch `![
 
 ### Posts
 Über den Reiter "Post" können Studierende Abgaben machen.
+
+### Feedback
+Für jede ausgewählte Abgabe können Tutoren und Admins Feedback in Textform - und je nach konfiguration auch mit Noten und roten / gelben Karten geben.
 
 ### PDF Download
 **[wkhtmltopdf](https://wkhtmltopdf.org/) muss für die PDF Funktionalität installiert und zu PATH hinzugefügt sein.**

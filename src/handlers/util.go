@@ -48,7 +48,7 @@ func checkViewPermission(us user.User, r *http.Request) bool {
 func existingTaskNumbers() []int {
 
 	list := make([]int, 0)
-	tasks, err := ioutil.ReadDir("./Userdata/assignments")
+	tasks, err := ioutil.ReadDir("./coursedata/tasks")
 	if err != nil {
 		fmt.Println(err)
 		return list

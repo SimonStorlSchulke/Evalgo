@@ -44,7 +44,7 @@ func (fb Feedback) IsYellow() bool {
 func GetFeedback(matrikel, postNr int) (Feedback, error) {
 	nrStr, _ := intToString(postNr)
 	var fb Feedback
-	jsondata, err := ioutil.ReadFile(fmt.Sprintf("./Userdata/Students/%v/post_%s_feedback.json", matrikel, nrStr))
+	jsondata, err := ioutil.ReadFile(fmt.Sprintf("./coursedata/users/%v/post_%s_feedback.json", matrikel, nrStr))
 	if err != nil {
 		return fb, err
 	}
@@ -62,7 +62,7 @@ func StoreFeedback(matrikel int, postNr int, fb Feedback) error {
 		return err
 	}
 	postNrStr, _ := intToString(postNr)
-	path := fmt.Sprintf("./Userdata/Students/%v/post_%s_feedback.json", matrikel, postNrStr)
+	path := fmt.Sprintf("./coursedata/users/%v/post_%s_feedback.json", matrikel, postNrStr)
 	err = ioutil.WriteFile(path, jsondata, 0777)
 	if err != nil {
 		return err

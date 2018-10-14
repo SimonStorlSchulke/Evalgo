@@ -58,7 +58,7 @@ func (us User) MayPost() bool {
 //Returns a User based on given Matrikel
 func FromMatrikel(matrikel int) (User, error) {
 	var us User
-	jsondata, err := ioutil.ReadFile(fmt.Sprintf("./Userdata/Students/%v/profile.json", matrikel))
+	jsondata, err := ioutil.ReadFile(fmt.Sprintf("./coursedata/users/%v/profile.json", matrikel))
 	if err != nil {
 		fmt.Println(err)
 		return us, err
@@ -74,7 +74,7 @@ func FromMatrikel(matrikel int) (User, error) {
 //Return path to user portrait TODO: jpg support
 func (us *User) GetPortraitPath() string {
 	url := fmt.Sprintf("./portraits/%v.png", us.Matrikel)
-	filepath := fmt.Sprintf("./Userdata/Portraits/%v.png", us.Matrikel)
+	filepath := fmt.Sprintf("./coursedata/portraits/%v.png", us.Matrikel)
 
 	if _, err := os.Stat(filepath); os.IsNotExist(err) {
 		return "./portraits/default.png"
@@ -140,7 +140,7 @@ func (us *User) Unregister() {
 
 //returns a List of registered Matrikelnumbers
 func MatrikelList() []int {
-	folders, err := ioutil.ReadDir("./Userdata/Students")
+	folders, err := ioutil.ReadDir("./coursedata/users")
 	if err != nil {
 		fmt.Println(err)
 		return nil
@@ -158,11 +158,11 @@ func MatrikelList() []int {
 	return mList
 }
 
-/*ReadStudents reads all profile.json files in /Userdata/Students
+/*ReadStudents reads all profile.json files in /coursedata/Students
 and return it as a slice of Students*/
 func ReadStudents() []User {
 	//Read Folders
-	folders, err := ioutil.ReadDir("./Userdata/Students")
+	folders, err := ioutil.ReadDir("./coursedata/users")
 	if err != nil {
 		fmt.Println(err)
 		return nil
@@ -175,7 +175,7 @@ func ReadStudents() []User {
 
 	//Loop through Folders and create User Slice
 	for _, file := range folders {
-		path = fmt.Sprintf("./Userdata/Students/%s/profile.json", file.Name())
+		path = fmt.Sprintf("./coursedata/users/%s/profile.json", file.Name())
 
 		jsondata, err = ioutil.ReadFile(path)
 		if err != nil {
@@ -197,11 +197,11 @@ func ReadStudents() []User {
 	return studentlist
 }
 
-/*ReadStudents reads all profile.json files in /Userdata/Students
+/*ReadStudents reads all profile.json files in /coursedata/Students
 and return it as a slice of Students*/
 func ReadTutors() []User {
 	//Read Folders
-	folders, err := ioutil.ReadDir("./Userdata/Students")
+	folders, err := ioutil.ReadDir("./coursedata/users")
 	if err != nil {
 		fmt.Println(err)
 		return nil
@@ -218,7 +218,7 @@ func ReadTutors() []User {
 
 	//Loop through Folders and create User Slice
 	for _, file := range folders {
-		path = fmt.Sprintf("./Userdata/Students/%s/profile.json", file.Name())
+		path = fmt.Sprintf("./coursedata/users/%s/profile.json", file.Name())
 
 		jsondata, err = ioutil.ReadFile(path)
 		if err != nil {
@@ -242,7 +242,7 @@ func ReadTutors() []User {
 
 //Returns Folderpath to Studentdata as string
 func (us *User) getPath() string {
-	return filepath.Join(".", "Userdata", "Students", fmt.Sprintf("%v", us.Matrikel))
+	return filepath.Join(".", "coursedata", "users", fmt.Sprintf("%v", us.Matrikel))
 }
 
 //aplies user at beginning of Slice

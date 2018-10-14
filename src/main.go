@@ -25,10 +25,10 @@ func main() {
 	FileServer := http.FileServer(http.Dir("static"))
 	http.Handle(genUrl("static/"), http.StripPrefix(genUrl("static/"), FileServer))
 
-	FileServerPortraits := http.FileServer(http.Dir("Userdata/Portraits"))
+	FileServerPortraits := http.FileServer(http.Dir("coursedata/portraits"))
 	http.Handle(genUrl("portraits/"), http.StripPrefix(genUrl("portraits/"), FileServerPortraits))
 
-	FileServerImg := http.FileServer(http.Dir("Userdata/assignments/img"))
+	FileServerImg := http.FileServer(http.Dir("coursedata/tasks/img"))
 	http.Handle(genUrl("img/"), http.StripPrefix(genUrl("img/"), FileServerImg))
 
 	rtr.HandleFunc(genUrl("register"), handlers.HandleRegister)
