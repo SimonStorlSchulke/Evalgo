@@ -65,3 +65,13 @@ func existingTaskNumbers() []int {
 	}
 	return list
 }
+
+func highestTaskNumber() int {
+	maxNr := 1
+	for _, e := range existingTaskNumbers() {
+		if e > maxNr {
+			maxNr = e
+		}
+	}
+	return maxNr
+}

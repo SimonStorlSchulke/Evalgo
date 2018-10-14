@@ -35,6 +35,7 @@ func main() {
 	rtr.HandleFunc(genUrl("authlogin"), handlers.HandleAuthLogin)
 	rtr.HandleFunc(genUrl("portrait"), handlers.PortraitUpload)
 	rtr.HandleFunc(genUrl("post"), handlers.HandlePostForm)
+	rtr.HandleFunc(genUrl("process"), handlers.ProcessPost)
 	rtr.HandleFunc(genUrl("table"), handlers.HandleTable)
 	rtr.HandleFunc(genUrl("info"), handlers.HandleInfo)
 	rtr.HandleFunc(genUrl("{number}"), handlers.HandleMainSite)

@@ -5,6 +5,7 @@ import (
 	"io/ioutil"
 	"strconv"
 	"strings"
+	"time"
 )
 
 //Post a string to /coursedata/users/[st.matrikel]/post_[postnumber].md
@@ -13,6 +14,10 @@ func (us *User) PostNr(str string, postNumber int) error {
 	if err != nil {
 		return err
 	}
+	//Add Time Stamp
+	tm := time.Now()
+	timestring := fmt.Sprintf("<i class='last-modified'>last modified %v:%v %s %v %v</i>\n", tm.Hour(), tm.Minute(), tm.Month(), tm.Day(), tm.Year())
+	str = timestring + str
 
 	err = ioutil.WriteFile(fmt.Sprintf("./coursedata/users/%v/post_%s.md", us.Matrikel, nrStr), []byte(str), 0777)
 	if err != nil {

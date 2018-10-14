@@ -118,7 +118,7 @@ code:not(pre) {
     border-style: solid;
     border-width: 1px;
     border-radius: 3px;
-    background: #ddd;
+    background: #eee;
     border-color: #aaa;
     color: black;
 }

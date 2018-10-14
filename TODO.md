@@ -8,8 +8,11 @@
 - Javascript savety in user posts
 - Links zu jeweiliger Aufgabe in Notentabelle
 - Ordner unbenennen: Userdata -> coursedata, assignments -> tasks, Students -> users alles klein
+- Config- und Nutzerverwaltungssseite
 
 ### BUGS:
+- Post funzt manchmal ned? Noch unklar wann / warum
+    - vlt gefixed -> im Auge behalten!
 - Gruppenfarben im geschlossenen Kurs falsch angezeigt
 
 ### Hässlicher Code:

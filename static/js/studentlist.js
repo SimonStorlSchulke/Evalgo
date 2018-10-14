@@ -8,9 +8,6 @@ window.onload = function () {
     }
     switchStudent(cMat);
     UpdateTaskSwitcher(cNr);
-
-    var matCl = ".".concat(matrikel);
-    $(matCl).addClass("selected-profile");
 }
 
 //But Not Matrikel

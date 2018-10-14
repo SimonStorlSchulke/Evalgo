@@ -14,60 +14,58 @@
         <h1>Abgabe</h1>
         <div class="row">
             <div class="col">
-                <p class="text-muted">{{.Vorname}} {{.Nachname}} {{.Matrikel}}</p>
-                <p><a class="link-primary" href="./">Zurück zur Übersicht</a></p>  
+                <p class="text-muted">{{.Us.Vorname}} {{.Us.Nachname}} {{.Us.Matrikel}}</p>
+                <p><a class="link-primary" href="./">Zurück zur Übersicht</a></p>
                 <div class="form-group">
-                    <form method="post">
-                        
-                        <label for="matrikel">Aufgabe Nr. </label>
-                        <input id="postNr" min=1 max=1000 style="width: 50px;" value=1 class="" form-control type="number" name="postNr">
-                        <a class="text-primary" style="cursor: pointer;" onclick="loadPost()" class="link-primary">&nbspBestehende Abgabe editieren</a><br>
-                        <textarea id="textarea" rows=20 placeholder="Hier Abgabentext eingeben" oninput="checkText()" class="form-control" type="text" name="postedText"></textarea>
-                        <br>
-                        <input  disabled="true" id="submit-button" class="btn btn-primary" type="submit" value="Post">
+                    <form action="./process" method="post">
+                        <label for="postNr">Aufgabe Nr. </label>
+                        <input id="postNr" min=1 max={{.MaxPostNum}} style="width: 50px;" value=1 class="" form-control type="number" name="postNr">
+                        <a class="text-primary" style="cursor: pointer;" onclick="loadPost()" class="link-primary">&nbspBestehende Abgabe editieren</a>
+                        <textarea id="textarea" rows=20 placeholder="Hier Abgabentext eingeben" oninput="checkText()" class="form-control" type="text" name="postcontent"></textarea>
+
+                        <input type="submit" class="btn btn-primary">
+                    </form>
                 </div>
             </div>
-            <div class="col">
-            </form>
-            <div id="markdown-examples">
-                Zur Formatierung des Textes kann <a href="https://github.com/adam-p/markdown-here/wiki/Markdown-Cheatsheet">Markdown</a> verwendet werden:<br><br>
-                <b>Überschriften</b>:<br>
-                # Ich werde eine sehr dicke Überschrift<br>
-                ## Ich mehr so mittel<br>
-                ### eher kleiner<br>
-                ....<br><br>
-                <b>Textformat:</b><br>
-                *ich werde italic Text*<br>
-                **ich werde dicker Text**<br><br>
-                <b>Links & Bilder einbinden:</b><br>
-                [klick mich](https://www.hs-furtwangen.de/)<br>
-                ![bild-titel](https://irgendein-Link-zu-irgendeinem-bild)<br><br>
+                <div id="markdown-examples">
+                    Zur Formatierung des Textes kann <a href="https://github.com/adam-p/markdown-here/wiki/Markdown-Cheatsheet">Markdown</a>
+                    verwendet werden:<br><br>
+                    <b>Überschriften</b>:<br>
+                    # Ich werde eine sehr dicke Überschrift<br>
+                    ## Ich mehr so mittel<br>
+                    ### eher kleiner<br>
+                    ....<br><br>
+                    <b>Textformat:</b><br>
+                    *ich werde italic Text*<br>
+                    **ich werde dicker Text**<br><br>
+                    <b>Links & Bilder einbinden:</b><br>
+                    [klick mich](https://www.hs-furtwangen.de/)<br>
+                    ![bild-titel](https://irgendein-Link-zu-irgendeinem-bild)<br><br>
 
-                <b>Listen</b><br>
-                * Das hier werden<br><br>
-                * Aufzählungen<br><br>
-                1. Geht auch<br><br>
-                2. Mit Nummern<br><br
-                <i>Zwischen Aufzählungen müssen Leerzeichen sein.</i><br><br>
+                    <b>Listen</b><br>
+                    * Das hier werden<br><br>
+                    * Aufzählungen<br><br>
+                    1. Geht auch<br><br>
+                    2. Mit Nummern<br><br <i>Zwischen Aufzählungen müssen Leerzeichen sein.</i><br><br>
 
-                
-                <b>Tabellen</b><br>
-                Spalte1 | Spalte2<br>
-                --------|--------<br>
-                Eintrag1   | 15<br>
-                Eintrag2   | 34<br><br>
 
-                <b>Code Block mit Syntax Highlighting</b><br>
-                ```java<br>
-                System.Out.Prinln("das funktioniert nicht nur mit Java!")<br>
-                ```<br><br>
+                    <b>Tabellen</b><br>
+                    Spalte1 | Spalte2<br>
+                    --------|--------<br>
+                    Eintrag1 | 15<br>
+                    Eintrag2 | 34<br><br>
+
+                    <b>Code Block mit Syntax Highlighting</b><br>
+                    ```java<br>
+                    System.Out.Prinln("das funktioniert nicht nur mit Java!")<br>
+                    ```<br><br>
+                </div>
             </div>
-        </div>
         </div>
     </div>
     <script>
         //Read previously selected Postnumber from URL and set it in the Editor
-        window.onload = function() {
+        window.onload = function () {
             postNr = new URL(document.URL).searchParams.get("nr");
             console.log(postNr);
             document.getElementById("postNr").value = postNr;
@@ -86,30 +84,30 @@
         function loadPost() {
             var xhr = new XMLHttpRequest();
 
-                //open request to /matrikel/postraw/number
-                var path = './';
-                var urlArray = window.location.pathname.split( '/' );
+            //open request to /matrikel/postraw/number
+            var path = './';
+            var urlArray = window.location.pathname.split('/');
 
-                var postNr = document.getElementById("postNr").value;
+            var postNr = document.getElementById("postNr").value;
 
-                //Open path to postnumber, else take post 1
-                xhr.open('GET', path.concat("{{.Matrikel}}", "/postraw/",postNr), true);
+            //Open path to postnumber, else take post 1
+            xhr.open('GET', path.concat("{{.Us.Matrikel}}", "/postraw/", postNr), true);
 
-                //handle response
-                xhr.onreadystatechange = function () {
-                    if (xhr.readyState === XMLHttpRequest.DONE && xhr.status === 200) {
-                        var posttext = xhr.responseText;
-                        var lines = posttext.split('\n');
-                        lines.splice(0, 1);
-                        posttext = lines.join('\n');
-                        posttext += "\n";
-                        document.getElementById("textarea").value = posttext;
-                    }
-                };
-                xhr.send();
+            //handle response
+            xhr.onreadystatechange = function () {
+                if (xhr.readyState === XMLHttpRequest.DONE && xhr.status === 200) {
+                    var posttext = xhr.responseText;
+                    var lines = posttext.split('\n');
+                    lines.splice(0, 1);
+                    posttext = lines.join('\n');
+                    posttext += "\n";
+                    document.getElementById("textarea").value = posttext;
+                }
+            };
+            xhr.send();
         }
     </script>
-    
+
 </body>
 
 </html>
