@@ -72,7 +72,7 @@ Es gibt drei Nutzergruppen:
 Momentan werden alle Nutzer als `Student` registriert. In der entsprechenden profile.json Datei kann im nachhinein dann "usertype" auf 2 (`Tutor`) oder 3 (`Admin`) gesetzt werden. Momentan gibt es in der Funktionalität noch keinen unterschied zwischen Tutor und Admin.
 
 ### Aufgabenstellung
-Für die Aufgabenstellung werden Markdown Dateien im Userdata/assignments erstellt. Diese müssen dem Benennungsschema `post_001.md`, `post_002.md`... folgen. Der Aufgabenwähler auf der hauptseite erkenn automatisch, für welche Aufgaben Einträge bestehen und zeigt diese im Aufgabenwähler an.
+Für die Aufgabenstellung werden Markdown Dateien im coursedata/tasks erstellt. Diese müssen dem Benennungsschema `post_001.md`, `post_002.md`... folgen. Der Aufgabenwähler auf der Hauptseite erkennt automatisch, für welche Aufgaben Einträge bestehen und zeigt diese im Aufgabenwähler an.
 
 Da Bilder in den Aufgabenstellungen von der Haupseite aus aufgerufen werden, können diese per Markdown folgendermaßen z.b. aufgerufen werden: `![beschreibung](img/06.png "Licht")`. 
 Da der assignments/img Ordner beliebig unterteilt werden kann, ist z.b. auch `![alt text](img/a1/06.png "Licht")` möglich - wenn das Bild in einem Unterordner assignments/img/a1 abgelegt wurde.

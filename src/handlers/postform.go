@@ -26,7 +26,11 @@ func HandlePostForm(w http.ResponseWriter, r *http.Request) {
 	postNumber, _ := strconv.Atoi(r.FormValue("postNr"))
 	st, _ := user.FromMatrikel(matrikel)
 	if postedText != "" && postNumber > 0 && postNumber < 1000 {
-		st.PostNr(postedText, postNumber)
+		err := st.PostNr(postedText, postNumber)
+		if err != nil {
+			fmt.Fprint(w, err)
+			return
+		}
 		redirPath := fmt.Sprintf("./%v/post/%v", matrikel, postNumber)
 		http.Redirect(w, r, redirPath, http.StatusSeeOther)
 	}

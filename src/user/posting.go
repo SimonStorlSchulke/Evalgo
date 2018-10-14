@@ -8,12 +8,18 @@ import (
 )
 
 //Post a string to /coursedata/users/[st.matrikel]/post_[postnumber].md
-func (us *User) PostNr(str string, postNumber int) {
+func (us *User) PostNr(str string, postNumber int) error {
 	nrStr, err := intToString(postNumber)
-	if err == nil {
-		ioutil.WriteFile(fmt.Sprintf("./coursedata/users/%v/post_%s.md", us.Matrikel, nrStr), []byte(str), 0777)
-		fmt.Println(us.Vorname, us.Nachname, "created post Nr.", postNumber)
+	if err != nil {
+		return err
 	}
+
+	err = ioutil.WriteFile(fmt.Sprintf("./coursedata/users/%v/post_%s.md", us.Matrikel, nrStr), []byte(str), 0777)
+	if err != nil {
+		return err
+	}
+	fmt.Println(us.Vorname, us.Nachname, "created post Nr.", postNumber)
+	return nil
 }
 
 //Returns a post as []byte

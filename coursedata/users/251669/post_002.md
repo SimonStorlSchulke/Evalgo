@@ -1,4 +1,4 @@
-<i class='last-modified'>last modified 22:34 October 12 2018</i>
+<i class='last-modified'>last modified 15:59 October 14 2018</i>
 ### Convert User Struct to JSON
 **Kuhles Meerschweinchen:**  
 ![img](https://files.gamebanana.com/img/ico/sprays/5076a41eda117.gif)
@@ -13,3 +13,4 @@ func (us *User) ToJSON() []byte {
 	return jsondata
 }
 ```
+`Ctrl + B`

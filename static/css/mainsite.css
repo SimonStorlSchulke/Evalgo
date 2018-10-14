@@ -112,7 +112,19 @@
     word-wrap: break-word !important;
     max-width: 100%;
     padding-bottom: 50px;
+}
 
+code:not(pre) {
+    border-style: solid;
+    border-width: 1px;
+    border-radius: 3px;
+    background: #ddd;
+    border-color: #aaa;
+    color: black;
+}
+
+pre code {
+    border-style: none !important;
 }
 
 .post-area img {
