@@ -12,7 +12,7 @@ func (us *User) PostNr(str string, postNumber int) {
 	nrStr, err := intToString(postNumber)
 	if err == nil {
 		ioutil.WriteFile(fmt.Sprintf("./Userdata/Students/%v/post_%s.md", us.Matrikel, nrStr), []byte(str), 0777)
-		fmt.Println(us.Vorname, us.Nachname, "created a new post Nr.", postNumber)
+		fmt.Println(us.Vorname, us.Nachname, "created post Nr.", postNumber)
 	}
 }
 

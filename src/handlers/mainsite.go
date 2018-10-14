@@ -43,8 +43,7 @@ func HandleMainSite(w http.ResponseWriter, r *http.Request) {
 		}
 	}
 
-	/*append groupcolors
-	green, blue, yellow, red, orange, purple, grey...
+	/*append groupcolor classes (actual colors are defined in groupcolors.css)
 	TODO: Display Groupnumbers correctly in closed course.*/
 	groupColors := []string{"grc-1", "grc-2", "grc-3", "grc-4", "grc-5", "grc-6", "grc-7", "grc-8", "grc-9", "grc-10", "grc-11"}
 	cNum := conf.Group_number

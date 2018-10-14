@@ -1,3 +1,29 @@
+.bg-dark {
+    background: #33393B !important;
+    box-shadow: 0px -10px 10px 0px #25292A inset; 
+}
+
+.navbar-dark {
+    color: #CCCCCC;
+}
+
+.nav-link {
+    color: #CCCCCC;
+}
+
+#sidebar-wrapper {
+    z-index: 1000;
+    position: fixed;
+    left: 250px;
+    width: 0;
+    height: 100%;
+    margin-left: -250px;
+    overflow-y: auto;
+    background: #363D3F;
+    color: #CCCCCC;
+}
+
+
 .feedback-post {
     background: red;
     color: black;
@@ -105,8 +131,6 @@
     }
 }
 
-
-
 #post-area {
     margin-top: 10px;
     word-wrap: break-word !important;
@@ -125,9 +149,10 @@ hr {
  }
 
 .selected-profile {
-    box-shadow: inset 0 0 14px rgba(66, 170, 255, 0.5);
-    outline: 3px solid #077ee0;
-    outline-offset: -3px;
+    outline: 2px solid #d2dde7;
+    box-shadow: 0px 0px 20px 0px #0000007a inset !important; 
+    outline-offset: -2px;
+    color: white;
 }
 
 .active {
@@ -161,13 +186,9 @@ hr {
 
 .sidebar-st {
     line-height: 35px;
-    border-color: rgb(133, 133, 133);
-    border-style: solid;
-    border-width: 0px 0px 1px 0px;
     cursor: pointer;
+    box-shadow: 0px -10px 10px 0px rgba(0, 0, 0, 0.267) inset; 
 }
-
-
 
 #navbar-portrait {
     height: 42px;
@@ -193,17 +214,6 @@ hr {
 
 #wrapper.toggled {
     padding-left: 250px;
-}
-
-#sidebar-wrapper {
-    z-index: 1000;
-    position: fixed;
-    left: 250px;
-    width: 0;
-    height: 100%;
-    margin-left: -250px;
-    overflow-y: auto;
-    background: #eee;
 }
 
 #page-content-wrapper {
