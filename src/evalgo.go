@@ -14,7 +14,6 @@ import (
 var conf courseconfig.Config = courseconfig.GetConfig()
 
 func genUrl(str string) string {
-	fmt.Printf("%s%s\n", conf.Root_url, str)
 	return fmt.Sprintf("%s%s", conf.Root_url, str)
 }
 
@@ -47,18 +46,41 @@ func main() {
 	rtr.HandleFunc(genUrl("task/{tasknr}"), handlers.HandleTasks)
 	http.Handle(genUrl(""), rtr)
 
-	fmt.Printf("Start server at port%s:\n"+
-		"   Coursname: %s\n"+
-		"   Number of studentgroups: %v\n"+
-		"   Course open: %v\n",
-		conf.Port, conf.Course_name, conf.Group_number, conf.Open_course)
+	fmt.Printf("Course: %s\n"+
+		"Course open: %v\n"+
+		"Groups: %v\n"+
+		"Cards: %v\n"+
+		"Grades: %v \n",
+		conf.Course_name, conf.Open_course, conf.Group_number, conf.Enable_cards, conf.Enable_grades)
 
-	//Start Server or exit with error message alter 5 seconds
-	//err := http.ListenAndServeTLS(conf.Port, "../.tls/fullchain.pem", "../.tls/privkey.pem", nil)   template.Execute(writer, student1)
-	err := http.ListenAndServe(":8080", nil)
-	if err != nil {
-		fmt.Println(err)
-		time.Sleep(time.Second * 5)
-		os.Exit(1)
+	var localhost bool
+	if len(os.Args) > 1 {
+		if os.Args[1] == "localhost" {
+			localhost = true
+		}
+	}
+
+	if localhost {
+		fmt.Printf("Started server at localhost%s%s\n",
+			conf.Port, conf.Root_url)
+
+		//Start Server or exit with error message alter 5 seconds
+		err := http.ListenAndServe(":8080", nil)
+		if err != nil {
+			fmt.Println(err)
+			time.Sleep(time.Second * 5)
+			os.Exit(1)
+		}
+	} else {
+		fmt.Printf("Started server at /%s%s\n",
+			conf.Port, conf.Root_url)
+
+		//Start Server or exit with error message alter 5 seconds
+		err := http.ListenAndServeTLS(conf.Port, "../.tls/fullchain.pem", "../.tls/privkey.pem", nil)
+		if err != nil {
+			fmt.Println(err)
+			time.Sleep(time.Second * 5)
+			os.Exit(1)
+		}
 	}
 }
