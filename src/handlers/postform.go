@@ -32,7 +32,12 @@ func HandlePostForm(w http.ResponseWriter, r *http.Request) {
 		Us:         us,
 		MaxPostNum: highestTaskNumber(),
 	}
-	tpl.Execute(w, pageData)
+	err = tpl.Execute(w, pageData)
+	if err != nil {
+		fmt.Fprint(w, err)
+		return
+	}
+	return
 }
 
 //Handle incoming Posts
