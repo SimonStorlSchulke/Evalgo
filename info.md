@@ -15,6 +15,7 @@
         - 🗀 js
         - 🗀 highlightJS
         - 🗀 bootstrap
+        - icon.png
     - 🗀 coursedata
         - 🗀 tasks
             - 🗀 img (beliebige Unterstruktur)
