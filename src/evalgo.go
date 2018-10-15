@@ -2,6 +2,7 @@ package main
 
 import (
 	"fmt"
+	"log"
 	"net/http"
 	"os"
 	"time"
@@ -15,6 +16,13 @@ var conf courseconfig.Config = courseconfig.GetConfig()
 
 func genUrl(str string) string {
 	return fmt.Sprintf("%s%s", conf.Root_url, str)
+}
+
+func Log(handler http.Handler) http.Handler {
+	return http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
+		log.Printf("%s %s %s", r.RemoteAddr, r.Method, r.URL)
+		handler.ServeHTTP(w, r)
+	})
 }
 
 func main() {
@@ -66,7 +74,7 @@ func main() {
 			conf.Port, conf.Root_url)
 
 		//Start Server or exit with error message alter 5 seconds
-		err := http.ListenAndServe(":8080", nil)
+		err := http.ListenAndServe(":8080", Log(http.DefaultServeMux))
 		if err != nil {
 			fmt.Println(err)
 			time.Sleep(time.Second * 5)

@@ -11,9 +11,9 @@ import (
 
 //Handles user Post form
 func HandlePostForm(w http.ResponseWriter, r *http.Request) {
+
 	//Redirect to loggin if not logged in
 	isLoggedIn, matrikel := loggedIn(r)
-	//get highest taskNumber
 	if isLoggedIn == false {
 		http.Redirect(w, r, "./login", http.StatusSeeOther)
 		return
@@ -42,19 +42,25 @@ func HandlePostForm(w http.ResponseWriter, r *http.Request) {
 
 //Handle incoming Posts
 func ProcessPost(w http.ResponseWriter, r *http.Request) {
-	fmt.Println("1")
+
+	//Max Memory 10kb
+	r.ParseMultipartForm(10 * 1024)
+
 	if r.Method != "POST" {
 		fmt.Fprint(w, "Method is not Post")
 		return
 	}
-	fmt.Println("2")
+
 	isLoggedIn, matrikel := loggedIn(r)
 	if !isLoggedIn {
 		http.Redirect(w, r, "./login", http.StatusSeeOther)
 		return
 	}
-
-	us, _ := user.FromMatrikel(matrikel)
+	us, err := user.FromMatrikel(matrikel)
+	if err != nil {
+		fmt.Fprint(w, err)
+		return
+	}
 	postcontent := r.FormValue("postcontent")
 	postNr, err := strconv.Atoi(r.FormValue("postNr"))
 

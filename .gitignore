@@ -6,6 +6,10 @@
 .idea/
 .vscode/
 
+# logfile
+serverlog.txt
+log.txt
+
 debug
 
 # Test binary, build with `go test -c`

@@ -1,3 +1,2 @@
-<i class='last-modified'>last modified 21:25 October 14 2018</i>
-# WOW
-i bims kul
+<i class='last-modified'>last modified 1:49 October 15 2018</i>
+gjztiuk
