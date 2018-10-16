@@ -1,4 +1,4 @@
-<i class='last-modified'>last modified 9:37 October 15 2018</i>
+<i class='last-modified'>last modified 15:26 October 15 2018</i>
 ```js
 xhr.onreadystatechange = function () {
                 if (xhr.readyState === XMLHttpRequest.DONE && xhr.status === 200) {
@@ -12,3 +12,4 @@ xhr.onreadystatechange = function () {
                 }
             };
 ```
+
