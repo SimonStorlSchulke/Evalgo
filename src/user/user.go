@@ -138,7 +138,7 @@ func (us *User) Unregister() {
 	fmt.Printf("Unregistered User %s %s at %s\n", us.Vorname, us.Nachname, us.getPath())
 }
 
-//returns a List of registered Matrikelnumbers
+//returns a List of registered Matrikelnumbers (read from folder names)
 func MatrikelList() []int {
 	folders, err := ioutil.ReadDir("./coursedata/users")
 	if err != nil {

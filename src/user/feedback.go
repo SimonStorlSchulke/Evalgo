@@ -25,7 +25,7 @@ func NewFeedback(text string, grade int, card int) Feedback {
 	return Feedback{text, grade, card}
 }
 
-//For usage in Template Logic
+//Returns wether Feedback has red Card - for usage in Template Logic
 func (fb Feedback) IsRed() bool {
 	if fb.Card == 2 {
 		return true
@@ -33,6 +33,7 @@ func (fb Feedback) IsRed() bool {
 	return false
 }
 
+//Returns wether Feedback has yellow Card - for usage in Template Logic
 func (fb Feedback) IsYellow() bool {
 	if fb.Card == 1 {
 		return true

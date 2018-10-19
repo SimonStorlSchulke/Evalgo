@@ -14,9 +14,9 @@ import (
 func PortraitUpload(w http.ResponseWriter, r *http.Request) {
 	fmt.Println("method:", r.Method)
 	if r.Method == "GET" {
-		crutime := time.Now().Unix()
+		ctime := time.Now().Unix()
 		h := md5.New()
-		io.WriteString(h, strconv.FormatInt(crutime, 10))
+		io.WriteString(h, strconv.FormatInt(ctime, 10))
 		token := fmt.Sprintf("%x", h.Sum(nil))
 
 		t, _ := template.ParseFiles("./templates/portrait-upload.go.html")

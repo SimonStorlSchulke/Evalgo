@@ -1,7 +1,6 @@
 package handlers
 
 import (
-	"fmt"
 	"net/http"
 	"text/template"
 
@@ -11,12 +10,8 @@ import (
 
 func HandleTable(w http.ResponseWriter, r *http.Request) {
 
-	//Check Permission and deny if no loggged in user or user is not authorized
-	loggedIn, loggedInMat := loggedIn(r)
-	loggedInUser, err := user.FromMatrikel(loggedInMat)
-
-	if !loggedIn || loggedInUser.Usertype == user.STUDENT || err != nil {
-		fmt.Fprintf(w, "Permission Denied. This Page is only accessible by authorized, logged in users.")
+	if !isAuthSession(r, w) {
+		permissionDeniedMsg(w)
 		return
 	}
 
@@ -33,11 +28,29 @@ func HandleTable(w http.ResponseWriter, r *http.Request) {
 		}
 	}
 
-	//2D Feedback Map - Keys: Matrikel, Tasknumber
-	fbs := make(map[int]map[int]user.Feedback)
+	fbt := FeedbackTable(&studentsOnly)
 
-	for _, st := range studentsOnly {
-		fbs[st.Matrikel] = make(map[int]user.Feedback)
+	pageData := struct {
+		Coursename string
+		Tasks      []int
+		Students   []user.User
+		Grades     map[int]map[int]user.Feedback
+	}{cfg.Course_name, tasks, studentsOnly, fbt}
+
+	tpl := template.Must(template.ParseFiles("./templates/table.go.html"))
+	tpl.Execute(w, pageData)
+}
+
+//2D FeedbackMap with grades and cards of Students and Tasks
+func FeedbackTable(students *[]user.User) map[int]map[int]user.Feedback {
+	cfg := courseconfig.Conf
+	tasks := existingTaskNumbers()
+
+	//2D Feedback Map - Keys: Matrikel, Tasknumber
+	fbt := make(map[int]map[int]user.Feedback)
+
+	for _, st := range *students {
+		fbt[st.Matrikel] = make(map[int]user.Feedback)
 		for _, ts := range tasks {
 			fb := user.Feedback{}
 			cfb, err := user.GetFeedback(st.Matrikel, ts)
@@ -50,18 +63,8 @@ func HandleTable(w http.ResponseWriter, r *http.Request) {
 					fb.Card = 0
 				}
 			}
-			fbs[st.Matrikel][ts] = fb
+			fbt[st.Matrikel][ts] = fb
 		}
-
 	}
-
-	pageData := struct {
-		Coursename string
-		Tasks      []int
-		Students   []user.User
-		Grades     map[int]map[int]user.Feedback
-	}{cfg.Course_name, tasks, studentsOnly, fbs}
-
-	tpl := template.Must(template.ParseFiles("./templates/table.go.html"))
-	tpl.Execute(w, pageData)
+	return fbt
 }

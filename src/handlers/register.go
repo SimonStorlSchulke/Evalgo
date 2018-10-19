@@ -34,5 +34,6 @@ func HandleRegister(w http.ResponseWriter, r *http.Request) {
 		http.SetCookie(w, c)
 		http.Redirect(w, r, "./", http.StatusSeeOther)
 	}
+	//TODO show error to user registration when failed
 	tpl.Execute(w, vorname)
 }
