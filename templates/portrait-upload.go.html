@@ -1,14 +1,34 @@
 <!doctype html>
 <html lang="en">
+
 <head>
     <meta charset="utf-8">
-    <title>Single file upload</title>
+    <title>Portrait ändern</title>
+    <link rel="icon" type="image/png" href="./static/icon.png" />
+    <link rel="stylesheet" href="./static/bootstrap/bootstrap.min.css">
 </head>
+
 <body>
-    <form enctype="multipart/form-data" action="./uploadportrait" method="post">
-        <input type="file" name="uploadfile" />
-        <input type="hidden" name="token" value="{{.}}"/>
-        <input type="submit" value="upload" />
-    </form>
-    </body>
+    <div class="container-fluid" style="padding: 50px 15%;">
+        <h1>Portrait ändern</h1>
+        <div class="form-group">
+            <form accept="image/jpeg" enctype="multipart/form-data" action="./uploadportrait" method="post">
+                <input class="inputfile" id="fileform" accept="image/jpeg" type="file" name="uploadfile" oninput="checkForm();" />
+                <input class="btn btn-primary" disabled id="btn" type="submit" value="upload" />
+            </form>
+        </div>
+    </div>
+    <style>
+
+    </style>
+    <script>
+        function checkForm() {
+            if (document.getElementById("fileform").value != "") {
+                document.getElementById("btn").disabled = false;
+            }
+        }
+
+    </script>
+</body>
+
 </html>

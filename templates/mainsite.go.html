@@ -64,7 +64,7 @@
                         Eingeloggt als {{if .CurrentUser.IsAuthorized}}authorized{{end}} {{.CurrentUser.Vorname}} {{.CurrentUser.Nachname}}
                         <i style="font-size: 13px">
                             #{{.CurrentUser.Matrikel}}</i>
-                        <img style="background-image: url({{.CurrentPortrait}}?v={{.Rand}});" id="navbar-portrait">
+                        <a href="./uploadportrait"><img style="background-image: url({{.CurrentPortrait}}?v={{.Rand}});" id="navbar-portrait"></a>
                     {{else}}
                     <li class="nav-link">not logged in </li>
                     {{end}}

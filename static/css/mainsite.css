@@ -191,6 +191,10 @@ hr {
     border-radius: 22px;
 }
 
+#navbar-portrait:hover {
+    background-image: url("../misc/portrait_icon.png") !important;
+}
+
 /*!
  * Start Bootstrap - Simple Sidebar HTML Template (http://startbootstrap.com)
  * Code licensed under the Apache License v2.0.

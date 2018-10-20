@@ -73,11 +73,11 @@ func FromMatrikel(matrikel int) (User, error) {
 
 //Return path to user portrait TODO: jpg support
 func (us *User) GetPortraitPath() string {
-	url := fmt.Sprintf("./portraits/%v.png", us.Matrikel)
-	filepath := fmt.Sprintf("./coursedata/portraits/%v.png", us.Matrikel)
+	url := fmt.Sprintf("./portraits/%v.jpg", us.Matrikel)
+	filepath := fmt.Sprintf("./coursedata/portraits/%v.jpg", us.Matrikel)
 
 	if _, err := os.Stat(filepath); os.IsNotExist(err) {
-		return "./portraits/default.png"
+		return "./portraits/default.jpg"
 	}
 	return url
 }

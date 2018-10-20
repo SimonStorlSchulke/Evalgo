@@ -13,6 +13,7 @@ import (
 )
 
 func PortraitUpload(w http.ResponseWriter, r *http.Request) {
+	//TODO: limit File size, (allow jpg)
 	fmt.Println("p method:", r.Method)
 	isLoggedIn, mat := loggedIn(r)
 	if !isLoggedIn {
@@ -29,21 +30,22 @@ func PortraitUpload(w http.ResponseWriter, r *http.Request) {
 		t, _ := template.ParseFiles("./templates/portrait-upload.go.html")
 		t.Execute(w, token)
 	} else {
-		fmt.Println("p method:", r.Method)
-		r.ParseMultipartForm(32 << 20)
+		r.Body = http.MaxBytesReader(w, r.Body, 1*512*1024) // 500kb
+
 		file, handler, err := r.FormFile("uploadfile")
-		ext := filepath.Ext(handler.Filename)
-		if ext != ".png" {
-			fmt.Fprintf(w, "not an png file but %v", ext)
-			return
-		}
 		if err != nil {
 			fmt.Println(err)
+			fmt.Fprintf(w, "Fehler beim Upload des Portraits: %v Die Datei darf maximal 500kb groß sein.", err)
+			return
+		}
+		ext := filepath.Ext(handler.Filename)
+		if ext != ".jpg" && ext != ".JPG" && ext != ".jpeg" && ext != ".JPEG" {
+			fmt.Fprint(w, "Fehler. Bild muss im .jpg Format sein")
 			return
 		}
 		defer file.Close()
-		fmt.Fprintf(w, "uploaded new Portrait")
-		f, err := os.OpenFile("./coursedata/portraits/"+fmt.Sprintf("%v.png", mat), os.O_WRONLY|os.O_CREATE, 0666)
+		fmt.Fprintf(w, "Neues Portrait hochgeladen")
+		f, err := os.OpenFile("./coursedata/portraits/"+fmt.Sprintf("%v.jpg", mat), os.O_WRONLY|os.O_CREATE, 0666)
 		if err != nil {
 			fmt.Println(err)
 			return
