@@ -81,6 +81,7 @@ func HandleLogin(w http.ResponseWriter, r *http.Request) {
 	tpl.Execute(w, "")
 }
 
+//currently unused
 func HandleAuthLogin(w http.ResponseWriter, r *http.Request) {
 
 	tpl := template.Must(template.ParseFiles("./templates/login.go.html"))

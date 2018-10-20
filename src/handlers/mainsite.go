@@ -3,6 +3,7 @@ package handlers
 import (
 	"fmt"
 	"log"
+	"math/rand"
 	"net/http"
 	"strconv"
 	"text/template"
@@ -67,6 +68,8 @@ func HandleMainSite(w http.ResponseWriter, r *http.Request) {
 		portraits = append(portraits, st.GetPortraitPath())
 	}
 
+	//random number to be added at the end of profile pic links to force the browser to reload them each time
+
 	pageData := struct {
 		Students        []user.User
 		CurrentUser     user.User
@@ -75,6 +78,7 @@ func HandleMainSite(w http.ResponseWriter, r *http.Request) {
 		CourseName      string
 		Conf            courseconfig.Config
 		TaskNumbers     []int
+		Rand            int
 	}{
 		Students:        studentlist,
 		CurrentUser:     currentUser,
@@ -83,6 +87,9 @@ func HandleMainSite(w http.ResponseWriter, r *http.Request) {
 		CourseName:      conf.Course_name,
 		Conf:            conf,
 		TaskNumbers:     existingTaskNumbers(),
+
+		//random number to be added at the end of profile pic links to force the browser to reload them each time (and not use the old one from cache)
+		Rand: rand.Int(),
 	}
 
 	//Feedback

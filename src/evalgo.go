@@ -32,6 +32,9 @@ func main() {
 	FileServer := http.FileServer(http.Dir("static"))
 	http.Handle(genUrl("static/"), http.StripPrefix(genUrl("static/"), FileServer))
 
+	FileServerRes := http.FileServer(http.Dir("coursedata/ressources"))
+	http.Handle(genUrl("res/"), http.StripPrefix(genUrl("res/"), FileServerRes))
+
 	FileServerPortraits := http.FileServer(http.Dir("coursedata/portraits"))
 	http.Handle(genUrl("portraits/"), http.StripPrefix(genUrl("portraits/"), FileServerPortraits))
 
@@ -41,7 +44,7 @@ func main() {
 	rtr.HandleFunc(genUrl("register"), handlers.HandleRegister)
 	rtr.HandleFunc(genUrl("login"), handlers.HandleLogin)
 	rtr.HandleFunc(genUrl("authlogin"), handlers.HandleAuthLogin)
-	rtr.HandleFunc(genUrl("portrait"), handlers.PortraitUpload)
+	rtr.HandleFunc(genUrl("uploadportrait"), handlers.PortraitUpload)
 	rtr.HandleFunc(genUrl("post"), handlers.HandlePostForm)
 	rtr.HandleFunc(genUrl("process"), handlers.ProcessPost)
 	rtr.HandleFunc(genUrl("table"), handlers.HandleTable)

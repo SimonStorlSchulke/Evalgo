@@ -64,7 +64,7 @@
                         Eingeloggt als {{if .CurrentUser.IsAuthorized}}authorized{{end}} {{.CurrentUser.Vorname}} {{.CurrentUser.Nachname}}
                         <i style="font-size: 13px">
                             #{{.CurrentUser.Matrikel}}</i>
-                        <img style="background-image: url({{.CurrentPortrait}});" id="navbar-portrait">
+                        <img style="background-image: url({{.CurrentPortrait}}?v={{.Rand}});" id="navbar-portrait">
                     {{else}}
                     <li class="nav-link">not logged in </li>
                     {{end}}
@@ -85,11 +85,12 @@
             </li>
             <!--Show Students when logged in-->
             {{if .CurrentUser.Vorname}}
+            {{$rand := .Rand}}
             {{$st := .Students}} {{$pt := .Portraits}} {{range $index, $st := .Students}}
             <li class="{{.Matrikel}} {{.Gruppenfarbe}}" onclick="switchStudent({{.Matrikel}});">
                 <div class="sidebar-st {{.Matrikel}}">
                     <div class="sidebar-name {{if .IsAuthorized}}sidebar-authorized-user{{end}}">{{.Vorname}} {{.Nachname}}</div>
-                    <img align="middle" style="background-image: url({{index $pt $index}});" class="sidebar-portrait">
+                    <img align="middle" style="background-image: url({{index $pt $index}}?v={{$rand}});" class="sidebar-portrait">
                     <p class="sidebar-matrikel{{if .IsAuthorized}} sidebar-tutor{{end}}">{{if .IsAuthorized}}Tutor{{else}}{{.Matrikel}}{{end}}</p>
                 </div>
                 </a>

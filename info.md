@@ -25,6 +25,7 @@
             - post_001.md
             - post_002.md
             - post_...
+        - 🗀 ressources (beliebiger inhalt)
         - 🗀 portraits
             * ...[Matrikelnumer].png
             * default.png
@@ -70,13 +71,15 @@ Es gibt drei Nutzergruppen:
 - 2 `Tutor`
 - 3 `Admin`
 
-Momentan werden alle Nutzer als `Student` registriert. In der entsprechenden profile.json Datei kann im nachhinein dann "usertype" auf 2 (`Tutor`) oder 3 (`Admin`) gesetzt werden. Momentan gibt es in der Funktionalität noch keinen unterschied zwischen Tutor und Admin.
+Momentan werden alle Nutzer als `Student` registriert. In der entsprechenden profile.json Datei kann im Nachhinein dann "usertype" auf 2 (`Tutor`) oder 3 (`Admin`) gesetzt werden. Momentan gibt es in der Funktionalität noch keinen Unterschied zwischen Tutor und Admin.
 
 ### Aufgabenstellung
 Für die Aufgabenstellung werden Markdown Dateien im coursedata/tasks erstellt. Diese müssen dem Benennungsschema `post_001.md`, `post_002.md`... folgen. Der Aufgabenwähler auf der Hauptseite erkennt automatisch, für welche Aufgaben Einträge bestehen und zeigt diese im Aufgabenwähler an.
 
-Da Bilder in den Aufgabenstellungen von der Haupseite aus aufgerufen werden, können diese per Markdown folgendermaßen z.b. aufgerufen werden: `![beschreibung](img/06.png "Licht")`. 
+Da **Bilder** in den Aufgabenstellungen von der Haupseite aus aufgerufen werden, können diese per Markdown folgendermaßen z.b. aufgerufen werden: `![beschreibung](img/06.png "Licht")`. 
 Da der assignments/img Ordner beliebig unterteilt werden kann, ist z.b. auch `![alt text](img/a1/06.png "Licht")` möglich - wenn das Bild in einem Unterordner assignments/img/a1 abgelegt wurde.
+
+Zusätzliche Ressourcen können im Ordner `coursedata/ressources` abgelegt werden. Diese können dann in der Aufgabenstellung mit `res/dateiname.dateiendung` und der üblichen Markdown Syntax verlinkt werden. Zum Beispiel `[Modell - Burg](res/burg.blend)`. Zudem sind diese Dateien auf der Hauptseite über den Reiter *Ressourcen* erreichbar (wird nur angezeigt, wenn der `res` Ordner nicht leer ist).
 
 ### Posts
 Über den Reiter "Post" können Studierende Abgaben machen.
