@@ -13,7 +13,6 @@ import (
 )
 
 func PortraitUpload(w http.ResponseWriter, r *http.Request) {
-	//TODO: limit File size, (allow jpg)
 	fmt.Println("p method:", r.Method)
 	isLoggedIn, mat := loggedIn(r)
 	if !isLoggedIn {
@@ -34,7 +33,6 @@ func PortraitUpload(w http.ResponseWriter, r *http.Request) {
 
 		file, handler, err := r.FormFile("uploadfile")
 		if err != nil {
-			fmt.Println(err)
 			fmt.Fprintf(w, "Fehler beim Upload des Portraits: %v Die Datei darf maximal 500kb groß sein.", err)
 			return
 		}
@@ -44,12 +42,17 @@ func PortraitUpload(w http.ResponseWriter, r *http.Request) {
 			return
 		}
 		defer file.Close()
-		fmt.Fprintf(w, "Neues Portrait hochgeladen")
+
 		f, err := os.OpenFile("./coursedata/portraits/"+fmt.Sprintf("%v.jpg", mat), os.O_WRONLY|os.O_CREATE, 0666)
 		if err != nil {
 			fmt.Println(err)
 			return
 		}
+		st := fmt.Sprintf("<html><body>Neues Portrait hochgeladen <br>"+
+			"<img src='./portraits/%v.jpg'><br>"+
+			"<a href='./'>Zurück zur Übersicht </a></body></html>", mat)
+		fmt.Fprintf(w, st)
+		fmt.Printf("User %v updated his Portrait", mat)
 
 		defer f.Close()
 		io.Copy(f, file)

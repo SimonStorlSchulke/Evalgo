@@ -29,7 +29,6 @@ func HandleMainSite(w http.ResponseWriter, r *http.Request) {
 	} else {
 		studentlist = user.ReadTutors()
 		studentlist = append(studentlist, currentUser)
-		//TODO studenten auch Posts von authorisierte Nutzern anzeigen
 	}
 
 	//Extract Students from Users and combine them again later - there must be a better way though...
@@ -48,6 +47,7 @@ func HandleMainSite(w http.ResponseWriter, r *http.Request) {
 	TODO: Display Groupnumbers correctly in closed course.*/
 	groupColors := []string{"grc-1", "grc-2", "grc-3", "grc-4", "grc-5", "grc-6", "grc-7", "grc-8", "grc-9", "grc-10", "grc-11"}
 	cNum := conf.Group_number
+	//Limit maxG Group Number to 6 - maybe revisit this later
 	if cNum > 6 {
 		cNum = 6
 	}

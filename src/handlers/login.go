@@ -48,6 +48,7 @@ func loggedIn(r *http.Request) (bool, int) {
 	return false, 0
 }
 
+//TODO: Clean me up pls
 func HandleLogin(w http.ResponseWriter, r *http.Request) {
 
 	tpl := template.Must(template.ParseFiles("./templates/login.go.html"))
@@ -56,8 +57,7 @@ func HandleLogin(w http.ResponseWriter, r *http.Request) {
 	var err error
 	var us user.User
 
-	//dirty Fix. Clean me up pls
-	if matrikel != 0 {
+	if r.Method == "POST" {
 		us, err = user.FromMatrikel(int(matrikel))
 		if err != nil {
 			fmt.Println(err)
