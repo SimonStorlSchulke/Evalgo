@@ -8,13 +8,13 @@ import (
 func HandlePdf(w http.ResponseWriter, r *http.Request) {
 	us, err := studentFromURL(r)
 	if err != nil {
-		fmt.Fprint(w, "error reading matrikel")
+		WriteError(w, "cannot read matrikel", err)
 		return
 	}
 
 	//Check Permission
 	if !checkViewPermission(us, r) {
-		fmt.Fprintf(w, "Permission Denied")
+		WriteMsg(w, MsgPermissionDenied)
 		return
 	}
 

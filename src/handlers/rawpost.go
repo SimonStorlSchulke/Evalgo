@@ -16,13 +16,14 @@ func HandleRawPosts(w http.ResponseWriter, r *http.Request) {
 
 	//Check Permission
 	if !checkViewPermission(us, r) {
-		fmt.Fprintf(w, "Permission Denied")
+		fmt.Fprintf(w, MsgPermissionDenied)
 		return
 	}
 
 	//Display Error Message when matrikel does not exist
 	if err != nil {
-		fmt.Fprintf(w, "Error reading Matrikelnumber %v for accessing raw post", us.Matrikel)
+		//Do not use WriteMsg() here - this handler only displays the raw post information and should therefore not contain any styling
+		fmt.Fprintf(w, "%s %v for accessing raw post", MsgErrorReadingMat, us.Matrikel)
 		return
 	}
 	postNrSt := mux.Vars(r)["postnr"]

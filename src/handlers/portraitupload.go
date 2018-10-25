@@ -16,7 +16,7 @@ func PortraitUpload(w http.ResponseWriter, r *http.Request) {
 	fmt.Println("p method:", r.Method)
 	isLoggedIn, mat := loggedIn(r)
 	if !isLoggedIn {
-		fmt.Fprintf(w, "loggin to change your portrait")
+		WriteMsg(w, MsgPermissionDeniedLoggedIn)
 		return
 	}
 
@@ -33,12 +33,12 @@ func PortraitUpload(w http.ResponseWriter, r *http.Request) {
 
 		file, handler, err := r.FormFile("uploadfile")
 		if err != nil {
-			fmt.Fprintf(w, "Fehler beim Upload des Portraits: %v Die Datei darf maximal 500kb groß sein.", err)
+			WriteError(w, "Die Datei darf maximal 500kb groß sein", err)
 			return
 		}
 		ext := filepath.Ext(handler.Filename)
 		if ext != ".jpg" && ext != ".JPG" && ext != ".jpeg" && ext != ".JPEG" {
-			fmt.Fprint(w, "Fehler. Bild muss im .jpg Format sein")
+			WriteMsg(w, "Fehler. Bild muss im .jpg Format sein")
 			return
 		}
 		defer file.Close()

@@ -11,7 +11,7 @@ import (
 func HandleTable(w http.ResponseWriter, r *http.Request) {
 
 	if !isAuthSession(r, w) {
-		permissionDeniedMsg(w)
+		WriteMsg(w, MsgPermissionDenied)
 		return
 	}
 

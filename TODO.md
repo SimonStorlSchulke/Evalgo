@@ -1,23 +1,21 @@
 ## TODO:
 - HTML Validator
-- UpdateConfif() nutzen
 - Studiengang Attribute (MIB, MKB...)
-- Bilder Upload (profile und Tasks)
+- (Bilder Upload für Posts)
 - Gruppenfarben manuell zuweisbar machen
 - PDF Download
 - Javascript savety in user posts
 - Links zu jeweiliger Aufgabe in Notentabelle
-- Ordner unbenennen: Userdata -> coursedata, assignments -> tasks, Students -> users alles klein
 - Config- und Nutzerverwaltungssseite
-- Printf für int to string
+    - UpdateConfif() nutzen damit Server nicht neugestarted werden muss für Config Update
+- Printf für intToString() nutzen
 
 ### BUGS:
-- Post funzt manchmal ned? Noch unklar wann / warum
-    - Kommt garnicht bis in
-- Gruppenfarben im geschlossenen Kurs falsch angezeigt
+- Gruppenfarben im geschlossenen Kurs falsch angezeigt (weil Grupenfarbe automatisch den angezeigten Studenten zugewiesen wird und im geschl. Kurs nur einer angezeigt wird)
 
 ### Hässlicher Code:
 - Farbzuweisung in mainsite.go
 - Code "entdenglischen"
+- Posts objektorientierter gestalten
 
-- long term - Rewrite mit besserem error handling und klarer Struktur
+- long term - Refactor für besseres error handling und klare Struktur

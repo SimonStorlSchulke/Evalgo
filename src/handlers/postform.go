@@ -47,7 +47,7 @@ func ProcessPost(w http.ResponseWriter, r *http.Request) {
 	r.ParseMultipartForm(10 * 1024)
 
 	if r.Method != "POST" {
-		fmt.Fprint(w, "Method is not Post")
+		WriteMsg(w, MsgMessageNotPost)
 		return
 	}
 
@@ -58,19 +58,20 @@ func ProcessPost(w http.ResponseWriter, r *http.Request) {
 	}
 	us, err := user.FromMatrikel(matrikel)
 	if err != nil {
-		fmt.Fprint(w, err)
+
+		WriteError(w, "", err)
 		return
 	}
 	postcontent := r.FormValue("postcontent")
 	postNr, err := strconv.Atoi(r.FormValue("postNr"))
 
 	if err != nil {
-		fmt.Fprint(w, "cannot convert PostNumber to int", err)
+		WriteError(w, "cannot convert PostNumber to int", err)
 		return
 	}
 	err = us.PostNr(postcontent, postNr)
 	if err != nil {
-		fmt.Fprint(w, err)
+		WriteError(w, "", err)
 		return
 	}
 	redirURL := fmt.Sprintf("./?nr=%v&mat=%v", postNr, matrikel)

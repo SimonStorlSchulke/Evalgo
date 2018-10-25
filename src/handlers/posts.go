@@ -18,12 +18,12 @@ func HandlePosts(w http.ResponseWriter, r *http.Request) {
 	conf := courseconfig.GetConfig()
 	us, err := studentFromURL(r)
 	if err != nil {
-		fmt.Println("Error reading Matrikelnumber")
+		fmt.Println(MsgErrorReadingMat)
 	}
 
 	//Check Permission
 	if !checkViewPermission(us, r) {
-		fmt.Fprintf(w, "Permission Denied")
+		WriteMsg(w, MsgPermissionDenied)
 		return
 	}
 

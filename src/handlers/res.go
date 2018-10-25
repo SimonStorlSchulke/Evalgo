@@ -1,7 +1,6 @@
 package handlers
 
 import (
-	"fmt"
 	"net/http"
 )
 
@@ -10,11 +9,11 @@ func HandleRessources(w http.ResponseWriter, r *http.Request) {
 
 	empty, err := isEmpty("./coursedata/ressources")
 	if empty {
-		fmt.Fprintf(w, "No Ressources")
+		WriteMsg(w, MsgNoRessources)
 		return
 	}
 	if err != nil {
-		fmt.Fprint(w, err)
+		WriteError(w, "Ressources folder cannot be read", err)
 		return
 	}
 

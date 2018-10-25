@@ -17,12 +17,12 @@ func HandleProfile(w http.ResponseWriter, r *http.Request) {
 
 	//Check Permission
 	if !checkViewPermission(student, r) {
-		fmt.Fprintf(w, "Permission Denied")
+		fmt.Fprintf(w, MsgPermissionDenied)
 		return
 	}
 
 	if err != nil {
-		fmt.Fprintf(w, "There is no Student with the Matrikel %v registered.", student.Matrikel)
+		WriteMsg(w, fmt.Sprintf("There is no Student with the Matrikel %v registered.", student.Matrikel))
 		return
 	}
 

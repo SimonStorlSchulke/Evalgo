@@ -13,9 +13,25 @@ import (
 	"github.com/gorilla/mux"
 )
 
-//Prints a "Permission denied" Message to w
-func permissionDeniedMsg(w http.ResponseWriter) {
-	fmt.Fprintf(w, "Permission Denied. This Page is only accessible by authorized (Tutor or Admin), logged in users.")
+//Messaging
+const (
+	MsgPermissionDeniedAuth     = "Permission Denied. This Page is only accessible by authorized (Tutor or Admin), logged in users."
+	MsgPermissionDeniedLoggedIn = "Permission Denied. This Page is only accessible for logged in users."
+	MsgPermissionDenied         = "Permission Denied."
+	MsgErrorReadingMat          = "Error reading Matrikelnumber"
+	MsgNoRessources             = "there are no Files in the coursedata/ressources directory"
+	MsgMessageNotPost           = "Message is not Post"
+)
+
+//Prints a message to the users Browser
+func WriteMsg(w http.ResponseWriter, str string) {
+	//Todo: Format nicely
+	fmt.Fprintf(w, str)
+}
+
+//The same as the function above but with an additional error
+func WriteError(w http.ResponseWriter, str string, err error) {
+	WriteMsg(w, fmt.Sprintf("An Error occured - %s: %v", str, err))
 }
 
 //Check Permission and return false if no loggged in user or user is not authorized
