@@ -73,7 +73,8 @@ Für die Aufgabenstellung werden Markdown Dateien in `coursedata/tasks` erstellt
 
 
 Da **Bilder** in den Aufgabenstellungen und Kursinfo von der Haupseite aus aufgerufen werden, können diese per Markdown folgendermaßen z.b. aufgerufen werden: `![beschreibung](img/smiley.png "Licht")`. Alle in `coursedata/tasks/img` Ordner vorhandenen Bilder sond so abrufbar - auch mit beliebigen Unterordnern.
-![beschreibung](coursedata/tasks/img/smiley.png "Licht")
+
+![beschreibung](coursedata/tasks/img/smiley.png "smiley")
 
 Da der tasks/img Ordner beliebig unterteilt werden kann, ist z.b. auch `![beschreibung](img/a1/06.png "Licht")` möglich - wenn das Bild in einem Unterordner tasks/img/a1 abgelegt wurde.
 
