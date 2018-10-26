@@ -114,3 +114,12 @@ Mit einem Klick auf das Profilfoto rechts oben, kann das Portrait geändert werd
 ### PDF Download
 **[wkhtmltopdf](https://wkhtmltopdf.org/) muss für die PDF Funktionalität installiert und zu PATH hinzugefügt sein.**
 Dann kann über die URL `.../[Matrikelnummer]/pdf` eine PDF Datei mit allen Abgaben des in der URL mit der Matrikelnummer bestimmten Studenten erstellen. Download dieser Dateien ist momentan noch nicht möglich.
+
+## 3. Abhängigkeiten
+Zum Kompilieren der Anwendung mit Go, werden zusätzlich folgende Packages benötigt:
+
+[github.com/russross/blackfriday](github.com/russross/blackfriday)
+
+[github.com/gorilla/mux](github.com/gorilla/mux)
+
+[github.com/SebastiaanKlippert/go-wkhtmltopdf](github.com/SebastiaanKlippert/go-wkhtmltopdf)
