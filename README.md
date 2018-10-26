@@ -1,7 +1,7 @@
 # Evago - Evaluierung von Go für Webdevelopment
 
 ### Veranstaltung: Aktuelle Entwicklungen im Bereich Online Medien - Prof. Eisenbiegler
-<br>
+
 ## Beispielhafte Ordnerstruktur:
 
 - 🗀 Hauptverzeichniss
