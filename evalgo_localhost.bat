@@ -1,1 +1,1 @@
-go run -race ./src/evalgo.go localhost > server.log
+evalgo.exe localhost > server.log

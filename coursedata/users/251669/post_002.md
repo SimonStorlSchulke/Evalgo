@@ -1,4 +1,4 @@
-<i class='last-modified'>last modified 0:41 October 26 2018</i>
+<i class='last-modified'>last modified 13:20 October 26 2018</i>
 ## Return User Struct from Matrikel
 ```go
 func FromMatrikel(matrikel int) (User, error) {
@@ -16,6 +16,7 @@ func FromMatrikel(matrikel int) (User, error) {
 	return us, err
 }
 ```
+
 
 
 

@@ -4,6 +4,3 @@ Groups: 3
 Cards: true
 Grades: true 
 Started server at localhost:8080/evalgo/
-p method: GET
-p method: POST
-User 251669 updated his Portrait

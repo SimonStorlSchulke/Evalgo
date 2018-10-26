@@ -1,4 +1,4 @@
-# Evago - Evaluierung von Go für Webdevelopment
+﻿# Evago - Evaluierung von Go für Webdevelopment
 
 ### Veranstaltung: Aktuelle Entwicklungen im Bereich Online Medien - Prof. Eisenbiegler
 <br>
@@ -73,7 +73,7 @@ Für die Aufgabenstellung werden Markdown Dateien in `coursedata/tasks` erstellt
 
 
 Da **Bilder** in den Aufgabenstellungen und Kursinfo von der Haupseite aus aufgerufen werden, können diese per Markdown folgendermaßen z.b. aufgerufen werden: `![beschreibung](img/smiley.png "Licht")`. Alle in `coursedata/tasks/img` Ordner vorhandenen Bilder sond so abrufbar - auch mit beliebigen Unterordnern.
-![beschreibung](coursedata/tasks/img/smiley.png "Licht")
+![beschreibung](img/smiley.png "Licht")
 
 Da der tasks/img Ordner beliebig unterteilt werden kann, ist z.b. auch `![beschreibung](img/a1/06.png "Licht")` möglich - wenn das Bild in einem Unterordner tasks/img/a1 abgelegt wurde.
 
@@ -97,7 +97,7 @@ Momentan werden alle Nutzer als `Student` registriert. In der entsprechenden pro
 Hier werden die hochgeladenen Portraits der Nutzer gespeichert (mit Matrikelnummer als Dateiname)
 
 ## 2. Bedienung
-![evalgo](coursedata/tasks/img/evalgo.jpg)
+![evalgo](img/evalgo.jpg)
 
 **Registrierung und Login** sollten selbsterklärend sein. Anstelle eines Nutzernamens, wird hier die Matrikelnummer zum Login verwendet.
 

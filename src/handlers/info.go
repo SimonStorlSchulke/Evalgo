@@ -11,14 +11,16 @@ import (
 //Course Info
 func HandleInfo(w http.ResponseWriter, r *http.Request) {
 
-	info, err := ioutil.ReadFile("./info.md")
+	info, err := ioutil.ReadFile("./coursedata/info.md")
 	if err != nil {
 		fmt.Fprint(w, "no infofile found")
 		return
 	}
 
-	//Parse Markdown and parse to string
-	info = blackfriday.MarkdownCommon(info)
-	str := "<div class='container-fluid post-area'>" + string(info[:]) + "</div>"
+	//Parse Markdown via Blackfriday
+	/*Blackfriday for some reasons always adds a Paragraph <p></p> around the first line... why though?
+	Dirty fix is to start converting the info []byte at index 3 and therefore remove the first <p>*/
+	info = blackfriday.MarkdownCommon(info[3:])
+	str := "<div class='container-fluid post-area'>\n\n\n" + string(info[0:]) + "</div>"
 	fmt.Fprint(w, str)
 }

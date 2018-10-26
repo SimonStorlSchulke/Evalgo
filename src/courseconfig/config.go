@@ -32,7 +32,7 @@ func GetConfig() Config {
 //Read courseconfig.json and return as Config struct
 func UpdateConfig() {
 	var conf Config
-	jsondata, err := ioutil.ReadFile("./courseconfig.json")
+	jsondata, err := ioutil.ReadFile("./coursedata/courseconfig.json")
 	if err != nil {
 		fmt.Println(err)
 		return
