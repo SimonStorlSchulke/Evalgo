@@ -76,7 +76,7 @@ func main() {
 		fmt.Printf("Started server at localhost%s%s\n",
 			conf.Port, conf.Root_url)
 
-		//Start Server or exit with error message alter 5 seconds
+		//Start Server or exit with error message after 5 seconds
 		err := http.ListenAndServe(":8080", Log(http.DefaultServeMux))
 		if err != nil {
 			fmt.Println(err)
@@ -87,7 +87,7 @@ func main() {
 		fmt.Printf("Started server at /%s%s\n",
 			conf.Port, conf.Root_url)
 
-		//Start Server or exit with error message alter 5 seconds
+		//Start Server or exit with error message after 5 seconds
 		err := http.ListenAndServeTLS(conf.Port, "../.tls/fullchain.pem", "../.tls/privkey.pem", nil)
 		if err != nil {
 			fmt.Println(err)
