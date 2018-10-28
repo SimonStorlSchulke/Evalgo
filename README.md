@@ -1,4 +1,4 @@
-# Evago - Evaluierung von Go für Webdevelopment
+# Evalgo - Evaluierung von Go für Webdevelopment
 
 ### Veranstaltung: Aktuelle Entwicklungen im Bereich Online Medien - Prof. Eisenbiegler
 
