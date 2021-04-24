@@ -1,6 +1,6 @@
 # Evalgo - Evaluierung von Go für Webdevelopment
 
-## [Vollständige Projektdokumentation]([hier](https://github.com/SimonStorlSchulke/Evalgo/blob/master/evalgo_dokumentation.pdf).)
+## [Vollständige Projektdokumentation](https://github.com/SimonStorlSchulke/Evalgo/blob/master/evalgo_dokumentation.pdf)
 
 ### Veranstaltung: Aktuelle Entwicklungen im Bereich Online Medien - Prof. Eisenbiegler
 
