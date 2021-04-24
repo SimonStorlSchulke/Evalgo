@@ -1,9 +1,11 @@
 # Evalgo - Evaluierung von Go für Webdevelopment
 
+## [Vollständige Projektdokumentation]([hier](https://github.com/SimonStorlSchulke/Evalgo/blob/master/evalgo_dokumentation.pdf).)
+
 ### Veranstaltung: Aktuelle Entwicklungen im Bereich Online Medien - Prof. Eisenbiegler
 
 Ziel dieses Projektes war die Umsetzung einer konfigurierbaren Abgabeplattform für Studierende mit moderner Benutzeroberfläche. Dozenten können Aufgabenformulierungen für ihre Veranstaltung veröffentlichen, die
-dann von den Studierenden bearbeitet und von Tutoren und Dozent bewertet werden. Zudem sollte die Plattform konfigurierbar sein, um beispielsweise Kurse öffentlich oder geschlossen zu gestalten. Vollständige Projektdokumentation [hier](https://github.com/SimonStorlSchulke/Evalgo/blob/master/evalgo_dokumentation.pdf).
+dann von den Studierenden bearbeitet und von Tutoren und Dozent bewertet werden. Zudem sollte die Plattform konfigurierbar sein, um beispielsweise Kurse öffentlich oder geschlossen zu gestalten.
 
 ## Beispielhafte Ordnerstruktur auf dem Server:
 
